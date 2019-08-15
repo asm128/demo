@@ -1,51 +1,51 @@
-[ { "name" : "arapresidentesarmiento"				, "title" : "ARA Presidente Sarmiento"								, "wiki": "https://en.wikipedia.org/wiki/ARA_Presidente_Sarmiento"									, "text": ""}
-, { "name" : "basilicanuestrasenioradelpilar"		, "title" : "Basilica Nuestra Señora del Pilar"						, "wiki": "https://en.wikipedia.org/wiki/Basilica_of_Our_Lady_of_the_Pillar,_Buenos_Aires"			, "text": ""}
-, { "name" : "belgrano"								, "title" : "Belgrano"												, "wiki": "https://en.wikipedia.org/wiki/Belgrano_(Buenos_Aires)"									, "text": ""}
-, { "name" : "bibliotecanacionalmarianomoreno"		, "title" : "Biblioteca Nacional Mariano Moreno"					, "wiki": "https://en.wikipedia.org/wiki/National_Library_of_the_Argentine_Republic"				, "text": ""}
-, { "name" : "casarosada"							, "title" : "Casa Rosada"											, "wiki": "https://en.wikipedia.org/wiki/Casa_Rosada"												, "text": ""}
-, { "name" : "catedralmetropolitanadebuenosaires"	, "title" : "Catedral Metropolitana de Buenos Aires"				, "wiki": "https://en.wikipedia.org/wiki/Buenos_Aires_Metropolitan_Cathedral"						, "text": ""}
-, { "name" : "centroculturalrecoleta"				, "title" : "Centro Cultural Recoleta"								, "wiki": "https://en.wikipedia.org/wiki/Centro_Cultural_Recoleta"									, "text": ""}
-, { "name" : "congresodelanacionargentina"			, "title" : "Congreso de la Nación Argentina"						, "wiki": "https://en.wikipedia.org/wiki/National_Congress_of_Argentina"							, "text": ""}
-, { "name" : "congressionalplaza"					, "title" : "Congressional Plaza"									, "wiki": "https://en.wikipedia.org/wiki/Congressional_Plaza"										, "text": ""}
-, { "name" : "elateneograndsplendid"				, "title" : "El Ateneo Grand Splendid"								, "wiki": "https://en.wikipedia.org/wiki/El_Ateneo_Grand_Splendid"									, "text": ""}
-, { "name" : "elzanjon"								, "title" : "El zanjón"												, "wiki": "https://en.wikipedia.org/wiki/El_Zanjón"													, "text": ""}
-, { "name" : "floralisgenerica"						, "title" : "Floralis Generica"										, "wiki": "https://en.wikipedia.org/wiki/Floralis_Genérica"											, "text": ""}
-, { "name" : "floridastreet"						, "title" : "Florida Street"										, "wiki": "https://en.wikipedia.org/wiki/Florida_Street"											, "text": ""}
-, { "name" : "fundacionproa"						, "title" : "Fundacion Proa"										, "wiki": "https://en.wikipedia.org/wiki/Fundación_Proa"											, "text": ""}
-, { "name" : "holyland"								, "title" : "Holy Land"												, "wiki": "https://en.wikipedia.org/wiki/Tierra_Santa_(theme_park)"									, "text": ""}
-, { "name" : "jardinbotanicocarlosthays"			, "title" : "Jardin Botanico Carlos Thays"							, "wiki": "https://en.wikipedia.org/wiki/Buenos_Aires_Botanical_Garden"								, "text": ""}
-, { "name" : "jardinjapones"						, "title" : "Jardin Japones"										, "wiki": "https://en.wikipedia.org/wiki/Buenos_Aires_Japanese_Gardens"								, "text": ""}
-, { "name" : "kirchnerculturalcentre"				, "title" : "Kirchner Cultural Centre"								, "wiki": "https://en.wikipedia.org/wiki/Kirchner_Cultural_Centre"									, "text": ""}
-, { "name" : "laboca"								, "title" : "La Boca"												, "wiki": "https://en.wikipedia.org/wiki/La_Boca"													, "text": ""}
-, { "name" : "lachacaritacemetery"					, "title" : "La Chacarita Cemetery"									, "wiki": "https://en.wikipedia.org/wiki/La_Chacarita_cemetery"										, "text": ""}
-, { "name" : "malba"								, "title" : "Malba"													, "wiki": "https://en.wikipedia.org/wiki/MALBA"														, "text": ""}
-, { "name" : "manzanadelasluces"					, "title" : "Manzana de las Luces"									, "wiki": "https://en.wikipedia.org/wiki/Illuminated_Block"											, "text": ""}
-, { "name" : "museodelosninosabasto"				, "title" : "Museo De Los Niños Abasto"								, "wiki": "https://en.wikipedia.org/wiki/"															, "text": ""}
-, { "name" : "museoevita"							, "title" : "Museo Evita"											, "wiki": "https://en.wikipedia.org/wiki/Museo_Evita"												, "text": ""}
-, { "name" : "museohistoriconacional"				, "title" : "Museo Historico Nacional"								, "wiki": "https://en.wikipedia.org/wiki/National_Historical_Museum_(Argentina)"					, "text": ""}
-, { "name" : "museohncabildoyrevoluciondemayo"		, "title" : "Museo Histórico Nacional Cabildo y Revolución de Mayo"	, "wiki": "https://en.wikipedia.org/wiki/Buenos_Aires_Cabildo"										, "text": ""}
-, { "name" : "museonacionaldeartedecorativo"		, "title" : "Museo Nacional de Arte Decorativo"						, "wiki": "https://en.wikipedia.org/wiki/National_Museum_of_Decorative_Arts,_Buenos_Aires"			, "text": ""}
-, { "name" : "museonacionaldebellasartes"			, "title" : "Museo Nacional de Bellas Artes"						, "wiki": "https://en.wikipedia.org/wiki/Museo_Nacional_de_Bellas_Artes_(Buenos_Aires)"				, "text": ""}
-, { "name" : "obelisco"								, "title" : "Obelisco"												, "wiki": "https://en.wikipedia.org/wiki/Obelisco_de_Buenos_Aires"									, "text": ""}
-, { "name" : "palaciobarolo"						, "title" : "Palacio Barolo"										, "wiki": "https://en.wikipedia.org/wiki/Palacio_Barolo"											, "text": ""}
-, { "name" : "palermosoho"							, "title" : "Palermo Soho"											, "wiki": "https://en.wikipedia.org/wiki/Palermo_Soho_(Buenos_Aires)"								, "text": ""}
-, { "name" : "parquecentenario"						, "title" : "Parque Centenario"										, "wiki": "https://en.wikipedia.org/wiki/Parque_Centenario"											, "text": ""}
-, { "name" : "parquedelacosta"						, "title" : "Parque De La Costa"									, "wiki": "https://en.wikipedia.org/wiki/Parque_de_la_Costa"										, "text": ""}
-, { "name" : "parquelezama"							, "title" : "Parque Lezama"											, "wiki": "https://en.wikipedia.org/wiki/Lezama_Park"												, "text": ""}
-, { "name" : "parquetresdefebrero"					, "title" : "Parque Tres de Febrero"								, "wiki": "https://en.wikipedia.org/wiki/Parque_Tres_de_Febrero"									, "text": ""}
-, { "name" : "paseoelrosedal"						, "title" : "Paseo El Rosedal"										, "wiki": "https://en.wikipedia.org/wiki/Paseo_El_Rosedal_(Buenos_Aires)"							, "text": ""}
-, { "name" : "piramidedemayo"						, "title" : "Piramide De Mayo"										, "wiki": "https://en.wikipedia.org/wiki/Pirámide_de_Mayo"											, "text": ""}
-, { "name" : "planetariogalileogalilei"				, "title" : "Planetario Galileo Galilei"							, "wiki": "https://en.wikipedia.org/wiki/Galileo_Galilei_planetarium"								, "text": ""}
-, { "name" : "plazademayo"							, "title" : "Plaza De Mayo"											, "wiki": "https://en.wikipedia.org/wiki/Plaza_de_Mayo"												, "text": ""}
-, { "name" : "plazadorrego"							, "title" : "Plaza Dorrego"											, "wiki": "https://en.wikipedia.org/wiki/Plaza_Dorrego"												, "text": ""}
-, { "name" : "plazaitalia"							, "title" : "Plaza Italia"											, "wiki": "https://en.wikipedia.org/wiki/Plaza_Italia,_Buenos_Aires"								, "text": ""}
-, { "name" : "plazasanmartin"						, "title" : "Plaza San Martin"										, "wiki": "https://en.wikipedia.org/wiki/Plaza_San_Martín_(Buenos_Aires)"							, "text": ""}
-, { "name" : "plazaserrano"							, "title" : "Plaza Serrano"											, "wiki": "https://en.wikipedia.org/wiki/Plaza_Serrano_(Buenos_Aires)"								, "text": ""}
-, { "name" : "puentedelamujer"						, "title" : "Puente De La Mujer"									, "wiki": "https://en.wikipedia.org/wiki/Puente_de_la_Mujer"										, "text": ""}
-, { "name" : "recoletacemetery"						, "title" : "Recoleta Cemetery"										, "wiki": "https://en.wikipedia.org/wiki/La_Recoleta_Cemetery"										, "text": ""}
-, { "name" : "reservaecologicacostanerasur"			, "title" : "Reserva Ecologica Costanera Sur"						, "wiki": "https://en.wikipedia.org/wiki/Costanera_Sur_Ecological_Reserve"							, "text": ""}
-, { "name" : "tangoshowbuenosaires"					, "title" : "Tango Show Buenos Aires"								, "wiki": "https://en.wikipedia.org/wiki/Tango_Show_Buenos_Aires"									, "text": ""}
-, { "name" : "teatrocolon"							, "title" : "Teatro Colon"											, "wiki": "https://en.wikipedia.org/wiki/Teatro_Colón"												, "text": ""}
-, { "name" : "thewatercompanypalace"				, "title" : "The Water Company Palace"								, "wiki": "https://en.wikipedia.org/wiki/The_Water_Company_Palace"									, "text": ""}
-, { "name" : "torremonumental"						, "title" : "Torre Monumental"										, "wiki": "https://en.wikipedia.org/wiki/Torre_Monumental"											, "text": ""}
+[ { "name" : "arapresidentesarmiento"				, "title" : "ARA Presidente Sarmiento"								, "wiki": "https://en.wikipedia.org/wiki/ARA_Presidente_Sarmiento"									, "text": {"en": "", "es": ""}
+, { "name" : "basilicanuestrasenioradelpilar"		, "title" : "Basilica Nuestra Señora del Pilar"						, "wiki": "https://en.wikipedia.org/wiki/Basilica_of_Our_Lady_of_the_Pillar,_Buenos_Aires"			, "text": {"en": "", "es": ""}
+, { "name" : "belgrano"								, "title" : "Belgrano"												, "wiki": "https://en.wikipedia.org/wiki/Belgrano_(Buenos_Aires)"									, "text": {"en": "", "es": ""}
+, { "name" : "bibliotecanacionalmarianomoreno"		, "title" : "Biblioteca Nacional Mariano Moreno"					, "wiki": "https://en.wikipedia.org/wiki/National_Library_of_the_Argentine_Republic"				, "text": {"en": "", "es": ""}
+, { "name" : "casarosada"							, "title" : "Casa Rosada"											, "wiki": "https://en.wikipedia.org/wiki/Casa_Rosada"												, "text": {"en": "", "es": ""}
+, { "name" : "catedralmetropolitanadebuenosaires"	, "title" : "Catedral Metropolitana de Buenos Aires"				, "wiki": "https://en.wikipedia.org/wiki/Buenos_Aires_Metropolitan_Cathedral"						, "text": {"en": "", "es": ""}
+, { "name" : "centroculturalrecoleta"				, "title" : "Centro Cultural Recoleta"								, "wiki": "https://en.wikipedia.org/wiki/Centro_Cultural_Recoleta"									, "text": {"en": "", "es": ""}
+, { "name" : "congresodelanacionargentina"			, "title" : "Congreso de la Nación Argentina"						, "wiki": "https://en.wikipedia.org/wiki/National_Congress_of_Argentina"							, "text": {"en": "", "es": ""}
+, { "name" : "congressionalplaza"					, "title" : "Congressional Plaza"									, "wiki": "https://en.wikipedia.org/wiki/Congressional_Plaza"										, "text": {"en": "", "es": ""}
+, { "name" : "elateneograndsplendid"				, "title" : "El Ateneo Grand Splendid"								, "wiki": "https://en.wikipedia.org/wiki/El_Ateneo_Grand_Splendid"									, "text": {"en": "", "es": ""}
+, { "name" : "elzanjon"								, "title" : "El zanjón"												, "wiki": "https://en.wikipedia.org/wiki/El_Zanjón"													, "text": {"en": "", "es": ""}
+, { "name" : "floralisgenerica"						, "title" : "Floralis Generica"										, "wiki": "https://en.wikipedia.org/wiki/Floralis_Genérica"											, "text": {"en": "", "es": ""}
+, { "name" : "floridastreet"						, "title" : "Florida Street"										, "wiki": "https://en.wikipedia.org/wiki/Florida_Street"											, "text": {"en": "", "es": ""}
+, { "name" : "fundacionproa"						, "title" : "Fundacion Proa"										, "wiki": "https://en.wikipedia.org/wiki/Fundación_Proa"											, "text": {"en": "", "es": ""}
+, { "name" : "holyland"								, "title" : "Holy Land"												, "wiki": "https://en.wikipedia.org/wiki/Tierra_Santa_(theme_park)"									, "text": {"en": "", "es": ""}
+, { "name" : "jardinbotanicocarlosthays"			, "title" : "Jardin Botanico Carlos Thays"							, "wiki": "https://en.wikipedia.org/wiki/Buenos_Aires_Botanical_Garden"								, "text": {"en": "", "es": ""}
+, { "name" : "jardinjapones"						, "title" : "Jardin Japones"										, "wiki": "https://en.wikipedia.org/wiki/Buenos_Aires_Japanese_Gardens"								, "text": {"en": "", "es": ""}
+, { "name" : "kirchnerculturalcentre"				, "title" : "Kirchner Cultural Centre"								, "wiki": "https://en.wikipedia.org/wiki/Kirchner_Cultural_Centre"									, "text": {"en": "", "es": ""}
+, { "name" : "laboca"								, "title" : "La Boca"												, "wiki": "https://en.wikipedia.org/wiki/La_Boca"													, "text": {"en": "", "es": ""}
+, { "name" : "lachacaritacemetery"					, "title" : "La Chacarita Cemetery"									, "wiki": "https://en.wikipedia.org/wiki/La_Chacarita_cemetery"										, "text": {"en": "", "es": ""}
+, { "name" : "malba"								, "title" : "Malba"													, "wiki": "https://en.wikipedia.org/wiki/MALBA"														, "text": {"en": "", "es": ""}
+, { "name" : "manzanadelasluces"					, "title" : "Manzana de las Luces"									, "wiki": "https://en.wikipedia.org/wiki/Illuminated_Block"											, "text": {"en": "", "es": ""}
+, { "name" : "museodelosninosabasto"				, "title" : "Museo De Los Niños Abasto"								, "wiki": "https://en.wikipedia.org/wiki/"															, "text": {"en": "", "es": ""}
+, { "name" : "museoevita"							, "title" : "Museo Evita"											, "wiki": "https://en.wikipedia.org/wiki/Museo_Evita"												, "text": {"en": "", "es": ""}
+, { "name" : "museohistoriconacional"				, "title" : "Museo Historico Nacional"								, "wiki": "https://en.wikipedia.org/wiki/National_Historical_Museum_(Argentina)"					, "text": {"en": "", "es": ""}
+, { "name" : "museohncabildoyrevoluciondemayo"		, "title" : "Museo Histórico Nacional Cabildo y Revolución de Mayo"	, "wiki": "https://en.wikipedia.org/wiki/Buenos_Aires_Cabildo"										, "text": {"en": "", "es": ""}
+, { "name" : "museonacionaldeartedecorativo"		, "title" : "Museo Nacional de Arte Decorativo"						, "wiki": "https://en.wikipedia.org/wiki/National_Museum_of_Decorative_Arts,_Buenos_Aires"			, "text": {"en": "", "es": ""}
+, { "name" : "museonacionaldebellasartes"			, "title" : "Museo Nacional de Bellas Artes"						, "wiki": "https://en.wikipedia.org/wiki/Museo_Nacional_de_Bellas_Artes_(Buenos_Aires)"				, "text": {"en": "", "es": ""}
+, { "name" : "obelisco"								, "title" : "Obelisco"												, "wiki": "https://en.wikipedia.org/wiki/Obelisco_de_Buenos_Aires"									, "text": {"en": "", "es": ""}
+, { "name" : "palaciobarolo"						, "title" : "Palacio Barolo"										, "wiki": "https://en.wikipedia.org/wiki/Palacio_Barolo"											, "text": {"en": "", "es": ""}
+, { "name" : "palermosoho"							, "title" : "Palermo Soho"											, "wiki": "https://en.wikipedia.org/wiki/Palermo_Soho_(Buenos_Aires)"								, "text": {"en": "", "es": ""}
+, { "name" : "parquecentenario"						, "title" : "Parque Centenario"										, "wiki": "https://en.wikipedia.org/wiki/Parque_Centenario"											, "text": {"en": "", "es": ""}
+, { "name" : "parquedelacosta"						, "title" : "Parque De La Costa"									, "wiki": "https://en.wikipedia.org/wiki/Parque_de_la_Costa"										, "text": {"en": "", "es": ""}
+, { "name" : "parquelezama"							, "title" : "Parque Lezama"											, "wiki": "https://en.wikipedia.org/wiki/Lezama_Park"												, "text": {"en": "", "es": ""}
+, { "name" : "parquetresdefebrero"					, "title" : "Parque Tres de Febrero"								, "wiki": "https://en.wikipedia.org/wiki/Parque_Tres_de_Febrero"									, "text": {"en": "", "es": ""}
+, { "name" : "paseoelrosedal"						, "title" : "Paseo El Rosedal"										, "wiki": "https://en.wikipedia.org/wiki/Paseo_El_Rosedal_(Buenos_Aires)"							, "text": {"en": "", "es": ""}
+, { "name" : "piramidedemayo"						, "title" : "Piramide De Mayo"										, "wiki": "https://en.wikipedia.org/wiki/Pirámide_de_Mayo"											, "text": {"en": "", "es": ""}
+, { "name" : "planetariogalileogalilei"				, "title" : "Planetario Galileo Galilei"							, "wiki": "https://en.wikipedia.org/wiki/Galileo_Galilei_planetarium"								, "text": {"en": "", "es": ""}
+, { "name" : "plazademayo"							, "title" : "Plaza De Mayo"											, "wiki": "https://en.wikipedia.org/wiki/Plaza_de_Mayo"												, "text": {"en": "", "es": ""}
+, { "name" : "plazadorrego"							, "title" : "Plaza Dorrego"											, "wiki": "https://en.wikipedia.org/wiki/Plaza_Dorrego"												, "text": {"en": "", "es": ""}
+, { "name" : "plazaitalia"							, "title" : "Plaza Italia"											, "wiki": "https://en.wikipedia.org/wiki/Plaza_Italia,_Buenos_Aires"								, "text": {"en": "", "es": ""}
+, { "name" : "plazasanmartin"						, "title" : "Plaza San Martin"										, "wiki": "https://en.wikipedia.org/wiki/Plaza_San_Martín_(Buenos_Aires)"							, "text": {"en": "", "es": ""}
+, { "name" : "plazaserrano"							, "title" : "Plaza Serrano"											, "wiki": "https://en.wikipedia.org/wiki/Plaza_Serrano_(Buenos_Aires)"								, "text": {"en": "", "es": ""}
+, { "name" : "puentedelamujer"						, "title" : "Puente De La Mujer"									, "wiki": "https://en.wikipedia.org/wiki/Puente_de_la_Mujer"										, "text": {"en": "", "es": ""}
+, { "name" : "recoletacemetery"						, "title" : "Recoleta Cemetery"										, "wiki": "https://en.wikipedia.org/wiki/La_Recoleta_Cemetery"										, "text": {"en": "", "es": ""}
+, { "name" : "reservaecologicacostanerasur"			, "title" : "Reserva Ecologica Costanera Sur"						, "wiki": "https://en.wikipedia.org/wiki/Costanera_Sur_Ecological_Reserve"							, "text": {"en": "", "es": ""}
+, { "name" : "tangoshowbuenosaires"					, "title" : "Tango Show Buenos Aires"								, "wiki": "https://en.wikipedia.org/wiki/Tango_Show_Buenos_Aires"									, "text": {"en": "", "es": ""}
+, { "name" : "teatrocolon"							, "title" : "Teatro Colon"											, "wiki": "https://en.wikipedia.org/wiki/Teatro_Colón"												, "text": {"en": "", "es": ""}
+, { "name" : "thewatercompanypalace"				, "title" : "The Water Company Palace"								, "wiki": "https://en.wikipedia.org/wiki/The_Water_Company_Palace"									, "text": {"en": "", "es": ""}
+, { "name" : "torremonumental"						, "title" : "Torre Monumental"										, "wiki": "https://en.wikipedia.org/wiki/Torre_Monumental"											, "text": {"en": "", "es": ""}
 ]

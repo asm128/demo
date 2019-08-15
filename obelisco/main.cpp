@@ -71,7 +71,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"'; }"
 		"\n	</script>"
 		"\n	</head><!--background-color:#E680C5;-->"
-		"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', '0', getFrameURLNoQS())\">"	//202050
+		"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', 'adverwall', getFrameURLNoQS(), document.getElementById('frameLang').value);\">"	//202050
 		"\n	<table style=\"width:100%;height:100%;\">"
 		"\n		<tr >"
 		"\n			<td style=\"text-align:left\" >"
@@ -80,6 +80,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n			<td style=\"text-align:left\" >"
 		"\n				<form style=\"width:0px;height:0px;\" id=\"homeState\">"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"frameName\" type=\"hidden\" value=\"0\" />"
+		"\n					<input style=\"width:0px;height:0px;\" id=\"frameLang\" type=\"hidden\" value=\"es\" />"
 		"\n				</form>"
 		"\n				<a href=\""
 		;
@@ -101,11 +102,11 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n			<td style=\"width:60%;height:100%;\" >"
 		"\n				<img src=\"/obelisco/image/blank.png\"/>"
 		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" >"
-		"\n				<img src=\"/obelisco/image/flag_uk.png\"/> English "
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, '/obelisco/debug/' + document.getElementById('frameName').value + '.exe', 'en');setLang('en');\" >"
+		"\n				<img src=\"/obelisco/image/flag_uk.png\"/> English"
 		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" >"
-		"\n				<img src=\"/obelisco/image/flag_ar.png\" /> Español "
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, '/obelisco/debug/' + document.getElementById('frameName').value + '.exe', 'es');setLang('es');\" >"
+		"\n				<img src=\"/obelisco/image/flag_ar.png\" /> Español"
 		"\n			</td>"
 		"\n		</tr>"
 		"\n	</table>"
