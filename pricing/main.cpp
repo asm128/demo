@@ -60,12 +60,12 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(::gpk::view_const_string{"\n<body style=\"width:100%;height:100%;background-color:#E0E0E0;font-family:Arial;\">"	}); // 202050
 	output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"	});
 	output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
-	output.append(::gpk::view_const_string{ "\n<td style=\"font-size:16px; font-weight:bold; vertical-align:top;\">"});
+	output.append(::gpk::view_const_string{ "\n<td style=\"font-size:24px; font-weight:bold; vertical-align:top;\">"});
 
 	//---------------------
 	output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"});
 	output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
-	output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;font-size:32px; font-weight:bold; vertical-align:top;\">"});
+	output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;font-size:24px; font-weight:bold; vertical-align:top;\">"});
 	output.append(::gpk::view_const_string{ "\n<h1>Publicidad</h1>"});
 	output.append(::gpk::view_const_string{"\n</td>"});
 	output.append(::gpk::view_const_string{"\n</tr>"});

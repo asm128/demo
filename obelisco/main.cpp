@@ -52,7 +52,6 @@ GPK_CGI_JSON_APP_IMPL();
 	const ::gpk::view_const_string							htmlDefaultAnte						=
 		"\n<html>"
 		"\n<head>"
-		//"\n	<meta name=\"viewport\" content=\"width=device-width\" >"
 		"\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=0.5\">"
 		;
 	output.append(htmlDefaultAnte);
@@ -76,6 +75,9 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n	<table style=\"width:100%;height:100%;\">"
 		"\n		<tr >"
 		"\n			<td style=\"text-align:left\" >"
+		"\n	<table style=\"width:100%;height:100%;\">"
+		"\n		<tr >"
+		"\n			<td style=\"text-align:left\" >"
 		"\n				<form style=\"width:0px;height:0px;\" id=\"homeState\">"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"frameName\" type=\"hidden\" value=\"0\" />"
 		"\n				</form>"
@@ -92,6 +94,24 @@ GPK_CGI_JSON_APP_IMPL();
 
 	const ::gpk::view_const_string							htmlDefaultEnd				=
 		"\" /></a>"
+		"\n			</td>"
+		"\n			<td style=\"width:100%;font-family:Arial;text-align:right;\" >"
+		"\n	<table style=\"height:100%;width:100%;font-weight:bold;\">"
+		"\n		<tr >"
+		"\n			<td style=\"width:60%;height:100%;\" >"
+		"\n				<img src=\"/obelisco/image/blank.png\"/>"
+		"\n			</td>"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" >"
+		"\n				<img src=\"/obelisco/image/flag_uk.png\"/> English "
+		"\n			</td>"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" >"
+		"\n				<img src=\"/obelisco/image/flag_ar.png\" /> Español "
+		"\n			</td>"
+		"\n		</tr>"
+		"\n	</table>"
+		"\n			</td>"
+		"\n		</tr>"
+		"\n	</table>"
 		"\n			</td>"
 		"\n		</tr>"
 		"\n		<tr style=\"height:90%;\" >"
