@@ -13,8 +13,8 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::array_pod<char_t> & ou
 	output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"});
 
 	output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
-	output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;font-size:32px; font-weight:bold; vertical-align:top;\">"});
-	output.append(::gpk::view_const_string{ "\n<h1>Turismo en Buenos Aires</h1>"});
+	output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;font-size:24px; font-weight:bold; vertical-align:top;\">"});
+	output.append(::gpk::view_const_string{ "\n<h1>Tourism in Buenos Aires</h1>"});
 	output.append(::gpk::view_const_string{"\n</td>"});
 	output.append(::gpk::view_const_string{"\n</tr>"});
 
@@ -88,7 +88,7 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::array_pod<char_t> & ou
 	output.append(::gpk::view_const_string{ "\n<head>"});
 	::ntl::htmlHeaderTitle		(txtTitle, output);
 	::ntl::htmlHeaderScriptFile	({fileScriptHeader	.begin(), fileScriptHeader	.size()}, output);
-	::ntl::htmlHeaderScriptFile	({fileScriptMenu		.begin(), fileScriptMenu	.size()}, output);
+	::ntl::htmlHeaderScriptFile	({fileScriptMenu	.begin(), fileScriptMenu	.size()}, output);
 	::ntl::htmlHeaderStyleLink	({fileStyle			.begin(), fileStyle			.size()}, output);
 	output.append(::gpk::view_const_string{"\n</head>"});
 
