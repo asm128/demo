@@ -25,16 +25,18 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::array_pod<char_t> & ou
 	const ::gpk::error_t									countItems						= ::gpk::jsonArraySize(*config.Reader[0]);
 	for(int32_t iItem = 0; iItem < countItems; ++iItem) {
 		const ::gpk::error_t									jsonIndexCurrentItem			= ::gpk::jsonArrayValueGet(*config.Reader[0], iItem);
-		const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonObjectValueGet(*config.Reader[jsonIndexCurrentItem], config.Reader.View, "wiki");
-		const ::gpk::error_t									jsonIndexName					= ::gpk::jsonObjectValueGet(*config.Reader[jsonIndexCurrentItem], config.Reader.View, "title");
+		::gpk::view_const_string								viewWikiURL						= {};
+		::gpk::view_const_string								viewWikiTitle					= {};
+		::gpk::view_const_string								viewWikiText					= {};
+		const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("en.wiki"	, config.Reader, jsonIndexCurrentItem, viewWikiURL);
+		const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("en.title"	, config.Reader, jsonIndexCurrentItem, viewWikiTitle);
+		const ::gpk::error_t									jsonIndexText					= ::gpk::jsonExpressionResolve("en.text"	, config.Reader, jsonIndexCurrentItem, viewWikiText);
 		output.append(::gpk::view_const_string{ "\n<tr>"});
 		output.append(::gpk::view_const_string{ "\n<td style=\"text-align:left;font-size:32px;vertical-align:top;\">"});
 		output.append(::gpk::view_const_string{ "\n<br/>"	});
-		::ntl::htmlHRefLink(config.Reader.View[jsonIndexName], config.Reader.View[jsonIndexWiki], "style=\"text-align:left;text-decoration:none;font-weight:bold;\"", output);
-		//::ntl::htmlTag("h4", config.Reader.View[jsonIndexName], "style=\"text-align:left;\"", output);
+		::ntl::htmlHRefLink(viewWikiTitle, viewWikiURL, "style=\"text-align:left;text-decoration:none;font-weight:bold;\"", output);
 		output.append(::gpk::view_const_string{ "\n<br/>"	});
-		//::ntl::htmlHRefLink(config.Reader.View[jsonIndexWiki], config.Reader.View[jsonIndexWiki], "style=\"text-align:left;text-decoration:none;font-weight:normal;\"", output);
-		::ntl::htmlTag("p", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lacus ut lorem dictum viverra eu maximus est. Nullam auctor nisi nec odio euismod volutpat. Proin porttitor in nulla et aliquet. Nulla nec vulputate tellus, sit amet faucibus dui. Morbi pharetra imperdiet pretium. Mauris ullamcorper dictum mauris sit amet rhoncus. Nulla blandit sem non erat lacinia, in imperdiet elit iaculis. Vestibulum nec dignissim metus. Quisque accumsan urna at sapien convallis, at sollicitudin magna lobortis. Curabitur vulputate aliquet pharetra. Fusce non velit nisl. Mauris ligula nulla, ultricies at nisl sit amet, semper sollicitudin mi.", "style=\" font-weight:normal;text-align:left;\"", output);
+		::ntl::htmlTag("p", viewWikiText, "style=\" font-weight:normal;text-align:left;\"", output);
 		output.append(::gpk::view_const_string{"\n</td>"});
 		output.append(::gpk::view_const_string{"\n</tr>"});
 	}
@@ -78,8 +80,6 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::array_pod<char_t> & ou
 	::gpk::array_pod<char_t>								fileProgramHeader	;
 	::ntl::httpPath(programState.Path.Image		, "logo_home"	, programState.Extension.Image, fileLogo);
 	::ntl::httpPath(programState.Path.Style		, "blankstyle"	, "css"	, fileStyle			);
-	//::ntl::httpPath(programState.Path.Script	, "header"		, "js"	, fileScriptHeader	);
-	//::ntl::httpPath(programState.Path.Script	, "menu"		, "js"	, fileScriptMenu	);
 	::ntl::httpPath(programState.Path.Program	, "adverwall"	, programState.Extension.Program, fileProgramContent);
 	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
 	const ::gpk::view_const_string							txtTitle						= "- Obelisco - Un Patrimonio Incalculable de la República de la Nación Argentina -";
