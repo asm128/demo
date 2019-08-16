@@ -55,7 +55,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />"
 		"\n<meta name=\"copyright\"		content=\"tuobelisco.com is a registered trademark of Pablo Ariel Zorrilla Cepeda\" />"
 		"\n<meta name=\"description\"	content=\"Lugares\" />"
-		"\n<meta name=\"keywords\"		content=\"obelisco, microcentro, buenos aires, turismo, publicidad, publicidad online\" />"
+		"\n<meta name=\"keywords\"		content=\"obelisco, microcentro, tuobelisco, tu obelisco, tu-obelisco, tuobelisco.com, buenos aires, turismo, publicidad, publicidad online\" />"
 		"\n<meta name=\"robots\"		content=\"index,follow\" />"
 		"\n<meta name=\"DC.title\"		content=\"Publicidad Online\" />"
 		"\n<meta name=\"viewport\"		content=\"width=device-width, initial-scale=0.5\" >"
