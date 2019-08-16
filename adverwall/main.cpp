@@ -9,7 +9,7 @@
 
 GPK_CGI_JSON_APP_IMPL();
 
-static	::gpk::error_t								htmlBoardGenerate				(::gpk::array_pod<char_t> & output)	{
+static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang, ::gpk::array_pod<char_t> & output)	{
 	output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"});
 
 	output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
@@ -28,9 +28,16 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::array_pod<char_t> & ou
 		::gpk::view_const_string								viewWikiURL						= {};
 		::gpk::view_const_string								viewWikiTitle					= {};
 		::gpk::view_const_string								viewWikiText					= {};
-		const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("en.wiki"	, config.Reader, jsonIndexCurrentItem, viewWikiURL);
-		const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("en.title"	, config.Reader, jsonIndexCurrentItem, viewWikiTitle);
-		const ::gpk::error_t									jsonIndexText					= ::gpk::jsonExpressionResolve("en.text"	, config.Reader, jsonIndexCurrentItem, viewWikiText);
+		if(lang == ::gpk::view_const_string{"es"}) {
+			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("es.wiki"	, config.Reader, jsonIndexCurrentItem, viewWikiURL);
+			const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("es.title"	, config.Reader, jsonIndexCurrentItem, viewWikiTitle);
+			const ::gpk::error_t									jsonIndexText					= ::gpk::jsonExpressionResolve("es.text"	, config.Reader, jsonIndexCurrentItem, viewWikiText);
+		}
+		else {
+			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("en.wiki"	, config.Reader, jsonIndexCurrentItem, viewWikiURL);
+			const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("en.title"	, config.Reader, jsonIndexCurrentItem, viewWikiTitle);
+			const ::gpk::error_t									jsonIndexText					= ::gpk::jsonExpressionResolve("en.text"	, config.Reader, jsonIndexCurrentItem, viewWikiText);
+		}
 		output.append(::gpk::view_const_string{ "\n<tr>"});
 		output.append(::gpk::view_const_string{ "\n<td style=\"text-align:left;font-size:32px;vertical-align:top;\">"});
 		output.append(::gpk::view_const_string{ "\n<br/>"	});
@@ -96,7 +103,9 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::array_pod<char_t> & ou
 	output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"	});
 	output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
 	output.append(::gpk::view_const_string{ "\n<td style=\"font-size:16px; font-weight:bold; vertical-align:top;\">"});
-	::htmlBoardGenerate(output);
+	::gpk::view_const_string lang;
+	::gpk::find("lang", requestReceived.QueryStringKeyVals, lang);
+	::htmlBoardGenerate(lang, output);
 
 	output.append(::gpk::view_const_string{"\n</td>"			});
 	output.append(::gpk::view_const_string{"\n</tr>"			});
