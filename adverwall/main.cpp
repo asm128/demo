@@ -20,6 +20,9 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 		output.append(::gpk::view_const_string{ "\n<h1>Tourism in Buenos Aires</h1>"});
 	output.append(::gpk::view_const_string{"\n</td>"});
 	output.append(::gpk::view_const_string{"\n</tr>"});
+	output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
+	output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;font-size:24px; font-weight:bold; vertical-align:top;\">"});
+
 
 	//---------------------
 	const char												contentFileName	[]				= "./tourism.json";
@@ -56,19 +59,32 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 			const ::gpk::error_t									jsonIndexImageTitle				= ::gpk::jsonExpressionResolve("en.image.title"	, config.Reader, jsonIndexCurrentItem, viewWikiImageTitle	);
 			const ::gpk::error_t									jsonIndexImageAlt				= ::gpk::jsonExpressionResolve("en.image.alt"	, config.Reader, jsonIndexCurrentItem, viewWikiImageAlt		);
 		}
+		output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;text-align:center;border-style:solid;border-width:2px;\" >"});
 		output.append(::gpk::view_const_string{ "\n<tr>"});
-		output.append(::gpk::view_const_string{ "\n<td style=\"text-align:left;font-size:32px;vertical-align:top;\">"});
-		output.append(::gpk::view_const_string{ "\n<br/>"	});
-		::ntl::htmlHRefLink(viewWikiTitle, viewWikiURL, "style=\"text-align:left;text-decoration:none;font-weight:bold;\"", output);
-		output.append(::gpk::view_const_string{ "\n<br/>"	});
-		::ntl::htmlTag("p", viewWikiText, "style=\" font-weight:normal;text-align:left;\"", output);
+		output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;text-align:left;font-size:32px;vertical-align:top;\">"});
+		//
+			output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;border-style:solid;border-width:2px;border-radius:16px;\" >"});
+			output.append(::gpk::view_const_string{ "\n<tr>"});
+			output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:left;font-size:32px;vertical-align:top;\">"});
+			//
+			::ntl::htmlHRefLink(viewWikiTitle, viewWikiURL, "style=\"text-align:left;text-decoration:none;font-weight:bold;\"", output);
+			output.append(::gpk::view_const_string{"\n</td>"});
+			output.append(::gpk::view_const_string{"\n</tr>"});
+			output.append(::gpk::view_const_string{ "\n<tr>"});
+			output.append(::gpk::view_const_string{ "\n<td style=\"background-color:white;height:100%;text-align:left;font-size:32px;vertical-align:top;\">"});
+			::ntl::htmlTag("p", viewWikiText, "style=\" font-weight:normal;text-align:left;\"", output);
+			//
+			output.append(::gpk::view_const_string{"\n</td>"});
+			output.append(::gpk::view_const_string{"\n</tr>"});
+			output.append(::gpk::view_const_string{"\n</table>"});
+		//
 		output.append(::gpk::view_const_string{"\n</td>"});
 		output.append(::gpk::view_const_string{ "\n<td style=\"text-align:left;font-size:32px;vertical-align:center;\">"});
 		output.append(::gpk::view_const_string{ "<a title=\""});
 		output.append(viewWikiImageTitle);
 		output.append(::gpk::view_const_string{ "\" href=\""});
 		output.append(viewWikiImageHRef);
-		output.append(::gpk::view_const_string{ "\" class=\"image\"><img alt=\""});
+		output.append(::gpk::view_const_string{ "\" class=\"image\" ><img alt=\""});
 		output.append(viewWikiImageAlt);
 		output.append(::gpk::view_const_string{ "\" src=\""});
 		output.append(viewWikiImageSrc);
@@ -77,8 +93,11 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 		output.append(::gpk::view_const_string{ "\" data-file-width=\"3264\" data-file-height=\"2448\"></a>"});
 		output.append(::gpk::view_const_string{"\n</td>"});
 		output.append(::gpk::view_const_string{"\n</tr>"});
+		output.append(::gpk::view_const_string{"\n</table>"});
 	}
 	//---------------------<a href="https://commons.wikimedia.org/wiki/File:ObeliscoBA2017.jpg"><img width="512" alt="ObeliscoBA2017" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/ObeliscoBA2017.jpg/512px-ObeliscoBA2017.jpg"></a>
+	output.append(::gpk::view_const_string{"\n</td>"});
+	output.append(::gpk::view_const_string{"\n</tr>"});
 
 	output.append(::gpk::view_const_string{"\n</table>"});
 	return 0;
