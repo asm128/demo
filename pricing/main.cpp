@@ -37,23 +37,12 @@ GPK_CGI_JSON_APP_IMPL();
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
 	::gpk::array_pod<char_t>								fileStyle			;
-	::gpk::array_pod<char_t>								fileScriptHeader	;
-	::gpk::array_pod<char_t>								fileScriptMenu		;
-	::gpk::array_pod<char_t>								fileProgramContent	;
-	::gpk::array_pod<char_t>								fileProgramHeader	;
 	::ntl::httpPath(programState.Path.Image		, "logo_home"	, programState.Extension.Image, fileLogo);
 	::ntl::httpPath(programState.Path.Style		, "blankstyle"	, "css"	, fileStyle			);
-	//::ntl::httpPath(programState.Path.Script	, "header"		, "js"	, fileScriptHeader	);
-	//::ntl::httpPath(programState.Path.Script	, "menu"		, "js"	, fileScriptMenu	);
-	::ntl::httpPath(programState.Path.Program	, "adverwall"	, programState.Extension.Program, fileProgramContent);
-	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
-	const ::gpk::view_const_string							txtTitle						= "- Obelisco - Un Patrimonio Incalculable de la República de la Nación Argentina -";
 
 	output.append(::gpk::view_const_string{ "\n<html>"});
 	output.append(::gpk::view_const_string{ "\n<head>"});
-	::ntl::htmlHeaderTitle(txtTitle, output);
-	::ntl::htmlHeaderScriptFile	({fileScriptHeader	.begin(), fileScriptHeader	.size()}, output);
-	::ntl::htmlHeaderScriptFile	({fileScriptMenu	.begin(), fileScriptMenu	.size()}, output);
+	::ntl::htmlHeaderTitle(programState.Page.Title, output);
 	::ntl::htmlHeaderStyleLink	({fileStyle			.begin(), fileStyle			.size()}, output);
 	output.append(::gpk::view_const_string{"\n</head>"});
 
@@ -66,12 +55,22 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"});
 	output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
 	output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;font-size:24px; font-weight:bold; vertical-align:top;\">"});
-	output.append(::gpk::view_const_string{ "\n<h1>Publicidad</h1>"});
+
+	::gpk::view_const_string								lang;
+	::gpk::find("lang", requestReceived.QueryStringKeyVals, lang);
+	if(lang == ::gpk::view_const_string{"es"})
+		output.append(::gpk::view_const_string{ "\n<h1>Publicidad</h1>"});
+	else
+		output.append(::gpk::view_const_string{ "\n<h1>Advertising</h1>"});
 	output.append(::gpk::view_const_string{"\n</td>"});
 	output.append(::gpk::view_const_string{"\n</tr>"});
 	output.append(::gpk::view_const_string{ "\n<tr style=\"height:100%;\" >"});
 	output.append(::gpk::view_const_string{ "\n<td style=\"font-size:32px; font-weight:bold; text-align:center;vertical-align:top;\">"});
-	output.append(::gpk::view_const_string{ "<a mp-mode=\"dftl\" href=\"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=420404344-34d30d46-7d4a-47b8-a961-65a5c8bb638f\" name=\"MP-payButton\" class='blue-ar-l-rn-none'>$1000 (ARS) - Publicidad Beta - 1 unidad (imagen + link + domicilio)</a>"																																																																	});
+	if(lang == ::gpk::view_const_string{"es"})
+		output.append(::gpk::view_const_string{ "<a mp-mode=\"dftl\" href=\"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=420404344-34d30d46-7d4a-47b8-a961-65a5c8bb638f\" name=\"MP-payButton\" class='blue-ar-l-rn-none'>$1000 (ARS) - Publicación Beta - 1 unidad (imagen + link + domicilio)</a>"																																																																	});
+	else
+		output.append(::gpk::view_const_string{ "<a mp-mode=\"dftl\" href=\"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=420404344-34d30d46-7d4a-47b8-a961-65a5c8bb638f\" name=\"MP-payButton\" class='blue-ar-l-rn-none'>$1000 (ARS) - Beta Ad - 1 unit (image + url + street address)</a>"																																																																	});
+
 	output.append(::gpk::view_const_string{ "<script type=\"text/javascript\">"																																																																																																																									});
 	output.append(::gpk::view_const_string{ "(function(){function $MPC_load(){window.$MPC_loaded !== true && (function(){var s = document.createElement(\"script\");s.type = \"text/javascript\";s.async = true;s.src = document.location.protocol+\"//secure.mlstatic.com/mptools/render.js\";var x = document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s, x);window.$MPC_loaded = true;})();}window.$MPC_loaded !== true ? (window.attachEvent ?window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null;})();"	});
 	output.append(::gpk::view_const_string{ "</script>"																																																																																																																															});

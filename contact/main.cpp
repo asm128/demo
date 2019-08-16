@@ -37,23 +37,13 @@ GPK_CGI_JSON_APP_IMPL();
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
 	::gpk::array_pod<char_t>								fileStyle			;
-	::gpk::array_pod<char_t>								fileScriptHeader	;
-	::gpk::array_pod<char_t>								fileScriptMenu		;
-	::gpk::array_pod<char_t>								fileProgramContent	;
-	::gpk::array_pod<char_t>								fileProgramHeader	;
 	::ntl::httpPath(programState.Path.Image		, "logo_home"	, programState.Extension.Image, fileLogo);
 	::ntl::httpPath(programState.Path.Style		, "blankstyle"	, "css"	, fileStyle			);
-	//::ntl::httpPath(programState.Path.Script	, "header"		, "js"	, fileScriptHeader	);
-	//::ntl::httpPath(programState.Path.Script	, "menu"		, "js"	, fileScriptMenu	);
-	::ntl::httpPath(programState.Path.Program	, "adverwall"	, programState.Extension.Program, fileProgramContent);
-	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
 	const ::gpk::view_const_string							txtTitle						= "- Obelisco - Un Patrimonio Incalculable de la República de la Nación Argentina -";
 
 	output.append(::gpk::view_const_string{ "\n<html>"});
 	output.append(::gpk::view_const_string{ "\n<head>"});
-	::ntl::htmlHeaderTitle(txtTitle, output);
-	::ntl::htmlHeaderScriptFile({fileScriptHeader	.begin(), fileScriptHeader	.size()}, output);
-	::ntl::htmlHeaderScriptFile({fileScriptMenu		.begin(), fileScriptMenu	.size()}, output);
+	::ntl::htmlHeaderTitle(programState.Page.Title, output);
 	::ntl::htmlHeaderStyleLink({fileStyle			.begin(), fileStyle			.size()}, output);
 	output.append(::gpk::view_const_string{"\n</head>"});
 

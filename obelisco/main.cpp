@@ -55,7 +55,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=0.5\">"
 		;
 	output.append(htmlDefaultAnte);
-	::ntl::htmlHeaderTitle("- Obelisco - Un Patrimonio Incalculable de la República de la Nación Argentina -", output);
+	::ntl::htmlHeaderTitle(programState.Page.Title, output);
 	::ntl::htmlHeaderScriptFile({fileScriptHeader	.begin(), fileScriptHeader	.size()}, output);
 	::ntl::htmlHeaderScriptFile({fileScriptMenu		.begin(), fileScriptMenu	.size()}, output);
 	::ntl::htmlHeaderStyleLink({fileStyle			.begin(), fileStyle			.size()}, output);
@@ -86,14 +86,9 @@ GPK_CGI_JSON_APP_IMPL();
 		;
 	output.append(htmlDefaultBegin);
 	output.append(fileProgramHeader);
-
-	const ::gpk::view_const_string							htmlDefaultEnter				=
-		"\"><img style=\"height:72px\" src=\""
-		;
-	output.append(htmlDefaultEnter);
+	output.append(::gpk::view_const_string{"\"><img style=\"height:72px\" src=\""});
 	output.append(fileLogo);
-
-	const ::gpk::view_const_string							htmlDefaultEnd				=
+	output.append(::gpk::view_const_string{
 		"\" /></a>"
 		"\n			</td>"
 		"\n			<td style=\"width:100%;font-family:Arial;text-align:right;\" >"
@@ -102,10 +97,18 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n			<td style=\"width:60%;height:100%;\" >"
 		"\n				<img src=\"/obelisco/image/blank.png\"/>"
 		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, '/obelisco/debug/' + document.getElementById('frameName').value + '.exe', 'en');setLang('en');\" >"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, '"
+		});
+	output.append(programState.Path.Program);
+	output.append(::gpk::view_const_string{"/' + document.getElementById('frameName').value + '.exe', 'en');setLang('en');\" >"});
+	output.append(::gpk::view_const_string{
 		"\n				<img src=\"/obelisco/image/flag_uk.png\"/> English"
 		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, '/obelisco/debug/' + document.getElementById('frameName').value + '.exe', 'es');setLang('es');\" >"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, '"
+		});
+	output.append(programState.Path.Program);
+	output.append(::gpk::view_const_string{"/' + document.getElementById('frameName').value + '.exe', 'en');setLang('es');\" >"});
+	output.append(::gpk::view_const_string{
 		"\n				<img src=\"/obelisco/image/flag_ar.png\" /> Español"
 		"\n			</td>"
 		"\n		</tr>"
@@ -122,13 +125,11 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n		</tr>"
 		"\n		<tr >"
 		"\n			<td style=\"width:100%;height:72px;font-family:Arial;\" >"
-		;
-	output.append(htmlDefaultEnd);
+		});
 
 	const ::ntl::SHTMLIcon									icons[]							=
 		{ {"tourism", "Turismo"}
 		, {"pricing", "Publicidad"}
-		//, {"contact", "Contacto"}
 		, {"terms"	, "Condiciones"}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
