@@ -29,9 +29,9 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 		::gpk::view_const_string								viewWikiTitle					= {};
 		::gpk::view_const_string								viewWikiText					= {};
 		if(lang == ::gpk::view_const_string{"es"}) {
-			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("en.wiki"	, config.Reader, jsonIndexCurrentItem, viewWikiURL);
-			const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("en.title"	, config.Reader, jsonIndexCurrentItem, viewWikiTitle);
-			const ::gpk::error_t									jsonIndexText					= ::gpk::jsonExpressionResolve("en.text"	, config.Reader, jsonIndexCurrentItem, viewWikiText);
+			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("es.wiki"	, config.Reader, jsonIndexCurrentItem, viewWikiURL);
+			const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("es.title"	, config.Reader, jsonIndexCurrentItem, viewWikiTitle);
+			const ::gpk::error_t									jsonIndexText					= ::gpk::jsonExpressionResolve("es.text"	, config.Reader, jsonIndexCurrentItem, viewWikiText);
 		}
 		else {
 			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("en.wiki"	, config.Reader, jsonIndexCurrentItem, viewWikiURL);
