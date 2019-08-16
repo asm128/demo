@@ -79,7 +79,7 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 			output.append(::gpk::view_const_string{"\n</table>"});
 		//
 		output.append(::gpk::view_const_string{"\n</td>"});
-		output.append(::gpk::view_const_string{ "\n<td style=\"text-align:left;font-size:32px;vertical-align:center;\">"});
+		output.append(::gpk::view_const_string{ "\n<td style=\"text-align:left;font-size:32px;vertical-align:top;\">"});
 		output.append(::gpk::view_const_string{ "<a title=\""});
 		output.append(viewWikiImageTitle);
 		output.append(::gpk::view_const_string{ "\" href=\""});
