@@ -107,7 +107,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, '"
 		});
 	output.append(programState.Path.Program);
-	output.append(::gpk::view_const_string{"/' + document.getElementById('frameName').value + '.exe', 'en');setLang('es');\" >"});
+	output.append(::gpk::view_const_string{"/' + document.getElementById('frameName').value + '.exe', 'es');setLang('es');\" >"});
 	output.append(::gpk::view_const_string{
 		"\n				<img src=\"/obelisco/image/flag_ar.png\" /> Español"
 		"\n			</td>"
