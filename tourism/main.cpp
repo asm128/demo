@@ -31,15 +31,30 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 		::gpk::view_const_string								viewWikiURL						= {};
 		::gpk::view_const_string								viewWikiTitle					= {};
 		::gpk::view_const_string								viewWikiText					= {};
+		::gpk::view_const_string								viewWikiImageHRef					= {};
+		::gpk::view_const_string								viewWikiImageSrc					= {};
+		::gpk::view_const_string								viewWikiImageSrcSet					= {};
+		::gpk::view_const_string								viewWikiImageTitle					= {};
+		::gpk::view_const_string								viewWikiImageAlt					= {};
 		if(lang == ::gpk::view_const_string{"es"}) {
-			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("es.wiki"	, config.Reader, jsonIndexCurrentItem, viewWikiURL);
-			const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("es.title"	, config.Reader, jsonIndexCurrentItem, viewWikiTitle);
-			const ::gpk::error_t									jsonIndexText					= ::gpk::jsonExpressionResolve("es.text"	, config.Reader, jsonIndexCurrentItem, viewWikiText);
+			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("es.wiki"		, config.Reader, jsonIndexCurrentItem, viewWikiURL			);
+			const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("es.title"		, config.Reader, jsonIndexCurrentItem, viewWikiTitle		);
+			const ::gpk::error_t									jsonIndexText					= ::gpk::jsonExpressionResolve("es.text"		, config.Reader, jsonIndexCurrentItem, viewWikiText			);
+			const ::gpk::error_t									jsonIndexImageHRef				= ::gpk::jsonExpressionResolve("es.image.href"	, config.Reader, jsonIndexCurrentItem, viewWikiImageHRef	);
+			const ::gpk::error_t									jsonIndexImageSrc				= ::gpk::jsonExpressionResolve("es.image.src"	, config.Reader, jsonIndexCurrentItem, viewWikiImageSrc		);
+			const ::gpk::error_t									jsonIndexImageSrcSet			= ::gpk::jsonExpressionResolve("es.image.srcset", config.Reader, jsonIndexCurrentItem, viewWikiImageSrcSet	);
+			const ::gpk::error_t									jsonIndexImageTitle				= ::gpk::jsonExpressionResolve("es.image.title"	, config.Reader, jsonIndexCurrentItem, viewWikiImageTitle	);
+			const ::gpk::error_t									jsonIndexImageAlt				= ::gpk::jsonExpressionResolve("es.image.alt"	, config.Reader, jsonIndexCurrentItem, viewWikiImageAlt		);
 		}
 		else {
-			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("en.wiki"	, config.Reader, jsonIndexCurrentItem, viewWikiURL);
-			const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("en.title"	, config.Reader, jsonIndexCurrentItem, viewWikiTitle);
-			const ::gpk::error_t									jsonIndexText					= ::gpk::jsonExpressionResolve("en.text"	, config.Reader, jsonIndexCurrentItem, viewWikiText);
+			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("en.wiki"		, config.Reader, jsonIndexCurrentItem, viewWikiURL			);
+			const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("en.title"		, config.Reader, jsonIndexCurrentItem, viewWikiTitle		);
+			const ::gpk::error_t									jsonIndexText					= ::gpk::jsonExpressionResolve("en.text"		, config.Reader, jsonIndexCurrentItem, viewWikiText			);
+			const ::gpk::error_t									jsonIndexImageHRef				= ::gpk::jsonExpressionResolve("en.image.href"	, config.Reader, jsonIndexCurrentItem, viewWikiImageHRef	);
+			const ::gpk::error_t									jsonIndexImageSrc				= ::gpk::jsonExpressionResolve("en.image.src"	, config.Reader, jsonIndexCurrentItem, viewWikiImageSrc		);
+			const ::gpk::error_t									jsonIndexImageSrcSet			= ::gpk::jsonExpressionResolve("en.image.srcset", config.Reader, jsonIndexCurrentItem, viewWikiImageSrcSet	);
+			const ::gpk::error_t									jsonIndexImageTitle				= ::gpk::jsonExpressionResolve("en.image.title"	, config.Reader, jsonIndexCurrentItem, viewWikiImageTitle	);
+			const ::gpk::error_t									jsonIndexImageAlt				= ::gpk::jsonExpressionResolve("en.image.alt"	, config.Reader, jsonIndexCurrentItem, viewWikiImageAlt		);
 		}
 		output.append(::gpk::view_const_string{ "\n<tr>"});
 		output.append(::gpk::view_const_string{ "\n<td style=\"text-align:left;font-size:32px;vertical-align:top;\">"});
@@ -48,9 +63,22 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 		output.append(::gpk::view_const_string{ "\n<br/>"	});
 		::ntl::htmlTag("p", viewWikiText, "style=\" font-weight:normal;text-align:left;\"", output);
 		output.append(::gpk::view_const_string{"\n</td>"});
+		output.append(::gpk::view_const_string{ "\n<td style=\"text-align:left;font-size:32px;vertical-align:center;\">"});
+		output.append(::gpk::view_const_string{ "<a title=\""});
+		output.append(viewWikiImageTitle);
+		output.append(::gpk::view_const_string{ "\" href=\""});
+		output.append(viewWikiImageHRef);
+		output.append(::gpk::view_const_string{ "\" class=\"image\"><img alt=\""});
+		output.append(viewWikiImageAlt);
+		output.append(::gpk::view_const_string{ "\" src=\""});
+		output.append(viewWikiImageSrc);
+		output.append(::gpk::view_const_string{ "\" decoding=\"async\" elementtiming=\"thumbnail\" width=\"245\" height=\"184\" srcset=\""});
+		output.append(viewWikiImageSrcSet);
+		output.append(::gpk::view_const_string{ "\" data-file-width=\"3264\" data-file-height=\"2448\"></a>"});
+		output.append(::gpk::view_const_string{"\n</td>"});
 		output.append(::gpk::view_const_string{"\n</tr>"});
 	}
-	//---------------------
+	//---------------------<a href="https://commons.wikimedia.org/wiki/File:ObeliscoBA2017.jpg"><img width="512" alt="ObeliscoBA2017" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/ObeliscoBA2017.jpg/512px-ObeliscoBA2017.jpg"></a>
 
 	output.append(::gpk::view_const_string{"\n</table>"});
 	return 0;
