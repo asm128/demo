@@ -14,7 +14,10 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 
 	output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
 	output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;font-size:24px; font-weight:bold; vertical-align:top;\">"});
-	output.append(::gpk::view_const_string{ "\n<h1>Tourism in Buenos Aires</h1>"});
+	if(lang == ::gpk::view_const_string{"es"})
+		output.append(::gpk::view_const_string{ "\n<h1>Turismo en Buenos Aires</h1>"});
+	else
+		output.append(::gpk::view_const_string{ "\n<h1>Tourism in Buenos Aires</h1>"});
 	output.append(::gpk::view_const_string{"\n</td>"});
 	output.append(::gpk::view_const_string{"\n</tr>"});
 
