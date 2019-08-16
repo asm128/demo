@@ -42,6 +42,7 @@ GPK_CGI_JSON_APP_IMPL();
 
 	output.append(::gpk::view_const_string{ "\n<html>"});
 	output.append(::gpk::view_const_string{ "\n<head>"});
+	output.append(::gpk::view_const_string{ "\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />"});
 	::ntl::htmlHeaderTitle(programState.Page.Title, output);
 	::ntl::htmlHeaderStyleLink	({fileStyle			.begin(), fileStyle			.size()}, output);
 	output.append(::gpk::view_const_string{"\n</head>"});
