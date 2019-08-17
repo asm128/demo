@@ -25,7 +25,7 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 
 
 	//---------------------
-	const char												contentFileName	[]				= "./tourism.json";
+	const char												contentFileName	[]				= "./shopping.json";
 	::gpk::SJSONFile										config							= {};
 	gpk_necall(::gpk::jsonFileRead(config, contentFileName), "Failed to load configuration file: %s.", contentFileName);
 	const ::gpk::error_t									countItems						= ::gpk::jsonArraySize(*config.Reader[0]);
@@ -123,9 +123,6 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 				output.append(::gpk::view_const_string{"\n</td>"});
 				output.append(::gpk::view_const_string{"\n</tr>"});
 				output.append(::gpk::view_const_string{"\n</table>"});
-
-
-
 
 			output.append(::gpk::view_const_string{"\n</td>"});
 			output.append(::gpk::view_const_string{"\n</tr>"});

@@ -46,7 +46,7 @@ GPK_CGI_JSON_APP_IMPL();
 	::ntl::httpPath(programState.Path.Style		, "blankstyle"	, "css"	, fileStyle			);
 	::ntl::httpPath(programState.Path.Script	, "header"		, "js"	, fileScriptHeader	);
 	::ntl::httpPath(programState.Path.Script	, "menu"		, "js"	, fileScriptMenu	);
-	::ntl::httpPath(programState.Path.Program	, "adverwall"	, programState.Extension.Program, fileProgramContent);
+	::ntl::httpPath(programState.Path.Program	, "shopping"	, programState.Extension.Program, fileProgramContent);
 	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
 
 	const ::gpk::view_const_string							htmlDefaultAnte						=
@@ -77,7 +77,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"'; }"
 		"\n	</script>"
 		"\n	</head><!--background-color:#E680C5;-->"
-		"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', 'adverwall', getFrameURLNoQS(), document.getElementById('frameLang').value);\">"	//202050
+		"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', 'shopping', getFrameURLNoQS(), document.getElementById('frameLang').value);\">"	//202050
 		"\n	<table style=\"width:100%;height:100%;\">"
 		"\n		<tr >"
 		"\n			<td style=\"text-align:left\" >"
