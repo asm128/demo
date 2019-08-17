@@ -105,8 +105,8 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 			//
 				output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;border-style:solid;border-width:2px;border-radius:16px;\" >"});
 				output.append(::gpk::view_const_string{ "\n<tr>"});
-				output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:right;font-size:32px;vertical-align:top;\">"});
-				output.append(::gpk::view_const_string{"\n<a target=\"blank\" style=\"margin:4px;font-size:16px;\" href=\""});
+				output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:center;font-size:32px;vertical-align:top;\">"});
+				output.append(::gpk::view_const_string{"\n<a target=\"blank\" style=\"margin:4px;font-size:24px;\" href=\""});
 				output.append(viewMapURL);
 				output.append(::gpk::view_const_string{"\">"});
 				if(lang == ::gpk::view_const_string{"es"})
@@ -114,6 +114,12 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 				else
 					output.append(::gpk::view_const_string{"Location"});
 				output.append(::gpk::view_const_string{"\n</a>"});
+				output.append(::gpk::view_const_string{"\n</td>"});
+				output.append(::gpk::view_const_string{"\n</tr>"});
+				output.append(::gpk::view_const_string{ "\n<tr style=\"height:100%;\">"});
+				output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:center;font-size:24px;vertical-align:top;border-style:solid;border-top-width:1px;\">"});
+				output.append(::gpk::view_const_string{"\n<br />"});
+
 				output.append(::gpk::view_const_string{"\n</td>"});
 				output.append(::gpk::view_const_string{"\n</tr>"});
 				output.append(::gpk::view_const_string{"\n</table>"});
