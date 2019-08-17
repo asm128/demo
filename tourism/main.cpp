@@ -34,11 +34,13 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 		::gpk::view_const_string								viewWikiURL						= {};
 		::gpk::view_const_string								viewWikiTitle					= {};
 		::gpk::view_const_string								viewWikiText					= {};
-		::gpk::view_const_string								viewWikiImageHRef					= {};
-		::gpk::view_const_string								viewWikiImageSrc					= {};
-		::gpk::view_const_string								viewWikiImageSrcSet					= {};
-		::gpk::view_const_string								viewWikiImageTitle					= {};
-		::gpk::view_const_string								viewWikiImageAlt					= {};
+		::gpk::view_const_string								viewWikiImageHRef				= {};
+		::gpk::view_const_string								viewWikiImageSrc				= {};
+		::gpk::view_const_string								viewWikiImageSrcSet				= {};
+		::gpk::view_const_string								viewWikiImageTitle				= {};
+		::gpk::view_const_string								viewWikiImageAlt				= {};
+		::gpk::view_const_string								viewMapURL						= {};
+		const ::gpk::error_t									jsonIndexMap					= ::gpk::jsonExpressionResolve("location", config.Reader, jsonIndexCurrentItem, viewMapURL);
 		if(lang == ::gpk::view_const_string{"es"}) {
 			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("es.wiki"		, config.Reader, jsonIndexCurrentItem, viewWikiURL			);
 			const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("es.title"		, config.Reader, jsonIndexCurrentItem, viewWikiTitle		);
@@ -79,18 +81,51 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 			output.append(::gpk::view_const_string{"\n</table>"});
 		//
 		output.append(::gpk::view_const_string{"\n</td>"});
-		output.append(::gpk::view_const_string{ "\n<td style=\"text-align:left;font-size:32px;vertical-align:top;\">"});
-		output.append(::gpk::view_const_string{ "<a title=\""});
-		output.append(viewWikiImageTitle);
-		output.append(::gpk::view_const_string{ "\" href=\""});
-		output.append(viewWikiImageHRef);
-		output.append(::gpk::view_const_string{ "\" class=\"image\" ><img alt=\""});
-		output.append(viewWikiImageAlt);
-		output.append(::gpk::view_const_string{ "\" src=\""});
-		output.append(viewWikiImageSrc);
-		output.append(::gpk::view_const_string{ "\" decoding=\"async\" elementtiming=\"thumbnail\" width=\"245\" height=\"184\" srcset=\""});
-		output.append(viewWikiImageSrcSet);
-		output.append(::gpk::view_const_string{ "\" data-file-width=\"3264\" data-file-height=\"2448\"></a>"});
+		output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;height:100%;text-align:left;font-size:32px;vertical-align:top;\">"});
+
+			output.append(::gpk::view_const_string{ "\n<table style=\"background-color:lightgrey;\" >"});
+			output.append(::gpk::view_const_string{ "\n<tr>"});
+			output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:left;font-size:32px;vertical-align:top;\">"});
+			output.append(::gpk::view_const_string{ "<a target=\"blank\" title=\""});
+			output.append(viewWikiImageTitle);
+			output.append(::gpk::view_const_string{ "\" href=\""});
+			output.append(viewWikiImageHRef);
+			output.append(::gpk::view_const_string{ "\" class=\"image\" ><img alt=\""});
+			output.append(viewWikiImageAlt);
+			output.append(::gpk::view_const_string{ "\" src=\""});
+			output.append(viewWikiImageSrc);
+			output.append(::gpk::view_const_string{ "\" decoding=\"async\" elementtiming=\"thumbnail\" width=\"245\" height=\"184\" srcset=\""});
+			output.append(viewWikiImageSrcSet);
+			output.append(::gpk::view_const_string{ "\" ></a>"});
+			output.append(::gpk::view_const_string{"\n</td>"});
+			output.append(::gpk::view_const_string{"\n</tr>"});
+			output.append(::gpk::view_const_string{ "\n<tr>"});
+			output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;font-size:32px;vertical-align:top;\">"});
+
+			//
+				output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;border-style:solid;border-width:2px;border-radius:16px;\" >"});
+				output.append(::gpk::view_const_string{ "\n<tr>"});
+				output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:right;font-size:32px;vertical-align:top;\">"});
+				output.append(::gpk::view_const_string{"\n<a target=\"blank\" style=\"margin:4px;font-size:16px;\" href=\""});
+				output.append(viewMapURL);
+				output.append(::gpk::view_const_string{"\">"});
+				if(lang == ::gpk::view_const_string{"es"})
+					output.append(::gpk::view_const_string{"Localización"});
+				else
+					output.append(::gpk::view_const_string{"Location"});
+				output.append(::gpk::view_const_string{"\n</a>"});
+				output.append(::gpk::view_const_string{"\n</td>"});
+				output.append(::gpk::view_const_string{"\n</tr>"});
+				output.append(::gpk::view_const_string{"\n</table>"});
+
+
+
+
+			output.append(::gpk::view_const_string{"\n</td>"});
+			output.append(::gpk::view_const_string{"\n</tr>"});
+			output.append(::gpk::view_const_string{"\n</table>"});
+
+
 		output.append(::gpk::view_const_string{"\n</td>"});
 		output.append(::gpk::view_const_string{"\n</tr>"});
 		output.append(::gpk::view_const_string{"\n</table>"});
