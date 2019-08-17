@@ -79,7 +79,11 @@ GPK_CGI_JSON_APP_IMPL();
 			::gpk::view_const_string								viewWikiImageAlt				= {};
 			const ::gpk::error_t									jsonIndexImageTitle				= ::gpk::jsonExpressionResolve("en.image.title"	, config.Reader, jsonIndexCurrentItem, viewWikiImageTitle	);
 			const ::gpk::error_t									jsonIndexImageAlt				= ::gpk::jsonExpressionResolve("en.image.alt"	, config.Reader, jsonIndexCurrentItem, viewWikiImageAlt		);
+			output.append(::gpk::view_const_string{"\n<p style=\"text-align:left;text-decoration:none;font-weight:bold;font-size:14px;\" >"});
+			output.append(viewWikiImageAlt);
+			output.append(::gpk::view_const_string{":"});
 			::ntl::htmlTag("p", viewWikiImageTitle, "style=\"text-align:left;text-decoration:none;font-weight:normal;font-size:14px;\"", output);
+			output.append(::gpk::view_const_string{"</p><br/>"});
 		}
 		output.append(::gpk::view_const_string{ "\n<br/><h3 style=\"text-align:left;\" >Copyright - TuBelisco.com:</h3>"});
 		output.append(::gpk::view_const_string{ "\n<br/><p  style=\"text-align:left;text-decoration:none;font-weight:normal;\" >TuObelisco.com es una creación de Pablo Ariel Zorrilla Cepeda - asm128 - The Dragon - pabloarielz@outlook.com - Todos los derechos reservados</p>"	});
