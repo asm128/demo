@@ -21,5 +21,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="keypad.json" />
+    <None Include="ads.json" />
+    <None Include="obelisco.bat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

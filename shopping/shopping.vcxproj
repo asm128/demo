@@ -109,7 +109,8 @@
       <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>shopping.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -131,7 +132,8 @@
       <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>shopping.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -157,7 +159,8 @@
       <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>shopping.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -183,15 +186,12 @@
       <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>shopping.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shopping.bat" />
-    <None Include="shopping.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

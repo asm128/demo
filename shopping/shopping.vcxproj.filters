@@ -19,10 +19,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="shopping.bat">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="shopping.json" />
-  </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 #include "neutralizer.h"
+#include "neutralizer_ad_category.h"
 
 #include "gpk_cgi_app_impl_v2.h"
 
@@ -8,6 +9,8 @@
 #include "gpk_json_expression.h"
 
 GPK_CGI_JSON_APP_IMPL();
+
+
 
 static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang, ::gpk::array_pod<char_t> & output)	{
 	output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"});
@@ -25,12 +28,26 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 
 
 	//---------------------
-	const char												contentFileName	[]				= "./meals.json";
+	const char												contentFileName	[]				= "./ads.json";
 	::gpk::SJSONFile										config							= {};
 	gpk_necall(::gpk::jsonFileRead(config, contentFileName), "Failed to load configuration file: %s.", contentFileName);
 	const ::gpk::error_t									countItems						= ::gpk::jsonArraySize(*config.Reader[0]);
 	for(int32_t iItem = 0; iItem < countItems; ++iItem) {
 		const ::gpk::error_t									jsonIndexCurrentItem			= ::gpk::jsonArrayValueGet(*config.Reader[0], iItem);
+		::gpk::view_const_string								viewWikiCategory				= {};
+		const ::gpk::error_t									jsonIndexArrayCategory			= ::gpk::jsonExpressionResolve("category"	, config.Reader, jsonIndexCurrentItem, viewWikiCategory);
+		bool													isCategory						= false;
+		for(uint32_t iCat = 0, countCat = (uint32_t)::gpk::jsonArraySize(*config.Reader[jsonIndexArrayCategory]); iCat < countCat; ++iCat) {
+			const ::gpk::error_t									jsonIndexNodeCategory			= ::gpk::jsonArrayValueGet(*config.Reader[jsonIndexArrayCategory], iCat);
+			const ::gpk::SJSONToken									& jsonToken						= config.Reader.Token[jsonIndexNodeCategory];
+			if(::ntl::AD_SHOP_CATEGORY_meals == jsonToken.Value) {
+				isCategory											= true;
+				break;
+			}
+		}
+		if(false == isCategory)
+			continue;
+
 		::gpk::view_const_string								viewWikiURL						= {};
 		::gpk::view_const_string								viewWikiTitle					= {};
 		::gpk::view_const_string								viewWikiText					= {};
@@ -39,7 +56,6 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 		::gpk::view_const_string								viewWikiImageTitle				= {};
 		::gpk::view_const_string								viewWikiImageAlt				= {};
 		::gpk::view_const_string								viewMapURL						= {};
-
 		const ::gpk::error_t									jsonIndexArrayPhone				= ::gpk::jsonExpressionResolve("phone"		, config.Reader, jsonIndexCurrentItem, viewMapURL);
 		const ::gpk::error_t									jsonIndexArrayWP				= ::gpk::jsonExpressionResolve("whatsapp"	, config.Reader, jsonIndexCurrentItem, viewMapURL);
 		const ::gpk::error_t									jsonIndexMap					= ::gpk::jsonExpressionResolve("location"	, config.Reader, jsonIndexCurrentItem, viewMapURL);

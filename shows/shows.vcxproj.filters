@@ -19,10 +19,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="shows.json" />
-    <None Include="shows.bat">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>
