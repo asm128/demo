@@ -39,7 +39,10 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 		::gpk::view_const_string								viewWikiImageTitle				= {};
 		::gpk::view_const_string								viewWikiImageAlt				= {};
 		::gpk::view_const_string								viewMapURL						= {};
-		const ::gpk::error_t									jsonIndexMap					= ::gpk::jsonExpressionResolve("location", config.Reader, jsonIndexCurrentItem, viewMapURL);
+
+		const ::gpk::error_t									jsonIndexArrayPhone				= ::gpk::jsonExpressionResolve("phone"		, config.Reader, jsonIndexCurrentItem, viewMapURL);
+		const ::gpk::error_t									jsonIndexArrayWP				= ::gpk::jsonExpressionResolve("whatsapp"	, config.Reader, jsonIndexCurrentItem, viewMapURL);
+		const ::gpk::error_t									jsonIndexMap					= ::gpk::jsonExpressionResolve("location"	, config.Reader, jsonIndexCurrentItem, viewMapURL);
 		if(lang == ::gpk::view_const_string{"es"}) {
 			const ::gpk::error_t									jsonIndexWiki					= ::gpk::jsonExpressionResolve("es.wiki"		, config.Reader, jsonIndexCurrentItem, viewWikiURL			);
 			const ::gpk::error_t									jsonIndexName					= ::gpk::jsonExpressionResolve("es.title"		, config.Reader, jsonIndexCurrentItem, viewWikiTitle		);
@@ -97,24 +100,41 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 			output.append(::gpk::view_const_string{ "\n<tr>"});
 			output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;font-size:32px;vertical-align:top;\">"});
 
-			//
+			// ----- Image info table
 				output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;border-style:solid;border-width:2px;border-radius:16px;\" >"});
 				output.append(::gpk::view_const_string{ "\n<tr>"});
-				output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:center;font-size:32px;vertical-align:top;\">"});
-				output.append(::gpk::view_const_string{"\n<a target=\"blank\" style=\"margin:4px;font-size:24px;\" href=\""});
-				output.append(viewMapURL);
-				output.append(::gpk::view_const_string{"\">"});
-				if(lang == ::gpk::view_const_string{"es"})
-					output.append(::gpk::view_const_string{"Localización"});
-				else
-					output.append(::gpk::view_const_string{"Location"});
-				output.append(::gpk::view_const_string{"\n</a>"});
-				output.append(::gpk::view_const_string{"\n</td>"});
-				output.append(::gpk::view_const_string{"\n</tr>"});
+				if(viewMapURL.size()) {
+					output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:center;font-size:32px;vertical-align:top;\">"});
+					output.append(::gpk::view_const_string{"\n<a target=\"blank\" style=\"margin:4px;font-size:24px;\" href=\""});
+					output.append(viewMapURL);
+					output.append(::gpk::view_const_string{"\">"});
+					if(lang == ::gpk::view_const_string{"es"})
+						output.append(::gpk::view_const_string{"Localización"});
+					else
+						output.append(::gpk::view_const_string{"Location"});
+					output.append(::gpk::view_const_string{"\n</a>"});
+					output.append(::gpk::view_const_string{"\n</td>"});
+					output.append(::gpk::view_const_string{"\n</tr>"});
+				}
 				output.append(::gpk::view_const_string{ "\n<tr style=\"height:100%;\">"});
 				output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:center;font-size:24px;vertical-align:top;border-style:solid;border-top-width:1px;\">"});
-				output.append(::gpk::view_const_string{"\n<br />"});
+				// ----- Contact info
+				const ::gpk::error_t									countPhones						= ::gpk::jsonArraySize(*config.Reader[jsonIndexArrayPhone	]);
+				const ::gpk::error_t									countWPs						= ::gpk::jsonArraySize(*config.Reader[jsonIndexArrayWP		]);
+				for(int32_t iPhone = 0; iPhone < countPhones	; ++iPhone) { ::gpk::view_const_string textPhone = config.Reader.View[::gpk::jsonArrayValueGet(*config.Reader[jsonIndexArrayPhone	], iPhone)]; output.append(textPhone); output.append(::gpk::view_const_string{"\n<br />"}); }
 
+				for(int32_t iPhone = 0; iPhone < countWPs		; ++iPhone) {
+					::gpk::view_const_string textPhone = config.Reader.View[::gpk::jsonArrayValueGet(*config.Reader[jsonIndexArrayWP], iPhone)];
+					output.append(::gpk::view_const_string{"\n<a target=\"blank\" href=\"https://wa.me/"});
+					output.append(textPhone);
+					output.append(::gpk::view_const_string{"\" >"});
+					output.append(textPhone);
+					output.append(::gpk::view_const_string{"</a>"});
+					output.append(::gpk::view_const_string{"<br />"});
+					// https://wa.me/15551234567
+				}
+
+				//
 				output.append(::gpk::view_const_string{"\n</td>"});
 				output.append(::gpk::view_const_string{"\n</tr>"});
 				output.append(::gpk::view_const_string{"\n</table>"});
@@ -128,7 +148,6 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 		output.append(::gpk::view_const_string{"\n</tr>"});
 		output.append(::gpk::view_const_string{"\n</table>"});
 	}
-	//---------------------<a href="https://commons.wikimedia.org/wiki/File:ObeliscoBA2017.jpg"><img width="512" alt="ObeliscoBA2017" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/ObeliscoBA2017.jpg/512px-ObeliscoBA2017.jpg"></a>
 	output.append(::gpk::view_const_string{"\n</td>"});
 	output.append(::gpk::view_const_string{"\n</tr>"});
 
