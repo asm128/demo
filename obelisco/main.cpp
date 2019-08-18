@@ -149,10 +149,10 @@ GPK_CGI_JSON_APP_IMPL();
 		});
 
 	const ::ntl::SHTMLIcon									icons[]							=
-		{ {"tourism"	, "Turismo"}
-		, {"shopping"	, "Comercio"}
-		, {"shows"		, "Shows/Arte"}
-		, {"meals"		, "Comidas"}
+		{ {"tourism"	, "Turismo y Guías"			}
+		, {"shopping"	, "Comercio y Servicios"	}
+		, {"shows"		, "Shows y Arte"			}
+		, {"meals"		, "Comidas y Snacks"		}
 		, {"pricing"	, "Publicar"}
 //		, {"terms"		, "Términos"}
 //		, {"copyright"	, ""}
