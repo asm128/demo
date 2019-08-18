@@ -138,6 +138,7 @@ GPK_CGI_JSON_APP_IMPL();
 		, {"shopping"	, "Comercios"}
 		, {"pricing"	, "Publicidad"}
 		, {"terms"		, "Condiciones"}
+		, {"copyright"	, "Copyright"}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 
