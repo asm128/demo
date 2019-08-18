@@ -118,9 +118,6 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 				output.append(::gpk::view_const_string{"\n</tr>"});
 				output.append(::gpk::view_const_string{"\n</table>"});
 
-
-
-
 			output.append(::gpk::view_const_string{"\n</td>"});
 			output.append(::gpk::view_const_string{"\n</tr>"});
 			output.append(::gpk::view_const_string{"\n</table>"});
