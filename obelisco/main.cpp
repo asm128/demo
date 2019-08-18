@@ -105,7 +105,18 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n	<table style=\"height:100%;width:100%;font-weight:bold;\">"
 		"\n		<tr >"
 		"\n			<td style=\"width:60%;height:100%;\" >"
-		"\n				<img src=\"/obelisco/image/blank.png\"/>"
+		"\n<table style=\"width: 100%; height: 100%; text-align: center; color: rgb(0, 0, 0);\" id=\"aWRfaWNvbl8=\" onclick=\"reframe('dumMainFrame', 'copyright', 'copyright.exe', document.getElementById('frameLang').value);\" onmouseout=\"cellColor('aWRfaWNvbl8=', null, 0);\" onmouseover=\"cellColor('aWRfaWNvbl8=', '#ec8106', 0);\">"
+		"\n<tbody><tr>															"
+		"\n<td>																	"
+		"\n<img style=\"\" src=\"/tuobelisco/image/icon_small_copyright.png\">	"
+		"\n</td></tr>															"
+		"\n<tr>																	"
+		"\n<td style=\"ont-size:1.5em;&quot;\">									"
+		"\n<p style=\"color:black;font-size:1.5em;\" id=\"copyright\"></p>		"
+		"\n</td>																"
+		"\n</tr>																"
+		"\n</tbody></table>														"
+		//"\n				<img src=\"/obelisco/image/blank.png\"/>"
 		"\n			</td>"
 		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, '"
 		});
@@ -140,11 +151,11 @@ GPK_CGI_JSON_APP_IMPL();
 	const ::ntl::SHTMLIcon									icons[]							=
 		{ {"tourism"	, "Turismo"}
 		, {"shopping"	, "Comercio"}
-		, {"shows"		, "Shows y Arte"}
+		, {"shows"		, "Shows/Arte"}
 		, {"meals"		, "Comidas"}
 		, {"pricing"	, "Publicar"}
 //		, {"terms"		, "Términos"}
-		, {"copyright"	, ""}
+//		, {"copyright"	, ""}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 
