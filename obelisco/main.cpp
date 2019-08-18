@@ -46,7 +46,17 @@ GPK_CGI_JSON_APP_IMPL();
 	::ntl::httpPath(programState.Path.Style		, "blankstyle"	, "css"	, fileStyle			);
 	::ntl::httpPath(programState.Path.Script	, "header"		, "js"	, fileScriptHeader	);
 	::ntl::httpPath(programState.Path.Script	, "menu"		, "js"	, fileScriptMenu	);
-	::ntl::httpPath(programState.Path.Program	, "shopping"	, programState.Extension.Program, fileProgramContent);
+
+	srand((uint32_t)time(0));
+	::gpk::view_const_string section;
+	switch(rand() % 4) {
+	case 0	: section = "shopping"	; break;
+	case 1	: section = "meals"		; break;
+	case 2	: section = "shows"		; break;
+	case 3	: section = "tourism"	; break;
+	}
+
+	::ntl::httpPath(programState.Path.Program	, section		, programState.Extension.Program, fileProgramContent);
 	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
 
 	const ::gpk::view_const_string							htmlDefaultAnte						=
@@ -66,18 +76,13 @@ GPK_CGI_JSON_APP_IMPL();
 	::ntl::htmlHeaderScriptFile({fileScriptMenu		.begin(), fileScriptMenu	.size()}, output);
 	::ntl::htmlHeaderStyleLink({fileStyle			.begin(), fileStyle			.size()}, output);
 
-	const ::gpk::view_const_string							htmlDefaultAlmost					=
-		"\n	<script type=\"text/javascript\">"
-		"\n		function getFrameURLNoQS	()						{ return '"
-		;
-	output.append(htmlDefaultAlmost);
+	output.append(::gpk::view_const_string{"\n</head>"});
+	output.append(::gpk::view_const_string{"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', '"	});
+	output.append(section);
+	output.append(::gpk::view_const_string{"', '"});
 	output.append(fileProgramContent);
-
+	output.append(::gpk::view_const_string{"', document.getElementById('frameLang').value);\">"	});
 	const ::gpk::view_const_string							htmlDefaultBegin					=
-		"'; }"
-		"\n	</script>"
-		"\n	</head><!--background-color:#E680C5;-->"
-		"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', 'shopping', getFrameURLNoQS(), document.getElementById('frameLang').value);\">"	//202050
 		"\n	<table style=\"width:100%;height:100%;\">"
 		"\n		<tr >"
 		"\n			<td style=\"text-align:left\" >"
