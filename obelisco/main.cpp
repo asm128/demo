@@ -137,8 +137,9 @@ GPK_CGI_JSON_APP_IMPL();
 		{ {"tourism"	, "Turismo"}
 		, {"shopping"	, "Comercio"}
 		, {"shows"		, "Espectáculos"}
+		, {"meals"		, "Comidas"}
 		, {"pricing"	, "Publicar"}
-		, {"terms"		, "Términos"}
+//		, {"terms"		, "Términos"}
 		, {"copyright"	, ""}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
