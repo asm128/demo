@@ -25,7 +25,7 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 
 
 	//---------------------
-	const char												contentFileName	[]				= "./shopping.json";
+	const char												contentFileName	[]				= "./shows.json";
 	::gpk::SJSONFile										config							= {};
 	gpk_necall(::gpk::jsonFileRead(config, contentFileName), "Failed to load configuration file: %s.", contentFileName);
 	const ::gpk::error_t									countItems						= ::gpk::jsonArraySize(*config.Reader[0]);
