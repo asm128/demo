@@ -6,6 +6,7 @@
 #include "gpk_process.h"
 #include "gpk_base64.h"
 #include "gpk_json_expression.h"
+#include "gpk_chrono.h"
 
 GPK_CGI_JSON_APP_IMPL();
 // today 1565740800
@@ -47,7 +48,7 @@ GPK_CGI_JSON_APP_IMPL();
 	::ntl::httpPath(programState.Path.Script	, "header"		, "js"	, fileScriptHeader	);
 	::ntl::httpPath(programState.Path.Script	, "menu"		, "js"	, fileScriptMenu	);
 
-	srand((uint32_t)time(0));
+	srand((uint32_t)::gpk::timeCurrentInUs());
 	::gpk::view_const_string section;
 	switch(rand() % 4) {
 	case 0	: section = "shopping"	; break;
