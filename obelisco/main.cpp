@@ -140,7 +140,7 @@ GPK_CGI_JSON_APP_IMPL();
 	const ::ntl::SHTMLIcon									icons[]							=
 		{ {"tourism"	, "Turismo"}
 		, {"shopping"	, "Comercio"}
-		, {"shows"		, "Espectáculos"}
+		, {"shows"		, "Shows y Arte"}
 		, {"meals"		, "Comidas"}
 		, {"pricing"	, "Publicar"}
 //		, {"terms"		, "Términos"}
