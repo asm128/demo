@@ -35,14 +35,20 @@ GPK_CGI_JSON_APP_IMPL();
 		::ntl::loadConfig(programState, indexRoot);
 	}
 	::gpk::view_const_string								lang;
+	::gpk::view_const_string								module;
 	::gpk::find("lang", requestReceived.QueryStringKeyVals, lang);
+	::gpk::find("module", requestReceived.QueryStringKeyVals, module);
 	::gpk::view_const_string								title;
-	if(lang == ::gpk::view_const_string{"es"})
-		title = (::gpk::view_const_string{ "Comidas en Obelisco"});
-	else
-		title = (::gpk::view_const_string{ "Meals in Obelisco"});
 
-	::ntl::pageCatalog("ads.json", programState.Path.Style, ::ntl::AD_SHOP_CATEGORY_meals, title, lang, output);
+	const ::ntl::AD_SHOP_CATEGORY							category			=::gpk::get_value<::ntl::AD_SHOP_CATEGORY>(module);
+	switch(category) {
+	case ::ntl::AD_SHOP_CATEGORY_shops: title = (lang == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Comercios en Obelisco"	})	: (::gpk::view_const_string{ "Shopping in Obelisco"	}); break;
+	case ::ntl::AD_SHOP_CATEGORY_meals: title = (lang == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Comidas en Obelisco"		})	: (::gpk::view_const_string{ "Meals in Obelisco"	}); break;
+	case ::ntl::AD_SHOP_CATEGORY_shows: title = (lang == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Espectáculos en Obelisco"})	: (::gpk::view_const_string{ "Shows in Obelisco"	}); break;
+	default: break;
+	}
+
+	::ntl::pageCatalog("ads.json", programState.Path.Style, category, title, lang, output);
 
 	if(output.size()) {
 		OutputDebugStringA(output.begin());

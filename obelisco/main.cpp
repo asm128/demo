@@ -49,7 +49,7 @@ GPK_CGI_JSON_APP_IMPL();
 	srand((uint32_t)::gpk::timeCurrentInUs());
 	::gpk::view_const_string section;
 	switch(rand() % 4) {
-	case 0	: section = "shopping"	; break;
+	case 0	: section = "shops"		; break;
 	case 1	: section = "meals"		; break;
 	case 2	: section = "shows"		; break;
 	case 3	: section = "tourism"	; break;
@@ -149,8 +149,8 @@ GPK_CGI_JSON_APP_IMPL();
 		});
 
 	const ::ntl::SHTMLIcon									icons[]							=
-		{ {"tourism"	, "Turismo y Guías"			}
-		, {"shopping"	, "Comercio y Servicios"	}
+		{ {"tours"		, "Turismo y Guías"			}
+		, {"shops"		, "Comercio y Servicios"	}
 		, {"shows"		, "Shows y Arte"			}
 		, {"meals"		, "Comidas y Snacks"		}
 		, {"pricing"	, "Publicar"}
