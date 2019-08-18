@@ -85,12 +85,12 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 
 			output.append(::gpk::view_const_string{ "\n<table style=\"background-color:lightgrey;\" >"});
 			output.append(::gpk::view_const_string{ "\n<tr>"});
-			output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:left;font-size:32px;vertical-align:top;\">"});
+			output.append(::gpk::view_const_string{ "\n<td style=\"background-color:lightgrey;text-align:left;font-size:32px;vertical-align:top;width:100%;\">"});
 			output.append(::gpk::view_const_string{ "<a target=\"blank\" title=\""});
 			output.append(viewWikiImageTitle);
 			output.append(::gpk::view_const_string{ "\" href=\""});
 			output.append(viewWikiImageHRef);
-			output.append(::gpk::view_const_string{ "\" class=\"image\" ><img decoding=\"async\" elementtiming=\"thumbnail\" width=\"490\" alt=\""});
+			output.append(::gpk::view_const_string{ "\" class=\"image\" ><img decoding=\"async\" elementtiming=\"thumbnail\" alt=\""});
 			output.append(viewWikiImageAlt);
 			output.append(::gpk::view_const_string{ "\" src=\""});
 			output.append(viewWikiImageSrc);
