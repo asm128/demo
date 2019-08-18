@@ -141,8 +141,6 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 ::gpk::error_t										gpk_cgi_generate_output			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::array_pod<char_t> & output)	{
 	::gpk::SHTTPAPIRequest									requestReceived					= {};
 	bool													isCGIEnviron					= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
-	::gpk::array_obj<::gpk::TKeyValConstString>				environViews;
-	gpk_necall(::gpk::environmentBlockViews(runtimeValues.EntryPointArgs.EnvironmentBlock, environViews), "%s", "If this breaks, we better know ASAP.");
 	if (isCGIEnviron) {
 		gpk_necall(output.append(::gpk::view_const_string{"Content-type: text/html\r\nCache-control: no-cache\r\n"}), "%s", "Out of memory?");
 		gpk_necall(output.append(::gpk::view_const_string{"\r\n"})								, "%s", "Out of memory?");
@@ -150,7 +148,7 @@ static	::gpk::error_t								htmlBoardGenerate				(::gpk::view_const_string lang
 			{ "GET"
 			, "POST"
 			};
-		if(0 == ::gpk::keyValVerify(environViews, "REQUEST_METHOD", methodsValid)) {
+		if(0 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
 			output.append(::gpk::view_const_string{"{ \"status\" : 403, \"description\" :\"forbidden\" }\r\n"});
 			return 1;
 		}

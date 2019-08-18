@@ -83,6 +83,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shows", "shows\shows.vcxpro
 		{8FD826F8-3739-44E6-8CC8-997122E53B8D} = {8FD826F8-3739-44E6-8CC8-997122E53B8D}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "obelib", "obelib\obelib.vcxproj", "{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -249,6 +251,18 @@ Global
 		{F075629A-66A7-48CE-9987-7FBDB9CA72C2}.ReleaseWithoutAsm|x64.Build.0 = Release|x64
 		{F075629A-66A7-48CE-9987-7FBDB9CA72C2}.ReleaseWithoutAsm|x86.ActiveCfg = Release|Win32
 		{F075629A-66A7-48CE-9987-7FBDB9CA72C2}.ReleaseWithoutAsm|x86.Build.0 = Release|Win32
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.Debug|x64.ActiveCfg = Debug|x64
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.Debug|x64.Build.0 = Debug|x64
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.Debug|x86.ActiveCfg = Debug|Win32
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.Debug|x86.Build.0 = Debug|Win32
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.Release|x64.ActiveCfg = Release|x64
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.Release|x64.Build.0 = Release|x64
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.Release|x86.ActiveCfg = Release|Win32
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.Release|x86.Build.0 = Release|Win32
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.ReleaseWithoutAsm|x64.ActiveCfg = Release|x64
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.ReleaseWithoutAsm|x64.Build.0 = Release|x64
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.ReleaseWithoutAsm|x86.ActiveCfg = Release|Win32
+		{66A78DBC-6DE1-4AE5-B27B-02F98FB3AC47}.ReleaseWithoutAsm|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
