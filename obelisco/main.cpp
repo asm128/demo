@@ -134,9 +134,10 @@ GPK_CGI_JSON_APP_IMPL();
 		});
 
 	const ::ntl::SHTMLIcon									icons[]							=
-		{ {"tourism", "Turismo"}
-		, {"pricing", "Publicidad"}
-		, {"terms"	, "Condiciones"}
+		{ {"tourism"	, "Turismo"}
+		, {"shopping"	, "Comercios"}
+		, {"pricing"	, "Publicidad"}
+		, {"terms"		, "Condiciones"}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 
