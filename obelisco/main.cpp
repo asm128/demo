@@ -135,10 +135,11 @@ GPK_CGI_JSON_APP_IMPL();
 
 	const ::ntl::SHTMLIcon									icons[]							=
 		{ {"tourism"	, "Turismo"}
-		, {"shopping"	, "Comercios"}
-		, {"pricing"	, "Publicidad"}
-		, {"terms"		, "Condiciones"}
-		, {"copyright"	, "Copyright"}
+		, {"shopping"	, "Comercio"}
+		, {"shows"		, "Espectáculos"}
+		, {"pricing"	, "Publicar"}
+		, {"terms"		, "Términos"}
+		, {"copyright"	, ""}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 
