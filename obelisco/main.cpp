@@ -52,7 +52,7 @@ GPK_CGI_JSON_APP_IMPL();
 	case 0	: section = "shops"		; break;
 	case 1	: section = "meals"		; break;
 	case 2	: section = "shows"		; break;
-	case 3	: section = "tourism"	; break;
+	case 3	: section = "tours"		; break;
 	}
 
 	::ntl::httpPath(programState.Path.Program	, section		, programState.Extension.Program, fileProgramContent);

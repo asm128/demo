@@ -50,7 +50,7 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
 	output.append(::gpk::view_const_string{ "\n<td style=\"font-size:16px; font-weight:bold; vertical-align:top;\">"});
 
-	static constexpr	const char							contentFileName	[]				= "./tourism.json";
+	static constexpr	const char							contentFileName	[]				= "./ads.json";
 	::gpk::SJSONFile										config							= {};	// json to get copyright notices from pic links.
 	gpk_necall(::gpk::jsonFileRead(config, contentFileName), "Failed to load configuration file: %s.", contentFileName);
 	const ::gpk::error_t									countItems						= ::gpk::jsonArraySize(*config.Reader[0]);
