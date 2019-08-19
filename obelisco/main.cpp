@@ -55,7 +55,7 @@ GPK_CGI_JSON_APP_IMPL();
 	case 3	: section = "tours"		; break;
 	}
 
-	::ntl::httpPath(programState.Path.Program	, section		, programState.Extension.Program, fileProgramContent);
+	::ntl::httpPath(programState.Path.Program	, "shops"		, programState.Extension.Program, fileProgramContent);
 	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
 
 	const ::gpk::view_const_string							htmlDefaultAnte						=
@@ -178,13 +178,13 @@ GPK_CGI_JSON_APP_IMPL();
 		});
 
 	const ::ntl::SHTMLIcon									icons[]							=
-		{ {"tours"		, "Turismo y Guías"			}
-		, {"shops"		, "Comercio y Servicios"	}
-		, {"shows"		, "Shows y Arte"			}
-		, {"meals"		, "Comidas y Snacks"		}
-		, {"pricing"	, "Publicar"}
-//		, {"terms"		, "Términos"}
-//		, {"copyright"	, ""}
+		{ {"tours"		, "shops"		, "Turismo y Guías"			}
+		, {"shops"		, "shops"		, "Comercio y Servicios"	}
+		, {"shows"		, "shops"		, "Shows y Arte"			}
+		, {"meals"		, "shops"		, "Comidas y Snacks"		}
+		, {"pricing"	, "pricing"		, "Publicar"}
+//		, {"terms"		, "terms"		, "Términos"}
+//		, {"copyright"	, "copyright"	, ""}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 
