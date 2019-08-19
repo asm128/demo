@@ -98,13 +98,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\obelisco\obelib; ..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
+      <AdditionalDependencies>obelib.lib; neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
@@ -120,13 +120,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\obelisco\obelib; ..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
+      <AdditionalDependencies>obelib.lib; neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
@@ -144,7 +144,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\obelisco\obelib; ..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -152,7 +152,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
+      <AdditionalDependencies>obelib.lib; neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
@@ -170,7 +170,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\obelisco\obelib; ..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -178,7 +178,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
+      <AdditionalDependencies>obelib.lib; neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
@@ -191,6 +191,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ads.json" />
+    <None Include="ad_category.json" />
+    <None Include="ad_subcategory.json" />
     <None Include="keypad.json" />
     <None Include="obelisco.bat" />
   </ItemGroup>

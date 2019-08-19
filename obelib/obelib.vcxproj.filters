@@ -17,4 +17,14 @@
   <ItemGroup>
     <None Include="neighbors.json" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="obelib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="obelib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

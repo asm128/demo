@@ -25,5 +25,7 @@
     <None Include="obelisco.bat">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="ad_category.json" />
+    <None Include="ad_subcategory.json" />
   </ItemGroup>
 </Project>

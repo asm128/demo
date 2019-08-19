@@ -1,0 +1,5 @@
+[ [{ "name": "agency"	}, { "name": "guide"	}, { "name": "transport"	}, { "name": "hotel"	}, ]
+, [{ "name": "meat"		}, { "name": "vegan"	}, { "name": "burger"		}, { "name": "sweeties"	}, ]
+, [{ "name": "shoes"	}, { "name": "wine"		}, { "name": "clothing"		}, { "name": "drugstore"}, ]
+, [{ "name": "theatre"	}, { "name": "museum"	}, { "name": "cinema"		}, { "name": "gallery"	}, ]
+]

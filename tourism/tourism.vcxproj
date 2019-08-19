@@ -99,7 +99,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\obelisco\obelib; ..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -107,7 +107,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
+      <AdditionalDependencies>obelib.lib; neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>tourism.bat</Command>
@@ -121,7 +121,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\obelisco\obelib; ..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -129,7 +129,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
+      <AdditionalDependencies>obelib.lib; neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>tourism.bat</Command>
@@ -145,7 +145,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\obelisco\obelib; ..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -155,7 +155,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
+      <AdditionalDependencies>obelib.lib; neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>tourism.bat</Command>
@@ -171,7 +171,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\obelisco\obelib; ..\..\neutralizer\neutralizer; ..\..\gpk\gpk; ..\..\gpk\llc;</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -181,7 +181,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
+      <AdditionalDependencies>obelib.lib; neutralizer.lib; llc.lib; gpk.lib; ws2_32.lib; zlibvc.lib;</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>tourism.bat</Command>
