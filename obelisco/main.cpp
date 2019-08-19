@@ -91,6 +91,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n			<td style=\"text-align:left\" >"
 		"\n				<form style=\"width:0px;height:0px;\" id=\"homeState\">"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"frameName\"		type=\"hidden\" value=\"0\" />"
+		"\n					<input style=\"width:0px;height:0px;\" id=\"frameProgram\"	type=\"hidden\" value=\"0\" />"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"frameLang\"		type=\"hidden\" value=\"es\" />"
 		//"\n					<input style=\"width:0px;height:0px;\" id=\"frameCategory\"	type=\"hidden\" value=\"0\" />"
 		"\n				</form>"
@@ -147,17 +148,13 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n</tbody></table>														"
 		//"\n				<img src=\"/obelisco/image/blank.png\"/>"
 		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, '"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, 'en');setLang('en');\" >"
 		});
-	output.append(programState.Path.Program);
-	output.append(::gpk::view_const_string{"/' + document.getElementById('frameName').value + '.exe', 'en');setLang('en');\" >"});
 	output.append(::gpk::view_const_string{
 		"\n				<img src=\"/obelisco/image/flag_uk.png\"/> English"
 		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, '"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, 'es');setLang('es');\" >"
 		});
-	output.append(programState.Path.Program);
-	output.append(::gpk::view_const_string{"/' + document.getElementById('frameName').value + '.exe', 'es');setLang('es');\" >"});
 	output.append(::gpk::view_const_string{
 		"\n				<img src=\"/obelisco/image/flag_ar.png\" /> Español"
 		"\n			</td>"
