@@ -75,6 +75,7 @@ GPK_CGI_JSON_APP_IMPL();
 	::ntl::htmlHeaderScriptFile({fileScriptMenu		.begin(), fileScriptMenu	.size()}, output);
 	::ntl::htmlHeaderStyleLink({fileStyle			.begin(), fileStyle			.size()}, output);
 
+	output.append(::gpk::view_const_string{"\n<link rel=\"icon\" type=\"image/png\" href=\"/favicon.png\">"});
 	output.append(::gpk::view_const_string{"\n</head>"});
 	output.append(::gpk::view_const_string{"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', '"	});
 	output.append(section);
