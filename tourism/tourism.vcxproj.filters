@@ -19,10 +19,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="tourism.json" />
-    <None Include="tourism.bat">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>

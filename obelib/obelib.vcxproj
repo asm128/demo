@@ -175,7 +175,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="neighbors.json" />
+    <None Include="neighborhoods.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="obelib.h" />
