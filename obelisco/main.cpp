@@ -49,10 +49,10 @@ GPK_CGI_JSON_APP_IMPL();
 	srand((uint32_t)::gpk::timeCurrentInUs());
 	::gpk::view_const_string section;
 	switch(rand() % 4) {
-	case 0	: section = "shops"		; break;
-	case 1	: section = "meals"		; break;
-	case 2	: section = "shows"		; break;
-	case 3	: section = "tours"		; break;
+	case 0: section = "shops"; break;
+	case 1: section = "meals"; break;
+	case 2: section = "shows"; break;
+	case 3: section = "tours"; break;
 	}
 
 	::ntl::httpPath(programState.Path.Program	, "shops"		, programState.Extension.Program, fileProgramContent);

@@ -73,6 +73,19 @@ GPK_CGI_JSON_APP_IMPL();
 		output.append(::gpk::view_const_string{ "\n<br/><h3 style=\"text-align:left;\" >Atribuciones de imágenes de Wikipedia:</h3>"});
 		for(int32_t iPic = 0; iPic < countItems; ++iPic) {
 			const ::gpk::error_t									jsonIndexCurrentItem			= ::gpk::jsonArrayValueGet(*config.Reader[0], iPic);
+			::gpk::view_const_string								viewWikiCategory				= {};
+			const ::gpk::error_t									jsonIndexArrayCategory			= ::gpk::jsonExpressionResolve("category"	, config.Reader, jsonIndexCurrentItem, viewWikiCategory);
+			bool													isCategory						= false;
+			for(uint32_t iCat = 0, countCat = (uint32_t)::gpk::jsonArraySize(*config.Reader[jsonIndexArrayCategory]); iCat < countCat; ++iCat) {
+				const ::gpk::error_t									jsonIndexNodeCategory			= ::gpk::jsonArrayValueGet(*config.Reader[jsonIndexArrayCategory], iCat);
+				const ::gpk::SJSONToken									& jsonToken						= config.Reader.Token[jsonIndexNodeCategory];
+				if(0 == jsonToken.Value) {
+					isCategory											= true;
+					break;
+				}
+			}
+			if(false == isCategory)
+				continue;
 			::gpk::view_const_string								viewWikiImageTitle				= {};
 			::gpk::view_const_string								viewWikiImageAlt				= {};
 			const ::gpk::error_t									jsonIndexImageTitle				= ::gpk::jsonExpressionResolve("es.image.title"	, config.Reader, jsonIndexCurrentItem, viewWikiImageTitle	);
@@ -104,6 +117,19 @@ GPK_CGI_JSON_APP_IMPL();
 		output.append(::gpk::view_const_string{ "\n<br/><h3 style=\"text-align:left;\" >Wikipedia images attributions:</h3>"});
 		for(int32_t iPic = 0; iPic < countItems; ++iPic) {
 			const ::gpk::error_t									jsonIndexCurrentItem			= ::gpk::jsonArrayValueGet(*config.Reader[0], iPic);
+			::gpk::view_const_string								viewWikiCategory				= {};
+			const ::gpk::error_t									jsonIndexArrayCategory			= ::gpk::jsonExpressionResolve("category"	, config.Reader, jsonIndexCurrentItem, viewWikiCategory);
+			bool													isCategory						= false;
+			for(uint32_t iCat = 0, countCat = (uint32_t)::gpk::jsonArraySize(*config.Reader[jsonIndexArrayCategory]); iCat < countCat; ++iCat) {
+				const ::gpk::error_t									jsonIndexNodeCategory			= ::gpk::jsonArrayValueGet(*config.Reader[jsonIndexArrayCategory], iCat);
+				const ::gpk::SJSONToken									& jsonToken						= config.Reader.Token[jsonIndexNodeCategory];
+				if(0 == jsonToken.Value) {
+					isCategory											= true;
+					break;
+				}
+			}
+			if(false == isCategory)
+				continue;
 			::gpk::view_const_string								viewWikiImageTitle				= {};
 			::gpk::view_const_string								viewWikiImageAlt				= {};
 			const ::gpk::error_t									jsonIndexImageTitle				= ::gpk::jsonExpressionResolve("en.image.title"	, config.Reader, jsonIndexCurrentItem, viewWikiImageTitle	);
