@@ -2,6 +2,7 @@
 #include "neutralizer.h"
 #include "neutralizer_ad_category.h"
 #include "gpk_json_expression.h"
+#include "gpk_parse.h"
 
 ::gpk::error_t					obe::cgi_generate_catalog			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::array_pod<char_t> & output)			{
 	::gpk::SHTTPAPIRequest									requestReceived					= {};
@@ -29,8 +30,12 @@
 	}
 	::gpk::view_const_string								lang;
 	::gpk::view_const_string								module;
+	::gpk::view_const_string								width;
+	::gpk::view_const_string								height;
 	::gpk::find("lang"	, requestReceived.QueryStringKeyVals, lang);
 	::gpk::find("module", requestReceived.QueryStringKeyVals, module);
+	::gpk::find("width", requestReceived.QueryStringKeyVals, width);
+	::gpk::find("height", requestReceived.QueryStringKeyVals, height);
 	::gpk::view_const_string								title;
 
 	const ::ntl::AD_SHOP_CATEGORY							category			=::gpk::get_value<::ntl::AD_SHOP_CATEGORY>(module);
@@ -42,7 +47,12 @@
 	default: break;
 	}
 
-	::ntl::pageCatalog("ads.json", programState.Path.Style, category, title, lang, output);
+
+	::gpk::SCoord2<uint32_t>	sizeScreen = {};
+	::gpk::parseIntegerDecimal(width, &sizeScreen.x);
+	::gpk::parseIntegerDecimal(height, &sizeScreen.y);
+
+	::ntl::pageCatalog("ads.json", sizeScreen, programState.Path.Style, category, title, lang, output);
 
 	if(output.size()) {
 		OutputDebugStringA(output.begin());
