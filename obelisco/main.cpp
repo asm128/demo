@@ -77,7 +77,7 @@ GPK_CGI_JSON_APP_IMPL();
 
 	output.append(::gpk::view_const_string{"\n<link rel=\"icon\" type=\"image/png\" href=\"/favicon.png\">"});
 	output.append(::gpk::view_const_string{"\n</head>"});
-	output.append(::gpk::view_const_string{"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', '"	});
+	output.append(::gpk::view_const_string{"\n	<body style=\"background-color:#fc9116;\" onresize=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, document.getElementById('frameLang').value);\" onload=\"reframe('dumMainFrame', '"	});
 	output.append(section);
 	output.append(::gpk::view_const_string{"', '"});
 	output.append(fileProgramContent);
