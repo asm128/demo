@@ -16,7 +16,7 @@ GPK_CGI_JSON_APP_IMPL();
 	bool													isCGIEnviron					= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
 	if (isCGIEnviron) {
 		gpk_necall(output.append(::gpk::view_const_string{"Content-type: text/html\r\nCache-control: no-cache\r\n"}), "%s", "Out of memory?");
-		gpk_necall(output.append(::gpk::view_const_string{"\r\n"})								, "%s", "Out of memory?");
+		gpk_necall(output.append(::gpk::view_const_string{"\r\n"}), "%s", "Out of memory?");
 		::gpk::view_const_string							methodsValid	[]				=
 			{ "GET"
 			, "POST"
@@ -36,15 +36,21 @@ GPK_CGI_JSON_APP_IMPL();
 		::ntl::loadConfig(programState, indexRoot);
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
+	::gpk::array_pod<char_t>								fileImageLangEng	;
+	::gpk::array_pod<char_t>								fileImageLangEsp	;
+	::gpk::array_pod<char_t>								fileImageCopysign	;
 	::gpk::array_pod<char_t>								fileStyle			;
 	::gpk::array_pod<char_t>								fileScriptHeader	;
 	::gpk::array_pod<char_t>								fileScriptMenu		;
 	::gpk::array_pod<char_t>								fileProgramContent	;
 	::gpk::array_pod<char_t>								fileProgramHeader	;
-	::ntl::httpPath(programState.Path.Image		, "logo_home"	, programState.Extension.Image, fileLogo);
-	::ntl::httpPath(programState.Path.Style		, "blankstyle"	, "css"	, fileStyle			);
-	::ntl::httpPath(programState.Path.Script	, "header"		, "js"	, fileScriptHeader	);
-	::ntl::httpPath(programState.Path.Script	, "menu"		, "js"	, fileScriptMenu	);
+	::ntl::httpPath(programState.Path.Image		, "logo_home"			, programState.Extension.Image, fileLogo);
+	::ntl::httpPath(programState.Path.Image		, "flag_uk"				, programState.Extension.Image, fileImageLangEng);
+	::ntl::httpPath(programState.Path.Image		, "flag_ar"				, programState.Extension.Image, fileImageLangEsp);
+	::ntl::httpPath(programState.Path.Image		, "icon_small_copyright", programState.Extension.Image, fileImageCopysign);
+	::ntl::httpPath(programState.Path.Style		, "blankstyle"			, "css"	, fileStyle			);
+	::ntl::httpPath(programState.Path.Script	, "header"				, "js"	, fileScriptHeader	);
+	::ntl::httpPath(programState.Path.Script	, "menu"				, "js"	, fileScriptMenu	);
 
 	srand((uint32_t)::gpk::timeCurrentInUs());
 	::gpk::view_const_string section;
@@ -81,8 +87,7 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(section);
 	output.append(::gpk::view_const_string{"', '"});
 	output.append(fileProgramContent);
-	output.append(::gpk::view_const_string{"', document.getElementById('frameLang').value);\">"	});
-	const ::gpk::view_const_string							htmlDefaultBegin					=
+	output.append(::gpk::view_const_string{"', document.getElementById('frameLang').value);\">"
 		"\n	<table style=\"width:100%;height:100%;\">"
 		"\n		<tr >"
 		"\n			<td style=\"text-align:left\" >"
@@ -96,8 +101,7 @@ GPK_CGI_JSON_APP_IMPL();
 		//"\n					<input style=\"width:0px;height:0px;\" id=\"frameCategory\"	type=\"hidden\" value=\"0\" />"
 		"\n				</form>"
 		"\n				<a href=\""
-		;
-	output.append(htmlDefaultBegin);
+		});
 	output.append(fileProgramHeader);
 	output.append(::gpk::view_const_string{"\"><img style=\"height:72px\" src=\""});
 	output.append(fileLogo);
@@ -138,7 +142,11 @@ GPK_CGI_JSON_APP_IMPL();
 /*<!-- Yummly		-->*/ //"	<a href=\"http://www.yummly.com/urb/verify?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">				<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/yummly.png\" alt=\"Yummly\" /></a>"
 /*<!-- Print		-->*/ //"	<a href=\"javascript:;\" onclick=\"window.print()\">																		<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/print.png\" alt=\"Print\" /></a>"
 //"</div>"
-		"\n</td><td onclick=\"reframe('dumMainFrame', 'copyright', 'copyright.exe', document.getElementById('frameLang').value);\" ><img style=\"\" src=\"/tuobelisco/image/icon_small_copyright.png\">	"
+		});
+	output.append(::gpk::view_const_string{"\n</td><td onclick=\"reframe('dumMainFrame', 'copyright', 'copyright.exe', document.getElementById('frameLang').value);\" ><img style=\"\" src=\""});
+	output.append(fileImageCopysign);
+	output.append(::gpk::view_const_string{
+		"\" >"
 		"\n</td></tr>															"
 		"\n<tr>																	"
 		"\n<td style=\"ont-size:1.5em;&quot;\">									"
@@ -149,14 +157,18 @@ GPK_CGI_JSON_APP_IMPL();
 		//"\n				<img src=\"/obelisco/image/blank.png\"/>"
 		"\n			</td>"
 		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, 'en');setLang('en');\" >"
+		"\n				<img src=\""
 		});
+	output.append(fileImageLangEng);
 	output.append(::gpk::view_const_string{
-		"\n				<img src=\"/obelisco/image/flag_uk.png\"/> English"
+		"\" /> English"
 		"\n			</td>"
 		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, 'es');setLang('es');\" >"
+		"\n				<img src=\""
 		});
+	output.append(fileImageLangEsp);
 	output.append(::gpk::view_const_string{
-		"\n				<img src=\"/obelisco/image/flag_ar.png\" /> Español"
+		"\" /> Español"
 		"\n			</td>"
 		"\n		</tr>"
 		"\n	</table>"
@@ -180,19 +192,16 @@ GPK_CGI_JSON_APP_IMPL();
 		, {"shows"		, "shops"		, "Shows y Arte"			}
 		, {"meals"		, "shops"		, "Comidas y Snacks"		}
 		, {"pricing"	, "pricing"		, "Publicar"}
-//		, {"terms"		, "terms"		, "Términos"}
-//		, {"copyright"	, "copyright"	, ""}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 
-	const ::gpk::view_const_string							htmlDefaultPost				=
+	output.append(::gpk::view_const_string{
 		"\n			</td>"
 		"\n		</tr>"
 		"\n	</table>"
 		"\n</body>"
 		"\n</html>"
-		;
-	output.append(htmlDefaultPost);
+		});
 	if(output.size()) {
 		OutputDebugStringA(output.begin());
 		OutputDebugStringA("\n");
