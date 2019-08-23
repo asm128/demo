@@ -37,11 +37,11 @@ GPK_CGI_JSON_APP_IMPL();
 	::gpk::view_const_string								height;
 	::gpk::find("lang"	, requestReceived.QueryStringKeyVals, lang);
 	::gpk::find("module", requestReceived.QueryStringKeyVals, module);
-	::gpk::find("width", requestReceived.QueryStringKeyVals, width);
+	::gpk::find("width"	, requestReceived.QueryStringKeyVals, width);
 	::gpk::find("height", requestReceived.QueryStringKeyVals, height);
 	::gpk::view_const_string								title;
 
-	const ::ntl::AD_SHOP_CATEGORY							category			=::gpk::get_value<::ntl::AD_SHOP_CATEGORY>(module);
+	const ::ntl::AD_SHOP_CATEGORY							category					= ::gpk::get_value<::ntl::AD_SHOP_CATEGORY>(module);
 	switch(category) {
 	case ::ntl::AD_SHOP_CATEGORY_tours: title = (lang == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Turismo en Buenos Aires"		}) : (::gpk::view_const_string{ "Tourism in Buenos Aires"	}); break;
 	case ::ntl::AD_SHOP_CATEGORY_shops: title = (lang == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Comercios en Obelisco"		}) : (::gpk::view_const_string{ "Shopping in Obelisco"		}); break;
@@ -50,9 +50,9 @@ GPK_CGI_JSON_APP_IMPL();
 	default: break;
 	}
 
-	::gpk::SCoord2<uint32_t>	sizeScreen = {};
-	::gpk::parseIntegerDecimal(width, &sizeScreen.x);
-	::gpk::parseIntegerDecimal(height, &sizeScreen.y);
+	::gpk::SCoord2<uint32_t>								sizeScreen						= {};
+	::gpk::parseIntegerDecimal(width	, &sizeScreen.x);
+	::gpk::parseIntegerDecimal(height	, &sizeScreen.y);
 
 	::ntl::pageCatalog("ads.json", sizeScreen, programState.Path.Style, category, title, lang, output);
 
