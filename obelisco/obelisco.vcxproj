@@ -195,6 +195,7 @@
     <None Include="ad_subcategory.json" />
     <None Include="keypad.json" />
     <None Include="obelisco.bat" />
+    <None Include="pokemon.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

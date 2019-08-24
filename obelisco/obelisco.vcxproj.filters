@@ -27,5 +27,6 @@
     </None>
     <None Include="ad_category.json" />
     <None Include="ad_subcategory.json" />
+    <None Include="pokemon.json" />
   </ItemGroup>
 </Project>
