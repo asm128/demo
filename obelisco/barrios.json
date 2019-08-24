@@ -1,0 +1,49 @@
+{ {"name": "Agronomía"				, "area": 2.1		, "population": 13963		, "commune": 15	}
+, {"name": "Almagro"				, "area": 4.1		, "population": 128206		, "commune": 5	}
+, {"name": "Balvanera"				, "area": 4.4		, "population": 137521		, "commune": 3	}
+, {"name": "Barracas"				, "area": 7.6		, "population": 73377		, "commune": 4	}
+, {"name": "Belgrano"				, "area": 6.8		, "population": 126816		, "commune": 13	}
+, {"name": "Boedo"					, "area": 2.6		, "population": 45563		, "commune": 5	}
+, {"name": "Caballito"				, "area": 6.8		, "population": 170309		, "commune": 6	}
+, {"name": "Chacarita"				, "area": 3.1		, "population": 25778		, "commune": 15	}
+, {"name": "Coghlan"				, "area": 1.3		, "population": 18021		, "commune": 12	}
+, {"name": "Colegiales"				, "area": 2.3		, "population": 52391		, "commune": 13	}
+, {"name": "Constitución"			, "area": 2.1		, "population": 41894		, "commune": 1	}
+, {"name": "Flores"					, "area": 7.8		, "population": 142695		, "commune": 7	}
+, {"name": "Floresta"				, "area": 2.3		, "population": 37247		, "commune": 10	}
+, {"name": "La Boca"				, "area": 3.1		, "population": 43413		, "commune": 4	}
+, {"name": "La Paternal"			, "area": 2.2		, "population": 19058		, "commune": 15	}
+, {"name": "Liniers"				, "area": 4.3		, "population": 42083		, "commune": 9	}
+, {"name": "Mataderos"				, "area": 7.3		, "population": 62206		, "commune": 9	}
+, {"name": "Monserrat"				, "area": 2.2		, "population": 39175		, "commune": 1	}
+, {"name": "Monte Castro"			, "area": 2.6		, "population": 32782		, "commune": 10	}
+, {"name": "Nueva Pompeya"			, "area": 6.2		, "population": 60465		, "commune": 4	}
+, {"name": "Núñez"					, "area": 4.5		, "population": 49019		, "commune": 13	}
+, {"name": "Palermo"				, "area": 15.9		, "population": 225245		, "commune": 14	}
+, {"name": "Parque Avellaneda"		, "area": 5.1		, "population": 51678		, "commune": 9	}
+, {"name": "Parque Chacabuco"		, "area": 3.8		, "population": 54638		, "commune": 7	}
+, {"name": "Parque Chas"			, "area": 1.4		, "population": 18926		, "commune": 15	}
+, {"name": "Parque Patricios"		, "area": 3.7		, "population": 37791		, "commune": 4	}
+, {"name": "Puerto Madero"			, "area": 2.1		, "population": 406			, "commune": 1	}
+, {"name": "Recoleta"				, "area": 5.9		, "population": 165494		, "commune": 2	}
+, {"name": "Retiro"					, "area": 2.8		, "population": 38635		, "commune": 1	}
+, {"name": "Saavedra"				, "area": 5.6		, "population": 48956		, "commune": 12	}
+, {"name": "San Cristóbal"			, "area": 2.1		, "population": 46494		, "commune": 3	}
+, {"name": "San Nicolás"			, "area": 2.3		, "population": 28667		, "commune": 1	}
+, {"name": "San Telmo"				, "area": 1.2		, "population": 23198		, "commune": 1	}
+, {"name": "Vélez Sársfield"		, "area": 2.4		, "population": 34084		, "commune": 10	}
+, {"name": "Versalles"				, "area": 1.4		, "population": 13556		, "commune": 10	}
+, {"name": "Villa Crespo"			, "area": 3.6		, "population": 83646		, "commune": 15	}
+, {"name": "Villa del Parque"		, "area": 3.4		, "population": 55502		, "commune": 11	}
+, {"name": "Villa Devoto"			, "area": 6.4		, "population": 67712		, "commune": 11	}
+, {"name": "Villa General Mitre"	, "area": 2.2		, "population": 34204		, "commune": 11	}
+, {"name": "Villa Lugano"			, "area": 9.0		, "population": 108170		, "commune": 8	}
+, {"name": "Villa Luro"				, "area": 2.6		, "population": 31859		, "commune": 10	}
+, {"name": "Villa Ortúzar"			, "area": 1.8		, "population": 21256		, "commune": 15	}
+, {"name": "Villa Pueyrredón"		, "area": 3.3		, "population": 38558		, "commune": 12	}
+, {"name": "Villa Real"				, "area": 1.3		, "population": 13681		, "commune": 10	}
+, {"name": "Villa Riachuelo"		, "area": 4.1		, "population": 13995		, "commune": 8	}
+, {"name": "Villa Santa Rita"		, "area": 2.2		, "population": 32248		, "commune": 11	}
+, {"name": "Villa Soldati"			, "area": 8.6		, "population": 39477		, "commune": 8	}
+, {"name": "Villa Urquiza"			, "area": 5.4		, "population": 85587		, "commune": 12	}
+]
