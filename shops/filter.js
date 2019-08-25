@@ -1,8 +1,8 @@
 function obeSearch(textToFind) {
- var selectBarrio	= document.getElementById('selectBarrio');
- var selectedOption	= selectBarrio.selectedIndex;
- var selectedBarrio	= selectedOption - 1;
- var lowerToFind		= textToFind.toLowerCase();
+	var selectBarrio	= document.getElementById('selectBarrio');
+	var selectedOption	= selectBarrio.selectedIndex;
+	var selectedBarrio	= selectedOption - 1;
+	var lowerToFind		= textToFind.toLowerCase();
 	var wordsToFind		= lowerToFind.split(' ');
 	var pos				= 0;
 	for(pos = 0; pos < idList.length; pos = pos +1)
@@ -40,11 +40,12 @@ function clearSearch() {
 	}
 	else {
 		for(id of idList) {
-			document.getElementById(id).style.visibility = 'collapse';
-			var barrioMap	= barrioIdMap[id];
+			var articleElement	= document.getElementById(id);
+			articleElement.style.visibility = 'collapse';
+			var barrioMap		= barrioIdMap[id];
 			for(barrio of barrioMap) {
 				if(selectedBarrio == barrio) {
-					document.getElementById(id).style.visibility = 'visible';
+					articleElement.style.visibility = 'visible';
 					break;
 				}
 			}
