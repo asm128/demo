@@ -7,6 +7,7 @@
 #include "gpk_base64.h"
 #include "gpk_json_expression.h"
 #include "gpk_chrono.h"
+#include "gpk_parse.h"
 
 GPK_CGI_JSON_APP_IMPL();
 // today 1565740800
@@ -26,6 +27,16 @@ GPK_CGI_JSON_APP_IMPL();
 			return 1;
 		}
 	}
+
+	::gpk::view_const_string								lang;
+	::gpk::view_const_string								module;
+	::gpk::view_const_string								width;
+	::gpk::view_const_string								height;
+	::gpk::find("lang"	, requestReceived.QueryStringKeyVals, lang);
+	::gpk::find("module", requestReceived.QueryStringKeyVals, module);
+	::gpk::find("width"	, requestReceived.QueryStringKeyVals, width);
+	::gpk::find("height", requestReceived.QueryStringKeyVals, height);
+	::gpk::view_const_string								title;
 
 	::ntl::SHTMLEndpoint									programState;
 	const char												configFileName	[]				= "./neutralizer.json";
@@ -98,7 +109,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n					<input style=\"width:0px;height:0px;\" id=\"frameName\"		type=\"hidden\" value=\"0\" />"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"frameProgram\"	type=\"hidden\" value=\"0\" />"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"frameLang\"		type=\"hidden\" value=\"es\" />"
-		//"\n					<input style=\"width:0px;height:0px;\" id=\"frameCategory\"	type=\"hidden\" value=\"0\" />"
+		//"\n					<input style=\"width:0px;height:0px;\" id=\"frameBarrio\"	type=\"hidden\" value=\"-1\" />"
 		"\n				</form>"
 		"\n				<a href=\""
 		});
@@ -156,6 +167,57 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n</tbody></table>														"
 		//"\n				<img src=\"/obelisco/image/blank.png\"/>"
 		"\n			</td>"
+		});
+//-----------------------------------------------------------------
+
+#if defined(ENABLE_MAINFRAME_BARRIO)
+	::gpk::SCoord2<uint32_t>								sizeScreen						= {};
+	::gpk::parseIntegerDecimal(width	, &sizeScreen.x);
+	::gpk::parseIntegerDecimal(height	, &sizeScreen.y);
+
+	char													fontSize	[32]					= {};
+	if(sizeScreen.x > sizeScreen.y)
+		sprintf_s(fontSize, "%u", sizeScreen.x ? sizeScreen.x / 55 : 24);
+	else
+		sprintf_s(fontSize, "%u", sizeScreen.y ? sizeScreen.y / 44 : 24);
+
+	output.append(::gpk::view_const_string{"\n<td style=\"font-weight:bold;font-size:"});
+	output.append(::gpk::view_const_string{fontSize});
+	output.append(::gpk::view_const_string{ "px;\" >"});
+	output.append(::gpk::view_const_string{"<h5>Barrio:<h5>"});
+	output.append(::gpk::view_const_string{"</td>"});
+	output.append(::gpk::view_const_string{
+		"\n<td>"
+		"<select id=\"testSelect1\" onchange=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, document.getElementById('frameLang').value);\" style=\"font-size:"
+		});
+	output.append(::gpk::view_const_string{fontSize});
+	output.append(::gpk::view_const_string{ "px;\" >"});
+
+	::gpk::SJSONFile										barrios							;
+	::gpk::jsonFileRead(barrios, "barrios.json");
+	const ::gpk::error_t									countBarrios					= ::gpk::jsonArraySize(*barrios.Reader[0]);
+	char													tempBarrioOption[256]			= {};
+	::gpk::view_const_string								barrioName;
+	//if(lang == ::gpk::view_const_string{"es"})
+		output.append(::gpk::view_const_string{"\n<option id=\"barrioOption\" value=\"-1\" style=\"\">Todos</option>"});
+	//else
+	//	output.append(::gpk::view_const_string{"\n<option id=\"barrioOption\" value=\"-1\" style=\"\">All</option>"});
+	for(int32_t iBarrio = 0; iBarrio < countBarrios; ++iBarrio) {
+		int32_t													indexBarrioNode					= ::gpk::jsonArrayValueGet(*barrios.Reader[0], iBarrio);
+		int32_t													indexBarrioName					= ::gpk::jsonObjectValueGet(*barrios.Reader[indexBarrioNode], barrios.Reader.View, "name");
+		sprintf_s(tempBarrioOption, "\n<option value=\"%u\" style=\"\">", iBarrio);
+		output.append(::gpk::view_const_string{tempBarrioOption});
+		output.append(barrios.Reader.View[indexBarrioName]);
+		output.append(::gpk::view_const_string{"</option>"});
+	}
+
+	output.append(::gpk::view_const_string{
+		"</select>"
+		"\n</td>"
+		});
+#endif
+//-----------------------------------------------------------------
+	output.append(::gpk::view_const_string{
 		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, 'en');setLang('en');\" >"
 		"\n				<img src=\""
 		});
