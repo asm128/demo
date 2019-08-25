@@ -51,7 +51,6 @@ GPK_CGI_JSON_APP_IMPL();
 	::gpk::array_pod<char_t>								fileImageCopysign	;
 	::gpk::array_pod<char_t>								fileStyle			;
 	::gpk::array_pod<char_t>								fileScriptHeader	;
-	::gpk::array_pod<char_t>								fileScriptMenu		;
 	::gpk::array_pod<char_t>								fileProgramContent	;
 	::gpk::array_pod<char_t>								fileProgramHeader	;
 	::ntl::httpPath(programState.Path.Image		, "logo_home"			, programState.Extension.Image, fileLogo);
@@ -60,7 +59,6 @@ GPK_CGI_JSON_APP_IMPL();
 	::ntl::httpPath(programState.Path.Image		, "icon_small_copyright", programState.Extension.Image, fileImageCopysign);
 	::ntl::httpPath(programState.Path.Style		, "blankstyle"			, "css"	, fileStyle			);
 	::ntl::httpPath(programState.Path.Script	, "header"				, "js"	, fileScriptHeader	);
-	::ntl::httpPath(programState.Path.Script	, "menu"				, "js"	, fileScriptMenu	);
 
 	srand((uint32_t)::gpk::timeCurrentInUs());
 	::gpk::view_const_string section;
@@ -88,7 +86,6 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(htmlDefaultAnte);
 	::ntl::htmlHeaderTitle(programState.Page.Title, output);
 	::ntl::htmlHeaderScriptFile({fileScriptHeader	.begin(), fileScriptHeader	.size()}, output);
-	::ntl::htmlHeaderScriptFile({fileScriptMenu		.begin(), fileScriptMenu	.size()}, output);
 	::ntl::htmlHeaderStyleLink({fileStyle			.begin(), fileStyle			.size()}, output);
 
 	output.append(::gpk::view_const_string{"\n<link rel=\"icon\" type=\"image/png\" href=\"/favicon.png\">"});
