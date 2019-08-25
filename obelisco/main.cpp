@@ -108,6 +108,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n					<input style=\"width:0px;height:0px;\" id=\"frameName\"		type=\"hidden\" value=\"0\" />"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"frameProgram\"	type=\"hidden\" value=\"0\" />"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"frameLang\"		type=\"hidden\" value=\"es\" />"
+		"\n					<input style=\"width:0px;height:0px;\" id=\"frameCategory\"	type=\"hidden\" value=\"-1\" />"
 		//"\n					<input style=\"width:0px;height:0px;\" id=\"frameBarrio\"	type=\"hidden\" value=\"-1\" />"
 		"\n				</form>"
 		"\n				<a href=\""

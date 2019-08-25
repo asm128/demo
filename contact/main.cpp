@@ -36,7 +36,7 @@ GPK_CGI_JSON_APP_IMPL();
 	::gpk::array_pod<char_t>								fileStyle			;
 	::ntl::httpPath(programState.Path.Image		, "logo_home"	, programState.Extension.Image, fileLogo);
 	::ntl::httpPath(programState.Path.Style		, "blankstyle"	, "css"	, fileStyle			);
-	const ::gpk::view_const_string							txtTitle						= "- Obelisco - Un Patrimonio Incalculable de la República de la Nación Argentina -";
+	const ::gpk::view_const_string							txtTitle						= "- TuObelisco - Un Patrimonio Incalculable -";
 
 	output.append(::gpk::view_const_string{ "\n<html>"});
 	output.append(::gpk::view_const_string{ "\n<head>"});
