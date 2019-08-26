@@ -1,5 +1,5 @@
 [ [{ "name": "agency"		}, { "name": "guide"	}, { "name": "transport"	}, { "name": "hotel"	}, ]
 , [{ "name": "breakfast"	}, { "name": "lunch"	}, { "name": "snack"		}, { "name": "dinner"	}, ]
-, [{ "name": "clothing"		}, { "name": "food"		}, { "name": "goods"		}, { "name": "drugstore"}, ]
+, [{ "name": "goods"		}, { "name": "food"		}, { "name": "services"		}, { "name": "utilities"}, ]
 , [{ "name": "theatre"		}, { "name": "museum"	}, { "name": "ride"			}, { "name": "dance"	}, ]
 ]
