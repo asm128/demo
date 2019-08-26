@@ -1,5 +1,4 @@
 #include "neutralizer.h"
-#include "neutralizer_ad_category.h"
 #include "gpk_json_expression.h"
 #include "gpk_parse.h"
 
@@ -41,20 +40,9 @@ GPK_CGI_JSON_APP_IMPL();
 	::gpk::find("height", requestReceived.QueryStringKeyVals, height);
 	::gpk::view_const_string								title;
 
-	const ::ntl::AD_SHOP_CATEGORY							category					= ::gpk::get_value<::ntl::AD_SHOP_CATEGORY>(module);
-	switch(category) {
-	case ::ntl::AD_SHOP_CATEGORY_tours: title = (lang == ::gpk::view_const_string{"es"}) ? ::gpk::view_const_string{ "Turismo"		} : ::gpk::view_const_string{ "Tourism"		}; break;
-	case ::ntl::AD_SHOP_CATEGORY_shops: title = (lang == ::gpk::view_const_string{"es"}) ? ::gpk::view_const_string{ "Comercios"	} : ::gpk::view_const_string{ "Shopping"	}; break;
-	case ::ntl::AD_SHOP_CATEGORY_meals: title = (lang == ::gpk::view_const_string{"es"}) ? ::gpk::view_const_string{ "Comidas"		} : ::gpk::view_const_string{ "Meals"		}; break;
-	case ::ntl::AD_SHOP_CATEGORY_shows: title = (lang == ::gpk::view_const_string{"es"}) ? ::gpk::view_const_string{ "Espectáculos"	} : ::gpk::view_const_string{ "Shows"		}; break;
-	default: break;
-	}
-
 	::gpk::SCoord2<uint32_t>								sizeScreen						= {};
 	::gpk::parseIntegerDecimal(width	, &sizeScreen.x);
 	::gpk::parseIntegerDecimal(height	, &sizeScreen.y);
-
-	::ntl::pageCatalog("ads.json", programState.Path.Script, sizeScreen, programState.Path.Style, category, title, lang, output);
 
 	if(output.size()) {
 		OutputDebugStringA(output.begin());
