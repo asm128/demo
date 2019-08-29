@@ -7,6 +7,10 @@
 #include "gpk_json_expression.h"
 #include "gpk_chrono.h"
 #include "gpk_parse.h"
+#include "gpk_encoding.h"
+#include "gpk_base64.h"
+#include "gpk_noise.h"
+
 
 GPK_CGI_JSON_APP_IMPL();
 // today 1565740800
@@ -28,6 +32,18 @@ GPK_CGI_JSON_APP_IMPL();
 	}
 	::ntl::SNTLArgs											qsArgs;
 	::ntl::loadNTLArgs(qsArgs, requestReceived.QueryStringKeyVals);
+	if(0 == qsArgs.Session.size()) {
+		const uint64_t											timeInUs						= ::gpk::timeCurrentInUs();
+		char													strTempSession	[2048]			= {};
+		::gpk::view_const_string								ipRemote;
+		sprintf_s(strTempSession, "%s_%llu", requestReceived.Ip.begin(), timeInUs);
+		::gpk::array_pod<char_t>								encrypted;
+		srand((uint32_t)::gpk::noise1DBase(::gpk::timeCurrentInUs()));
+		::gpk::ardellEncode(::gpk::view_const_string{strTempSession}, (uint32_t)rand(), true, encrypted);
+		::gpk::array_pod<char_t>								encoded;
+		::gpk::base64EncodeFS(encrypted, encoded);
+		qsArgs.Session										= ::gpk::label(encoded.begin(), encoded.size());
+	}
 
 	::gpk::view_const_string								title;
 
@@ -87,7 +103,7 @@ GPK_CGI_JSON_APP_IMPL();
 
 	output.append(::gpk::view_const_string{"\n<link rel=\"icon\" type=\"image/png\" href=\"/favicon.png\">"});
 	output.append(::gpk::view_const_string{"\n</head>"});
-	output.append(::gpk::view_const_string{"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', '"	}); // onresize=\"reframe('dumMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
+	output.append(::gpk::view_const_string{"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('tuMainFrame', '"	}); // onresize=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
 	output.append(section);
 	output.append(::gpk::view_const_string{"', '"});
 	output.append(fileProgramContent);
@@ -102,7 +118,11 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n					<input style=\"width:0px;height:0px;\" id=\"m\"	type=\"hidden\" value=\"0\" />"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"p\"	type=\"hidden\" value=\"0\" />"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"l\"	type=\"hidden\" value=\"es\" />"
-		"\n					<input style=\"width:0px;height:0px;\" id=\"s\"	type=\"hidden\" value=\"-1\" />"
+		"\n					<input style=\"width:0px;height:0px;\" id=\"s\"	type=\"hidden\" value=\""
+		});
+	output.append(qsArgs.Session);
+	output.append(::gpk::view_const_string{
+		"\" />"
 		"\n				</form>"
 		"\n				<a href=\""
 		});
@@ -147,7 +167,7 @@ GPK_CGI_JSON_APP_IMPL();
 ///*<!-- Print		-->*/ "	<a href=\"javascript:;\" onclick=\"window.print()\">																		<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/print.png\" alt=\"Print\" /></a>"
 //"</div>"
 		});
-	output.append(::gpk::view_const_string{"\n</td><td onclick=\"reframe('dumMainFrame', 'copyright', 'copyright.exe', document.getElementById('l').value, document.getElementById('s').value);\" ><img style=\"\" src=\""});
+	output.append(::gpk::view_const_string{"\n</td><td onclick=\"reframe('tuMainFrame', 'copyright', 'copyright.exe', document.getElementById('l').value, document.getElementById('s').value);\" ><img style=\"\" src=\""});
 	output.append(fileImageCopysign);
 	output.append(::gpk::view_const_string{
 		"\" >"
@@ -181,7 +201,7 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(::gpk::view_const_string{"</td>"});
 	output.append(::gpk::view_const_string{
 		"\n<td>"
-		"<select id=\"testSelect1\" onchange=\"reframe('dumMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\" style=\"font-size:"
+		"<select id=\"testSelect1\" onchange=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\" style=\"font-size:"
 		});
 	output.append(::gpk::view_const_string{fontSize});
 	output.append(::gpk::view_const_string{ "px;\" >"});
@@ -211,21 +231,21 @@ GPK_CGI_JSON_APP_IMPL();
 #endif
 //-----------------------------------------------------------------
 	output.append(::gpk::view_const_string{
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'en', document.getElementById('s').value);setLang('en');\" >"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'en', document.getElementById('s').value);setLang('en');\" >"
 		"\n				<img src=\""
 		});
 	output.append(fileImageLangEng);
 	output.append(::gpk::view_const_string{
 		"\" /> English"
 		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'es', document.getElementById('s').value);setLang('es');\" >"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'es', document.getElementById('s').value);setLang('es');\" >"
 		"\n				<img src=\""
 		});
 	output.append(fileImageLangEsp);
 	output.append(::gpk::view_const_string{
 		"\" /> Español"
 		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\" >"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\" >"
 		"\n				<img src=\""
 		});
 	output.append(fileImageSignedOut);
@@ -241,7 +261,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n		</tr>"
 		"\n		<tr style=\"height:90%;\" >"
 		"\n			<td style=\"width:100%;font-family:Arial;\" >"
-		"\n				<iframe id=\"dumMainFrame\" style=\"width:100%;height:100%;\" src=\"\"></iframe>"
+		"\n				<iframe id=\"tuMainFrame\" style=\"width:100%;height:100%;\" src=\"\"></iframe>"
 		"\n			</td>"
 		"\n		</tr>"
 		"\n		<tr >"
