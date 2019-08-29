@@ -23,7 +23,6 @@ GPK_CGI_JSON_APP_IMPL();
 			return 1;
 		}
 	}
-
 	::ntl::SHTMLEndpoint									programState;
 	const char												configFileName	[]				= "./neutralizer.json";
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
@@ -47,7 +46,7 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(::gpk::view_const_string{"\n<body style=\"width:100%;height:100%;background-color:#E0E0E0;font-family:Arial;\">"	}); // 202050
 	output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"	});
 	output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
-	output.append(::gpk::view_const_string{ "\n<td style=\"font-size:16px; font-weight:bold; vertical-align:top;\">"});
+	output.append(::gpk::view_const_string{ "\n<td style=\"font-weight:bold;vertical-align:top;\">"});
 
 	static constexpr	const char							contentFileName	[]				= "./ads.json";
 	::gpk::SJSONFile										config							= {};	// json to get copyright notices from pic links.
@@ -56,7 +55,7 @@ GPK_CGI_JSON_APP_IMPL();
 
 	//---------------------
 	::gpk::view_const_string								lang;
-	::gpk::find("lang", requestReceived.QueryStringKeyVals, lang);
+	::gpk::find("l", requestReceived.QueryStringKeyVals, lang);
 	if(lang == ::gpk::view_const_string{"es"}) {
 		output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"});
 		output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});

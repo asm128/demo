@@ -21,6 +21,8 @@ GPK_CGI_JSON_APP_IMPL();
 			return 1;
 		}
 	}
+	::ntl::SNTLArgs											qsArgs;
+	::ntl::loadNTLArgs(qsArgs, requestReceived.QueryStringKeyVals);
 
 	::ntl::SHTMLEndpoint									programState;
 	const char												configFileName	[]				= "./neutralizer.json";
@@ -30,19 +32,6 @@ GPK_CGI_JSON_APP_IMPL();
 		const ::gpk::error_t									indexRoot					= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
 		::ntl::loadConfig(programState, indexRoot);
 	}
-	::gpk::view_const_string								lang;
-	::gpk::view_const_string								module;
-	::gpk::view_const_string								width;
-	::gpk::view_const_string								height;
-	::gpk::find("lang"	, requestReceived.QueryStringKeyVals, lang);
-	::gpk::find("module", requestReceived.QueryStringKeyVals, module);
-	::gpk::find("width"	, requestReceived.QueryStringKeyVals, width);
-	::gpk::find("height", requestReceived.QueryStringKeyVals, height);
-	::gpk::view_const_string								title;
-
-	::gpk::SCoord2<uint32_t>								sizeScreen						= {};
-	::gpk::parseIntegerDecimal(width	, &sizeScreen.x);
-	::gpk::parseIntegerDecimal(height	, &sizeScreen.y);
 
 	if(output.size()) {
 		OutputDebugStringA(output.begin());

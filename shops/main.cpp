@@ -31,39 +31,33 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_string & 
 			return 1;
 		}
 	}
+	::ntl::SNTLArgs											qsArgs;
+	::ntl::loadNTLArgs(qsArgs, requestReceived.QueryStringKeyVals);
 
 	::ntl::SHTMLEndpoint									programState;
 	const char												configFileName	[]				= "./neutralizer.json";
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
 	{
 		::gpk::view_const_string								rootNode;
-		const ::gpk::error_t									indexRoot					= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
+		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
 		::ntl::loadConfig(programState, indexRoot);
 	}
-	::gpk::view_const_string								lang;
-	::gpk::view_const_string								module;
-	::gpk::view_const_string								width;
-	::gpk::view_const_string								height;
-	::gpk::find("lang"	, requestReceived.QueryStringKeyVals, lang);
-	::gpk::find("module", requestReceived.QueryStringKeyVals, module);
-	::gpk::find("width"	, requestReceived.QueryStringKeyVals, width);
-	::gpk::find("height", requestReceived.QueryStringKeyVals, height);
 	::gpk::view_const_string								title;
 
-	const ::AD_SHOP_CATEGORY							category					= ::gpk::get_value<::AD_SHOP_CATEGORY>(module);
+	const ::AD_SHOP_CATEGORY								category						= ::gpk::get_value<::AD_SHOP_CATEGORY>(qsArgs.Module);
 	switch(category) {
-	case ::AD_SHOP_CATEGORY_tours: title = (lang == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Turismo"		}) : (::gpk::view_const_string{ "Tourism"	}); break;
-	case ::AD_SHOP_CATEGORY_shops: title = (lang == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Comercios"	}) : (::gpk::view_const_string{ "Shopping"	}); break;
-	case ::AD_SHOP_CATEGORY_meals: title = (lang == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Comidas"		}) : (::gpk::view_const_string{ "Meals"		}); break;
-	case ::AD_SHOP_CATEGORY_shows: title = (lang == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Espectáculos"	}) : (::gpk::view_const_string{ "Shows"		}); break;
+	case ::AD_SHOP_CATEGORY_tours: title = (qsArgs.Language == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Turismo"		}) : (::gpk::view_const_string{ "Tourism"	}); break;
+	case ::AD_SHOP_CATEGORY_shops: title = (qsArgs.Language == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Comercios"		}) : (::gpk::view_const_string{ "Shopping"	}); break;
+	case ::AD_SHOP_CATEGORY_meals: title = (qsArgs.Language == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Comidas"		}) : (::gpk::view_const_string{ "Meals"		}); break;
+	case ::AD_SHOP_CATEGORY_shows: title = (qsArgs.Language == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Espectáculos"	}) : (::gpk::view_const_string{ "Shows"		}); break;
 	default: break;
 	}
 
 	::gpk::SCoord2<uint32_t>								sizeScreen						= {};
-	::gpk::parseIntegerDecimal(width	, &sizeScreen.x);
-	::gpk::parseIntegerDecimal(height	, &sizeScreen.y);
+	::gpk::parseIntegerDecimal(qsArgs.Width	, &sizeScreen.x);
+	::gpk::parseIntegerDecimal(qsArgs.Height, &sizeScreen.y);
 
-	::pageCatalog("ads.json", programState.Path.Script, sizeScreen, programState.Path.Style, category, title, lang, output);
+	::pageCatalog("ads.json", programState.Path.Script, sizeScreen, programState.Path.Style, category, title, qsArgs.Language, output);
 
 	if(output.size()) {
 		OutputDebugStringA(output.begin());
@@ -314,7 +308,7 @@ static ::gpk::error_t								htmlBoardGenerate					(const ::gpk::view_array<cons
 			output.append(::gpk::view_const_string{"\">"});
 			output.append(::gpk::view_const_string{"\n<td style=\"width:100%;text-align:left;vertical-align:top;\">"});
 			//
-				output.append(::gpk::view_const_string{"\n<table style=\"background-color:white;width:100%;height:100%;min-height:100%;text-align:center;border-style:solid;border-width:2px;border-radius:16px;font-size:"});
+				output.append(::gpk::view_const_string{"\n<table style=\"background-color:white;width:100%;height:100%;min-height:100%;text-align:center;border-style:solid;border-width:2px;border-radius:8px;font-size:"});
 				output.append(fontSize);
 				output.append(::gpk::view_const_string{"px;\" >"});
 				output.append(::gpk::view_const_string{"\n<tr>"});
@@ -355,7 +349,7 @@ static ::gpk::error_t								htmlBoardGenerate					(const ::gpk::view_array<cons
 				output.append(::gpk::view_const_string{ "\n<td style=\"vertical-align:top;\">"});
 
 				// ----- Image info table
-					output.append(::gpk::view_const_string{ "\n<table style=\"background-color:white;width:100%;height:100%;text-align:center;border-style:solid;border-width:2px;border-radius:16px;\" font-size:"});
+					output.append(::gpk::view_const_string{ "\n<table style=\"background-color:white;width:100%;height:100%;text-align:center;border-style:solid;border-width:2px;border-radius:8px;\" font-size:"});
 					output.append(fontSize);
 					output.append(::gpk::view_const_string{ "px;\">"});
 					if(views.MapURL.size()) {
@@ -448,7 +442,7 @@ static	::gpk::error_t								pageCatalog					(const ::gpk::view_const_string & c
 		"\n<body style=\"width:100%;height:100%;font-family:Arial;\">"
 		"\n<table style=\"width:100%;height:100%;text-align:center;\">"
 		"\n<tr style=\"\" >"
-		"\n<td style=\"font-size:16px; font-weight:bold; vertical-align:top;\">"
+		"\n<td style=\"vertical-align:top;\">"
 		});
 
 	//---------------------

@@ -26,15 +26,9 @@ GPK_CGI_JSON_APP_IMPL();
 			return 1;
 		}
 	}
+	::ntl::SNTLArgs											qsArgs;
+	::ntl::loadNTLArgs(qsArgs, requestReceived.QueryStringKeyVals);
 
-	::gpk::view_const_string								lang;
-	::gpk::view_const_string								module;
-	::gpk::view_const_string								width;
-	::gpk::view_const_string								height;
-	::gpk::find("lang"	, requestReceived.QueryStringKeyVals, lang);
-	::gpk::find("module", requestReceived.QueryStringKeyVals, module);
-	::gpk::find("width"	, requestReceived.QueryStringKeyVals, width);
-	::gpk::find("height", requestReceived.QueryStringKeyVals, height);
 	::gpk::view_const_string								title;
 
 	::ntl::SHTMLEndpoint									programState;
@@ -42,37 +36,40 @@ GPK_CGI_JSON_APP_IMPL();
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
 	{
 		::gpk::view_const_string								rootNode;
-		const ::gpk::error_t									indexRoot					= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
+		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
 		::ntl::loadConfig(programState, indexRoot);
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
 	::gpk::array_pod<char_t>								fileImageLangEng	;
 	::gpk::array_pod<char_t>								fileImageLangEsp	;
 	::gpk::array_pod<char_t>								fileImageCopysign	;
+	::gpk::array_pod<char_t>								fileImageSignedOut	;
 	::gpk::array_pod<char_t>								fileStyle			;
 	::gpk::array_pod<char_t>								fileScriptHeader	;
 	::gpk::array_pod<char_t>								fileProgramContent	;
 	::gpk::array_pod<char_t>								fileProgramHeader	;
-	::ntl::httpPath(programState.Path.Image		, "logo_home"			, programState.Extension.Image, fileLogo);
-	::ntl::httpPath(programState.Path.Image		, "flag_uk"				, programState.Extension.Image, fileImageLangEng);
-	::ntl::httpPath(programState.Path.Image		, "flag_ar"				, programState.Extension.Image, fileImageLangEsp);
-	::ntl::httpPath(programState.Path.Image		, "icon_small_copyright", programState.Extension.Image, fileImageCopysign);
-	::ntl::httpPath(programState.Path.Style		, "blankstyle"			, "css"	, fileStyle			);
-	::ntl::httpPath(programState.Path.Script	, "header"				, "js"	, fileScriptHeader	);
+	::ntl::httpPath(programState.Path.Image		, "logo_home"				, programState.Extension.Image, fileLogo			);
+	::ntl::httpPath(programState.Path.Image		, "flag_uk"					, programState.Extension.Image, fileImageLangEng	);
+	::ntl::httpPath(programState.Path.Image		, "flag_ar"					, programState.Extension.Image, fileImageLangEsp	);
+	::ntl::httpPath(programState.Path.Image		, "icon_small_signed_out"	, programState.Extension.Image, fileImageSignedOut	);
+	::ntl::httpPath(programState.Path.Image		, "icon_small_copyright"	, programState.Extension.Image, fileImageCopysign	);
+	::ntl::httpPath(programState.Path.Style		, "blankstyle"				, "css"	, fileStyle			);
+	::ntl::httpPath(programState.Path.Script	, "header"					, "js"	, fileScriptHeader	);
 
 	srand((uint32_t)::gpk::timeCurrentInUs());
-	::gpk::view_const_string section;
+	::gpk::view_const_string								section;
 	switch(rand() % 4) {
 	case 0: section = "shops"; break;
 	case 1: section = "meals"; break;
 	case 2: section = "shows"; break;
 	case 3: section = "tours"; break;
-	}
+	};
 
 	::ntl::httpPath(programState.Path.Program	, "shops"		, programState.Extension.Program, fileProgramContent);
 	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
+	::ntl::httpPath(programState.Path.Program	, "session"		, programState.Extension.Program, fileProgramHeader);
 
-	const ::gpk::view_const_string							htmlDefaultAnte						=
+	const ::gpk::view_const_string							htmlDefaultAnte					=
 		"\n<html>"
 		"\n<head>"
 		"\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />"
@@ -85,16 +82,16 @@ GPK_CGI_JSON_APP_IMPL();
 		;
 	output.append(htmlDefaultAnte);
 	::ntl::htmlHeaderTitle(programState.Page.Title, output);
-	::ntl::htmlHeaderScriptFile({fileScriptHeader	.begin(), fileScriptHeader	.size()}, output);
-	::ntl::htmlHeaderStyleLink({fileStyle			.begin(), fileStyle			.size()}, output);
+	::ntl::htmlHeaderScriptFile	({fileScriptHeader	.begin(), fileScriptHeader	.size()}, output);
+	::ntl::htmlHeaderStyleLink	({fileStyle			.begin(), fileStyle			.size()}, output);
 
 	output.append(::gpk::view_const_string{"\n<link rel=\"icon\" type=\"image/png\" href=\"/favicon.png\">"});
 	output.append(::gpk::view_const_string{"\n</head>"});
-	output.append(::gpk::view_const_string{"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', '"	}); // onresize=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, document.getElementById('frameLang').value);\"
+	output.append(::gpk::view_const_string{"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('dumMainFrame', '"	}); // onresize=\"reframe('dumMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
 	output.append(section);
 	output.append(::gpk::view_const_string{"', '"});
 	output.append(fileProgramContent);
-	output.append(::gpk::view_const_string{"', document.getElementById('frameLang').value);\">"
+	output.append(::gpk::view_const_string{"', document.getElementById('l').value, document.getElementById('s').value);\">"
 		"\n	<table style=\"width:100%;height:100%;\">"
 		"\n		<tr >"
 		"\n			<td style=\"text-align:left\" >"
@@ -102,11 +99,10 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n		<tr >"
 		"\n			<td style=\"text-align:left\" >"
 		"\n				<form style=\"width:0px;height:0px;\" id=\"homeState\">"
-		"\n					<input style=\"width:0px;height:0px;\" id=\"frameName\"		type=\"hidden\" value=\"0\" />"
-		"\n					<input style=\"width:0px;height:0px;\" id=\"frameProgram\"	type=\"hidden\" value=\"0\" />"
-		"\n					<input style=\"width:0px;height:0px;\" id=\"frameLang\"		type=\"hidden\" value=\"es\" />"
-		"\n					<input style=\"width:0px;height:0px;\" id=\"frameCategory\"	type=\"hidden\" value=\"-1\" />"
-		//"\n					<input style=\"width:0px;height:0px;\" id=\"frameBarrio\"	type=\"hidden\" value=\"-1\" />"
+		"\n					<input style=\"width:0px;height:0px;\" id=\"m\"	type=\"hidden\" value=\"0\" />"
+		"\n					<input style=\"width:0px;height:0px;\" id=\"p\"	type=\"hidden\" value=\"0\" />"
+		"\n					<input style=\"width:0px;height:0px;\" id=\"l\"	type=\"hidden\" value=\"es\" />"
+		"\n					<input style=\"width:0px;height:0px;\" id=\"s\"	type=\"hidden\" value=\"-1\" />"
 		"\n				</form>"
 		"\n				<a href=\""
 		});
@@ -139,19 +135,19 @@ GPK_CGI_JSON_APP_IMPL();
 /*<!-- Reddit		-->*/ "	<a href=\"http://reddit.com/submit?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">							<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/reddit.png\" alt=\"Reddit\" /></a>"
 /*<!-- Tumblr		-->*/ "	<a href=\"http://www.tumblr.com/share/link?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">					<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/tumblr.png\" alt=\"Tumblr\" /></a>"
 /*<!-- Twitter		-->*/ "	<a href=\"https://twitter.com/share?url=http://tuobelisco.com&amp;text=TuObelisco&amp;hashtags=tuobelisco\" target=\"_blank\">	<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/twitter.png\" alt=\"Twitter\" /></a>"
-/*<!-- Pinterest	-->*/ "	<a href=\"javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());\">"
-"<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/pinterest.png\" alt=\"Pinterest\" /></a>"
-/*<!-- Buffer		-->*/ //"	<a href=\"https://bufferapp.com/add?url=http://tuobelisco.com&amp;text=TuObelisco\" target=\"_blank\">						<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/buffer.png\" alt=\"Buffer\" /></a>"
-/*<!-- Digg			-->*/ //"	<a href=\"http://www.digg.com/submit?url=http://tuobelisco.com\" target=\"_blank\">											<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/diggit.png\" alt=\"Digg\" /></a>"
-/*<!-- Email		-->*/ //"	<a href=\"mailto:?Subject=Tu Obelisco&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://tuobelisco.com\">		<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/email.png\" alt=\"Email\" /></a>"
-/*<!-- Google+		-->*/ //"	<a href=\"https://plus.google.com/share?url=http://tuobelisco.com\" target=\"_blank\">										<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/google.png\" alt=\"Google\" /></a>"
-/*<!-- StumbleUpon	-->*/ //"	<a href=\"http://www.stumbleupon.com/submit?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">				<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/stumbleupon.png\" alt=\"StumbleUpon\" /></a>"
-/*<!-- VK			-->*/ //"	<a href=\"http://vkontakte.ru/share.php?url=http://tuobelisco.com\" target=\"_blank\">										<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/vk.png\" alt=\"VK\" /></a>"
-/*<!-- Yummly		-->*/ //"	<a href=\"http://www.yummly.com/urb/verify?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">				<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/yummly.png\" alt=\"Yummly\" /></a>"
-/*<!-- Print		-->*/ //"	<a href=\"javascript:;\" onclick=\"window.print()\">																		<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/print.png\" alt=\"Print\" /></a>"
+///*<!-- Pinterest	-->*/ "	<a href=\"javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());\">"
+//"<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/pinterest.png\" alt=\"Pinterest\" /></a>"
+///*<!-- Buffer		-->*/ "	<a href=\"https://bufferapp.com/add?url=http://tuobelisco.com&amp;text=TuObelisco\" target=\"_blank\">						<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/buffer.png\" alt=\"Buffer\" /></a>"
+///*<!-- Digg			-->*/ "	<a href=\"http://www.digg.com/submit?url=http://tuobelisco.com\" target=\"_blank\">											<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/diggit.png\" alt=\"Digg\" /></a>"
+///*<!-- Email		-->*/ "	<a href=\"mailto:?Subject=Tu Obelisco&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://tuobelisco.com\">		<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/email.png\" alt=\"Email\" /></a>"
+///*<!-- Google+		-->*/ "	<a href=\"https://plus.google.com/share?url=http://tuobelisco.com\" target=\"_blank\">										<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/google.png\" alt=\"Google\" /></a>"
+///*<!-- StumbleUpon	-->*/ "	<a href=\"http://www.stumbleupon.com/submit?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">				<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/stumbleupon.png\" alt=\"StumbleUpon\" /></a>"
+///*<!-- VK			-->*/ "	<a href=\"http://vkontakte.ru/share.php?url=http://tuobelisco.com\" target=\"_blank\">										<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/vk.png\" alt=\"VK\" /></a>"
+///*<!-- Yummly		-->*/ "	<a href=\"http://www.yummly.com/urb/verify?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">				<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/yummly.png\" alt=\"Yummly\" /></a>"
+///*<!-- Print		-->*/ "	<a href=\"javascript:;\" onclick=\"window.print()\">																		<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/print.png\" alt=\"Print\" /></a>"
 //"</div>"
 		});
-	output.append(::gpk::view_const_string{"\n</td><td onclick=\"reframe('dumMainFrame', 'copyright', 'copyright.exe', document.getElementById('frameLang').value);\" ><img style=\"\" src=\""});
+	output.append(::gpk::view_const_string{"\n</td><td onclick=\"reframe('dumMainFrame', 'copyright', 'copyright.exe', document.getElementById('l').value, document.getElementById('s').value);\" ><img style=\"\" src=\""});
 	output.append(fileImageCopysign);
 	output.append(::gpk::view_const_string{
 		"\" >"
@@ -185,7 +181,7 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(::gpk::view_const_string{"</td>"});
 	output.append(::gpk::view_const_string{
 		"\n<td>"
-		"<select id=\"testSelect1\" onchange=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, document.getElementById('frameLang').value);\" style=\"font-size:"
+		"<select id=\"testSelect1\" onchange=\"reframe('dumMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\" style=\"font-size:"
 		});
 	output.append(::gpk::view_const_string{fontSize});
 	output.append(::gpk::view_const_string{ "px;\" >"});
@@ -215,19 +211,26 @@ GPK_CGI_JSON_APP_IMPL();
 #endif
 //-----------------------------------------------------------------
 	output.append(::gpk::view_const_string{
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, 'en');setLang('en');\" >"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'en', document.getElementById('s').value);setLang('en');\" >"
 		"\n				<img src=\""
 		});
 	output.append(fileImageLangEng);
 	output.append(::gpk::view_const_string{
 		"\" /> English"
 		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('frameName').value, document.getElementById('frameProgram').value, 'es');setLang('es');\" >"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'es', document.getElementById('s').value);setLang('es');\" >"
 		"\n				<img src=\""
 		});
 	output.append(fileImageLangEsp);
 	output.append(::gpk::view_const_string{
 		"\" /> Español"
+		"\n			</td>"
+		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('dumMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\" >"
+		"\n				<img src=\""
+		});
+	output.append(fileImageSignedOut);
+	output.append(::gpk::view_const_string{
+		"\" />"
 		"\n			</td>"
 		"\n		</tr>"
 		"\n	</table>"
@@ -244,13 +247,12 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n		<tr >"
 		"\n			<td style=\"width:100%;height:72px;font-family:Arial;\" >"
 		});
-
 	const ::ntl::SHTMLIcon									icons[]							=
-		{ {"tours"		, "shops"		, "Turismo y Guías"			}
-		, {"shops"		, "shops"		, "Comercio y Servicios"	}
-		, {"shows"		, "shops"		, "Shows y Arte"			}
-		, {"meals"		, "shops"		, "Comidas y Snacks"		}
-		, {"pricing"	, "pricing"		, "Publicar"}
+		{ {"tours"	, "shops"	, "Turismo y<br/> Guías"			}
+		, {"shops"	, "shops"	, "Comercios y<br/> Servicios"	}
+		, {"shows"	, "shops"	, "Shows y<br/> Arte"			}
+		, {"meals"	, "shops"	, "Comidas y<br/> Snacks"		}
+		//, {"pricing", "pricing"	, "Publicar"			}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 

@@ -29,5 +29,6 @@
     <None Include="ad_subcategory.json" />
     <None Include="pokemon.json" />
     <None Include="barrios.json" />
+    <None Include="header.js" />
   </ItemGroup>
 </Project>

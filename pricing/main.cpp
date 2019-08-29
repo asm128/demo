@@ -23,7 +23,6 @@ GPK_CGI_JSON_APP_IMPL();
 			return 1;
 		}
 	}
-
 	::ntl::SHTMLEndpoint									programState;
 	const char												configFileName	[]				= "./neutralizer.json";
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
@@ -34,14 +33,14 @@ GPK_CGI_JSON_APP_IMPL();
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
 	::gpk::array_pod<char_t>								fileStyle			;
-	::ntl::httpPath(programState.Path.Image		, "logo_home"	, programState.Extension.Image, fileLogo);
-	::ntl::httpPath(programState.Path.Style		, "blankstyle"	, "css"	, fileStyle			);
+	::ntl::httpPath(programState.Path.Image, "logo_home"	, programState.Extension.Image, fileLogo);
+	::ntl::httpPath(programState.Path.Style, "blankstyle"	, "css"	, fileStyle			);
 
 	output.append(::gpk::view_const_string{ "\n<html>"});
 	output.append(::gpk::view_const_string{ "\n<head>"});
 	output.append(::gpk::view_const_string{ "\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />"});
 	::ntl::htmlHeaderTitle(programState.Page.Title, output);
-	::ntl::htmlHeaderStyleLink	({fileStyle			.begin(), fileStyle			.size()}, output);
+	::ntl::htmlHeaderStyleLink({fileStyle.begin(), fileStyle.size()}, output);
 	output.append(::gpk::view_const_string{"\n</head>"});
 
 	output.append(::gpk::view_const_string{"\n<body style=\"width:100%;height:100%;background-color:#E0E0E0;font-family:Arial;\">"	}); // 202050
@@ -55,7 +54,7 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;font-size:24px; font-weight:bold; vertical-align:top;\">"});
 
 	::gpk::view_const_string								lang;
-	::gpk::find("lang", requestReceived.QueryStringKeyVals, lang);
+	::gpk::find("l", requestReceived.QueryStringKeyVals, lang);
 	if(lang == ::gpk::view_const_string{"es"})
 		output.append(::gpk::view_const_string{ "\n<h1>Publicidad</h1>"});
 	else
@@ -64,29 +63,29 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(::gpk::view_const_string{"\n</tr>"});
 	output.append(::gpk::view_const_string{ "\n<tr style=\"height:100%;\" >"});
 	output.append(::gpk::view_const_string{ "\n<td style=\"font-size:32px; font-weight:bold; text-align:center;vertical-align:top;\">"});
-	if(lang == ::gpk::view_const_string{"es"})
-		output.append(::gpk::view_const_string{ "<a mp-mode=\"dftl\" href=\"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=420404344-34d30d46-7d4a-47b8-a961-65a5c8bb638f\" name=\"MP-payButton\" class='blue-ar-l-rn-none'>$1000 (ARS) - Publicación Beta <br /> 1 unidad/mes (imagen + link + domicilio/teléfono)</a>"																																																																	});
-	else
-		output.append(::gpk::view_const_string{ "<a mp-mode=\"dftl\" href=\"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=420404344-34d30d46-7d4a-47b8-a961-65a5c8bb638f\" name=\"MP-payButton\" class='blue-ar-l-rn-none'>$1000 (ARS) - Beta Ad <br /> 1 unit/month (image + url + street address/phone)</a>"																																																																	});
-
-	output.append(::gpk::view_const_string{ "<script type=\"text/javascript\">"																																																																																																																									});
-	output.append(::gpk::view_const_string{ "(function(){function $MPC_load(){window.$MPC_loaded !== true && (function(){var s = document.createElement(\"script\");s.type = \"text/javascript\";s.async = true;s.src = document.location.protocol+\"//secure.mlstatic.com/mptools/render.js\";var x = document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s, x);window.$MPC_loaded = true;})();}window.$MPC_loaded !== true ? (window.attachEvent ?window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null;})();"	});
-	output.append(::gpk::view_const_string{ "</script>"																																																																																																																															});
+	//if(lang == ::gpk::view_const_string{"es"})
+	//	output.append(::gpk::view_const_string{ "<a mp-mode=\"dftl\" href=\"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=420404344-34d30d46-7d4a-47b8-a961-65a5c8bb638f\" name=\"MP-payButton\" class='blue-ar-l-rn-none'>$1000 (ARS) - Publicación Beta <br /> 1 unidad/mes (imagen + link + domicilio/teléfono)</a>"});
+	//else
+	//	output.append(::gpk::view_const_string{ "<a mp-mode=\"dftl\" href=\"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=420404344-34d30d46-7d4a-47b8-a961-65a5c8bb638f\" name=\"MP-payButton\" class='blue-ar-l-rn-none'>$1000 (ARS) - Beta Ad <br /> 1 unit/month (image + url + street address/phone)</a>"});
+	//
+	//output.append(::gpk::view_const_string{ "<script type=\"text/javascript\">"																																																																																																																									});
+	//output.append(::gpk::view_const_string{ "(function(){function $MPC_load(){window.$MPC_loaded !== true && (function(){var s = document.createElement(\"script\");s.type = \"text/javascript\";s.async = true;s.src = document.location.protocol+\"//secure.mlstatic.com/mptools/render.js\";var x = document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s, x);window.$MPC_loaded = true;})();}window.$MPC_loaded !== true ? (window.attachEvent ?window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null;})();"	});
+	//output.append(::gpk::view_const_string{ "</script>"																																																																																																																															});
 	output.append(::gpk::view_const_string{"\n</td>"});
 	output.append(::gpk::view_const_string{"\n</tr>"});
 	output.append(::gpk::view_const_string{"\n</table>"});
 	//---------------------
-
 	output.append(::gpk::view_const_string{"\n</td>"			});
 	output.append(::gpk::view_const_string{"\n</tr>"			});
 
 	//---------------------
 	output.append(::gpk::view_const_string{ "\n<tr style=\"height:100%;\" >"});
 	output.append(::gpk::view_const_string{ "\n<td style=\"font-size:32px; font-weight:bold; text-align:center;vertical-align:top;\">"});
-	if(lang == ::gpk::view_const_string{"es"}) {
+	output.append(::gpk::view_const_string{"\n<form method=\"POST\" action=\"pricing.exe\" enctype=\"multipart/form-data\" ><input type=\"file\" id=\"avatar\" name=\"avatar\" accept=\"image/png\" /><input type=\"submit\" /></form>"});
 		output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"});
 		output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
 		output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;font-size:24px; font-weight:bold; vertical-align:top;\">"});
+	if(lang == ::gpk::view_const_string{"es"}) {
 		output.append(::gpk::view_const_string{ "\n<h1>Términos y condiciones</h1>"});
 		output.append(::gpk::view_const_string{"\n</td>"});
 		output.append(::gpk::view_const_string{"\n</tr>"});
@@ -121,20 +120,12 @@ GPK_CGI_JSON_APP_IMPL();
 			"Por ello, no garantiza un servicio libre de errores e ininterrumpido y no será responsable bajo ninguna circunstancia por eventuales daños y/o perjuicios directos o indirectos que puedan derivarse de su uso, por errores o inexactitudes de la información contenida en él, ni respecto de interrupciones, demoras, virus o fallas del sistema."
 			"</p>"
 			});
-
 		output.append(::gpk::view_const_string{ "\n<br/><h3 style=\"text-align:left;\" >Ley Aplicable</h3>"});
 		output.append(::gpk::view_const_string{ "\n<br/><p  style=\"text-align:left;text-decoration:none;font-weight:normal;\" >Estos términos y condiciones se otorgan en la Ciudad Autónoma de Buenos Aires y se gobiernan por las leyes de la República Argentina."
 			"Cualquier controversia derivada del presente acuerdo, su existencia, validez, interpretación, alcance o cumplimiento, será sometida a los Tribunales Ordinarios en lo Comercial con asiento en la Ciudad Autónoma de Buenos Aires.</p>"
 			});
-
-		output.append(::gpk::view_const_string{"\n</td>"});
-		output.append(::gpk::view_const_string{"\n</tr>"});
-		output.append(::gpk::view_const_string{"\n</table>"});
 	}
 	else {
-		output.append(::gpk::view_const_string{ "\n<table style=\"width:100%;height:100%;text-align:center;\">"});
-		output.append(::gpk::view_const_string{ "\n<tr style=\"\" >"});
-		output.append(::gpk::view_const_string{ "\n<td style=\"width:100%;font-size:24px; font-weight:bold; vertical-align:top;\">"});
 		output.append(::gpk::view_const_string{ "\n<h1>Terms and conditions</h1>"});
 		output.append(::gpk::view_const_string{"\n</td>"});
 		output.append(::gpk::view_const_string{"\n</tr>"});
@@ -157,7 +148,6 @@ GPK_CGI_JSON_APP_IMPL();
 			});
 		output.append(::gpk::view_const_string{ "\n<br/><h3 style=\"text-align:left;\" >Privacidad</h3>"});
 		output.append(::gpk::view_const_string{ "\n<br/><p  style=\"text-align:left;text-decoration:none;font-weight:normal;\" >Al continuar utilizando los servicios de TuObelisco.com, el usuario da consentimiento a recolectar y utilizar información conforme a lo establecido en nuestra Política de Privacidad.</p>"	});
-
 		output.append(::gpk::view_const_string{ "\n<br/><h3 style=\"text-align:left;\" >Usos no permitidos</h3>"});
 		output.append(::gpk::view_const_string{ "\n<br/><p  style=\"text-align:left;text-decoration:none;font-weight:normal;\" >No está permitida ninguna acción o uso de dispositivo, software, u otro medio tendiente a interferir tanto en las actividades y operatoria de TuObelisco.com como en las bases de datos de TuObelisco.com. Cualquier intromisión, tentativa o actividad violatoria o contraria a las leyes sobre derecho de propiedad intelectual y/o a las prohibiciones estipuladas en este contrato harán pasible a su responsable de las acciones legales pertinentes, y a las sanciones previstas por este acuerdo, así como lo hará responsable de indemnizar los daños ocasionados."
 			"No está permitido desencriptar o hacer ingeniería inversa del Sitio Web, o romper, alterar o interferir con el Servicio. Todo Usuario será legalmente responsable de las siguientes conductas: a) Uso incorrecto del sitio o de la información que contenga; b) Uso con fines o efectos ilícitos del sitio, sus servicios o de la información que contenga; c) Causar inutilización, demora, deterioro o daño al sitio, sus servicios o a la información que contenga; d) Reproducción total o parcial, comercialización, distribución, publicación o modificación no autorizada de información.</p>"
@@ -169,16 +159,16 @@ GPK_CGI_JSON_APP_IMPL();
 			"Por ello, no garantiza un servicio libre de errores e ininterrumpido y no será responsable bajo ninguna circunstancia por eventuales daños y/o perjuicios directos o indirectos que puedan derivarse de su uso, por errores o inexactitudes de la información contenida en él, ni respecto de interrupciones, demoras, virus o fallas del sistema."
 			"</p>"
 			});
-
 		output.append(::gpk::view_const_string{ "\n<br/><h3 style=\"text-align:left;\" >Ley Aplicable</h3>"});
 		output.append(::gpk::view_const_string{ "\n<br/><p  style=\"text-align:left;text-decoration:none;font-weight:normal;\" >Estos términos y condiciones se otorgan en la Ciudad Autónoma de Buenos Aires y se gobiernan por las leyes de la República Argentina."
 			"Cualquier controversia derivada del presente acuerdo, su existencia, validez, interpretación, alcance o cumplimiento, será sometida a los Tribunales Ordinarios en lo Comercial con asiento en la Ciudad Autónoma de Buenos Aires.</p>"
 			});
 
+	}
 		output.append(::gpk::view_const_string{"\n</td>"});
 		output.append(::gpk::view_const_string{"\n</tr>"});
 		output.append(::gpk::view_const_string{"\n</table>"});
-	}
+
 	//---------------------
 
 	output.append(::gpk::view_const_string{"\n</td>"});

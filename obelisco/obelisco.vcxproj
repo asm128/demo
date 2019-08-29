@@ -194,6 +194,7 @@
     <None Include="ad_category.json" />
     <None Include="ad_subcategory.json" />
     <None Include="barrios.json" />
+    <None Include="header.js" />
     <None Include="keypad.json" />
     <None Include="obelisco.bat" />
     <None Include="pokemon.json" />
