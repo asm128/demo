@@ -32,10 +32,11 @@ GPK_CGI_JSON_APP_IMPL();
 	}
 	::ntl::SNTLArgs											qsArgs;
 	::ntl::loadNTLArgs(qsArgs, requestReceived.QueryStringKeyVals);
+	::gpk::SJSONFile										sessionFile;
+	::gpk::view_const_string								section;
 	if(0 == qsArgs.Session.size()) {
 		const uint64_t											timeInUs						= ::gpk::timeCurrentInUs();
 		char													strTempSession	[2048]			= {};
-		::gpk::view_const_string								ipRemote;
 		sprintf_s(strTempSession, "%s_%llu", requestReceived.Ip.begin(), timeInUs);
 		::gpk::array_pod<char_t>								encrypted;
 		srand((uint32_t)::gpk::noise1DBase(::gpk::timeCurrentInUs()));
@@ -43,6 +44,21 @@ GPK_CGI_JSON_APP_IMPL();
 		::gpk::array_pod<char_t>								encoded;
 		::gpk::base64EncodeFS(encrypted, encoded);
 		qsArgs.Session										= ::gpk::label(encoded.begin(), encoded.size());
+		FILE													* fp							= 0;
+		fopen_s(&fp, qsArgs.Session.begin(), "rb");
+		ree_if(fp, "%s", "Some invalid access caused a redundant anon session.");
+		switch(rand() % 4) {
+		case 0: section = "shops"; break;
+		case 1: section = "meals"; break;
+		case 2: section = "shows"; break;
+		case 3: section = "tours"; break;
+		}
+	}
+	else {
+		::gpk::array_pod<char_t>								finalPath						= ::gpk::view_const_string{"session/"};
+		gpk_necall(finalPath.append(qsArgs.Session), "Failed to append path. Invalid session id?");
+		::gpk::jsonFileRead(sessionFile, {finalPath.begin(), finalPath.size()});
+		section												= "tours";
 	}
 
 	::gpk::view_const_string								title;
@@ -72,14 +88,6 @@ GPK_CGI_JSON_APP_IMPL();
 	::ntl::httpPath(programState.Path.Style		, "blankstyle"				, "css"	, fileStyle			);
 	::ntl::httpPath(programState.Path.Script	, "header"					, "js"	, fileScriptHeader	);
 
-	srand((uint32_t)::gpk::timeCurrentInUs());
-	::gpk::view_const_string								section;
-	switch(rand() % 4) {
-	case 0: section = "shops"; break;
-	case 1: section = "meals"; break;
-	case 2: section = "shows"; break;
-	case 3: section = "tours"; break;
-	};
 
 	::ntl::httpPath(programState.Path.Program	, "shops"		, programState.Extension.Program, fileProgramContent);
 	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
