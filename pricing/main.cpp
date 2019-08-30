@@ -32,8 +32,8 @@ GPK_CGI_JSON_APP_IMPL();
 		::ntl::loadConfig(programState, indexRoot);
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
-	::gpk::array_pod<char_t>								fileStyle			;
 	::ntl::httpPath(programState.Path.Image, "logo_home"	, programState.Extension.Image, fileLogo);
+	::gpk::array_pod<char_t>								fileStyle			;
 	::ntl::httpPath(programState.Path.Style, "blankstyle"	, "css"	, fileStyle			);
 
 	output.append(::gpk::view_const_string{ "\n<html>"});

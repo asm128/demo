@@ -149,9 +149,9 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append(::gpk::view_const_string{"\n</td>"			});
 	output.append(::gpk::view_const_string{"\n</tr>"			});
 	output.append(::gpk::view_const_string{"\n</table>"			});
-	output.append(::gpk::view_const_string{ "\n<code >"	});
+	output.append(::gpk::view_const_string{ "\n<code>"	});
 	output.append(runtimeValues.Content.Body.begin(), runtimeValues.Content.Length);
-	output.append(::gpk::view_const_string{ "\n</code >"	});
+	output.append(::gpk::view_const_string{ "\n</code>"	});
 	output.append(::gpk::view_const_string{"\n</body>"			});
 	output.append(::gpk::view_const_string{"\n</html>"			});
 

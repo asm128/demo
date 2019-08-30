@@ -34,6 +34,8 @@ GPK_CGI_JSON_APP_IMPL();
 	::ntl::loadNTLArgs(qsArgs, requestReceived.QueryStringKeyVals);
 	::gpk::SJSONFile										sessionFile;
 	::gpk::view_const_string								section;
+	const ::gpk::view_const_string							folderSession					= {};
+	const ::gpk::view_const_string							folderUser						= {};
 	if(0 == qsArgs.Session.size()) {
 		const uint64_t											timeInUs						= ::gpk::timeCurrentInUs();
 		char													strTempSession	[2048]			= {};
@@ -88,7 +90,6 @@ GPK_CGI_JSON_APP_IMPL();
 	::ntl::httpPath(programState.Path.Style		, "blankstyle"				, "css"	, fileStyle			);
 	::ntl::httpPath(programState.Path.Script	, "header"					, "js"	, fileScriptHeader	);
 
-
 	::ntl::httpPath(programState.Path.Program	, "shops"		, programState.Extension.Program, fileProgramContent);
 	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
 	::ntl::httpPath(programState.Path.Program	, "session"		, programState.Extension.Program, fileProgramHeader);
@@ -102,7 +103,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n<meta name=\"keywords\"		content=\"obelisco, microcentro, tuobelisco, tu obelisco, tu-obelisco, tuobelisco.com, buenos aires, turismo, publicidad, publicidad online\" />"
 		"\n<meta name=\"robots\"		content=\"index,follow\" />"
 		"\n<meta name=\"DC.title\"		content=\"Publicidad Online\" />"
-		"\n<meta name=\"viewport\"		content=\"width=device-width, initial-scale=0.5\" >"
+		"\n<meta name=\"viewport\"		content=\"width=device-width, initial-scale=0.5\" />"
 		;
 	output.append(htmlDefaultAnte);
 	::ntl::htmlHeaderTitle(programState.Page.Title, output);
@@ -250,15 +251,17 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n				<img src=\""
 		});
 	output.append(fileImageLangEsp);
+
+
 	output.append(::gpk::view_const_string{
 		"\" /> Español"
 		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\" >"
-		"\n				<img src=\""
+		"\n			<td style=\"text-align:center;vertical-align:center;\" >"	// onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
+		"\n				<a onclick=\"var frameRect = document.getElementById('tuMainFrame').getBoundingClientRect(); window.location = 'session.exe?w=' + frameRect.width + '&h=' + frameRect.height;\" ><img src=\""
 		});
 	output.append(fileImageSignedOut);
 	output.append(::gpk::view_const_string{
-		"\" />"
+		"\" /></a>"
 		"\n			</td>"
 		"\n		</tr>"
 		"\n	</table>"

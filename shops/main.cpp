@@ -430,6 +430,7 @@ static	::gpk::error_t								pageCatalog					(const ::gpk::view_const_string & c
 	output.append(::gpk::view_const_string{ "\n<html>"});
 	// --- Head
 	output.append(::gpk::view_const_string{ "\n<head>"});
+	output.append(::gpk::view_const_string{ "\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=0.5\" />"});
 	output.append(::gpk::view_const_string{ "\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />"});
 	::gpk::array_pod<char_t>								fileStyle			;
 	::ntl::httpPath(pathStyles, "blankstyle", "css"	, fileStyle);
