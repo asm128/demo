@@ -34,12 +34,22 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 
 		output.append(::gpk::view_const_string{"\n<table style=\"height:100%;width:100%;\" >"});
 		output.append(::gpk::view_const_string{"\n<tr>"});
+
+		output.append(::gpk::view_const_string{"\n<td style=\"background-color:#808000;font-size:"});
+		output.append(::gpk::view_const_string{fontSize});
+		output.append(::gpk::view_const_string{"px;\" />"});
+		if(qsArgs.Language == ::gpk::view_const_string{"es"})
+			output.append(::gpk::view_const_string{"correo-e"});
+		else
+			output.append(::gpk::view_const_string{"e-mail"});
+		output.append(::gpk::view_const_string{"</td>"});
+
 		output.append(::gpk::view_const_string{"\n<td>"});
 		output.append(::gpk::view_const_string{"\n<input type=\"text\" id=\"user\" onclick=\"if(document.getElementById('user_used').value == '0') { this.select(); document.getElementById('user_used').value = 1; }\" value=\""});
 		if(qsArgs.Language == ::gpk::view_const_string{"es"})
-			output.append(::gpk::view_const_string{"dirección de correo electrónico"});
+			output.append(::gpk::view_const_string{"usuario@ej.com"});
 		else
-			output.append(::gpk::view_const_string{"e-mail"});
+			output.append(::gpk::view_const_string{"user@example.com"});
 		output.append(::gpk::view_const_string{"\" style=\"width:100%;font-size:"});
 		output.append(::gpk::view_const_string{fontSize});
 		output.append(::gpk::view_const_string{"px;\" />"});	// document.getElementById('user_used');
@@ -48,6 +58,16 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 		output.append(::gpk::view_const_string{"\n</tr>"});
 
 		output.append(::gpk::view_const_string{"\n<tr>"});
+
+		output.append(::gpk::view_const_string{"\n<td style=\"background-color:#808000;font-size:"});
+		output.append(::gpk::view_const_string{fontSize});
+		output.append(::gpk::view_const_string{"px;\" />"});
+		if(qsArgs.Language == ::gpk::view_const_string{"es"})
+			output.append(::gpk::view_const_string{"contraseña"});
+		else
+			output.append(::gpk::view_const_string{"password"});
+		output.append(::gpk::view_const_string{"</td>"});
+
 		output.append(::gpk::view_const_string{"\n<td>"});
 		output.append(::gpk::view_const_string{"\n<input type=\"password\" id=\"pass\" onclick=\"if(document.getElementById('pass_used').value == '0') { this.select(); document.getElementById('pass_used').value = 1; }\" value=\""});
 		if(qsArgs.Language == ::gpk::view_const_string{"es"})
@@ -60,9 +80,19 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 		output.append(::gpk::view_const_string{"\n</td>"});
 		output.append(::gpk::view_const_string{"\n</tr>"});
 
-		output.append(::gpk::view_const_string{"\n<tr>"});
+		output.append(::gpk::view_const_string{"\n<tr id=\"test_row\" style=\"visibility:collapse;\" >"});
+
+		output.append(::gpk::view_const_string{"\n<td style=\"background-color:#808000;font-size:"});
+		output.append(::gpk::view_const_string{fontSize});
+		output.append(::gpk::view_const_string{"px;\" />"});
+		if(qsArgs.Language == ::gpk::view_const_string{"es"})
+			output.append(::gpk::view_const_string{"confirmar contraseña"});
+		else
+			output.append(::gpk::view_const_string{"confirm password"});
+		output.append(::gpk::view_const_string{"</td>"});
+
 		output.append(::gpk::view_const_string{"\n<td>"});
-		output.append(::gpk::view_const_string{"\n<input type=\"password\" id=\"test\" style=\"visibility:collapse;width:100%;font-size:"});
+		output.append(::gpk::view_const_string{"\n<input type=\"password\" id=\"test\" style=\"height:100%;width:100%;font-size:"});
 		output.append(::gpk::view_const_string{fontSize});
 		output.append(::gpk::view_const_string{"px;\" />"});
 		output.append(::gpk::view_const_string{"\n</td>"});

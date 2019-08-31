@@ -34,6 +34,9 @@ GPK_CGI_JSON_APP_IMPL();
 	}
 	::ntl::SNTLArgs											qsArgs;
 	::ntl::loadNTLArgs(qsArgs, requestReceived.QueryStringKeyVals);
+	if(0 == qsArgs.Language.size())
+		qsArgs.Language										= "es";
+
 	::gpk::SJSONFile										sessionFile;
 	::gpk::view_const_string								section;
 	const ::gpk::view_const_string							folderSession					= {};
@@ -259,7 +262,14 @@ GPK_CGI_JSON_APP_IMPL();
 		"\" /> Español"
 		"\n			</td>"
 		"\n			<td style=\"text-align:center;vertical-align:center;\" >"	// onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
-		"\n				<a onclick=\"var frameRect = document.getElementById('tuMainFrame').getBoundingClientRect(); window.location = 'session.exe?w=' + frameRect.width + '&h=' + frameRect.height;\" ><img src=\""
+		});
+	output.append(::gpk::view_const_string{
+		"\n				<a onclick=\"var frameRect = document.getElementById('tuMainFrame').getBoundingClientRect(); window.location = 'session.exe?w=' + frameRect.width + '&h=' + frameRect.height + '&l="
+		});
+	output.append(qsArgs.Language);
+	output.append(::gpk::view_const_string{"';\" >"});
+	output.append(::gpk::view_const_string{
+		"\n<img src=\""
 		});
 	output.append(fileImageSignedOut);
 	output.append(::gpk::view_const_string{
