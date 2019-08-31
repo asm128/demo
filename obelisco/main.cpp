@@ -24,8 +24,10 @@ GPK_CGI_JSON_APP_IMPL();
 		::gpk::view_const_string							methodsValid	[]				=
 			{ "GET"
 			, "POST"
+			, "get"
+			, "post"
 			};
-		if(0 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
+		if(-1 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
 			output.append(::gpk::view_const_string{"{ \"status\" : 403, \"description\" :\"forbidden\" }\r\n"});
 			return 1;
 		}

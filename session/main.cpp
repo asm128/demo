@@ -35,7 +35,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 		output.append(::gpk::view_const_string{"\n<table style=\"height:100%;width:100%;\" >"});
 		output.append(::gpk::view_const_string{"\n<tr>"});
 		output.append(::gpk::view_const_string{"\n<td>"});
-		output.append(::gpk::view_const_string{"\n<input type=\"text\" id=\"user\" name=\"user\" onclick=\"if(document.getElementById('user_used').value == '0') { this.select(); document.getElementById('user_used').value = 1; }\" value=\""});
+		output.append(::gpk::view_const_string{"\n<input type=\"text\" id=\"user\" onclick=\"if(document.getElementById('user_used').value == '0') { this.select(); document.getElementById('user_used').value = 1; }\" value=\""});
 		if(qsArgs.Language == ::gpk::view_const_string{"es"})
 			output.append(::gpk::view_const_string{"dirección de correo electrónico"});
 		else
@@ -49,7 +49,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 
 		output.append(::gpk::view_const_string{"\n<tr>"});
 		output.append(::gpk::view_const_string{"\n<td>"});
-		output.append(::gpk::view_const_string{"\n<input type=\"password\" id=\"pass\" name=\"pass\" onclick=\"if(document.getElementById('pass_used').value == '0') { this.select(); document.getElementById('pass_used').value = 1; }\" value=\""});
+		output.append(::gpk::view_const_string{"\n<input type=\"password\" id=\"pass\" onclick=\"if(document.getElementById('pass_used').value == '0') { this.select(); document.getElementById('pass_used').value = 1; }\" value=\""});
 		if(qsArgs.Language == ::gpk::view_const_string{"es"})
 			output.append(::gpk::view_const_string{"contraseña"});
 		else
@@ -62,7 +62,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 
 		output.append(::gpk::view_const_string{"\n<tr>"});
 		output.append(::gpk::view_const_string{"\n<td>"});
-		output.append(::gpk::view_const_string{"\n<input type=\"password\" id=\"test\" name=\"test\" style=\"visibility:collapse;width:100%;font-size:"});
+		output.append(::gpk::view_const_string{"\n<input type=\"password\" id=\"test\" style=\"visibility:collapse;width:100%;font-size:"});
 		output.append(::gpk::view_const_string{fontSize});
 		output.append(::gpk::view_const_string{"px;\" />"});
 		output.append(::gpk::view_const_string{"\n</td>"});
@@ -84,8 +84,8 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	output.append(::gpk::view_const_string{"px;\" />"});
 	output.append(::gpk::view_const_string{ "\n<input type=\"hidden\" id=\"user_used\" value=\"0\" />" });
 	output.append(::gpk::view_const_string{ "\n<input type=\"hidden\" id=\"pass_used\" value=\"0\" />" });
-	output.append(::gpk::view_const_string{ "\n<input type=\"hidden\" id=\"b64user\" value=\"\" />" });
-	output.append(::gpk::view_const_string{ "\n<input type=\"hidden\" id=\"b64pass\" value=\"\" />" });
+	output.append(::gpk::view_const_string{ "\n<input type=\"hidden\" id=\"b64user\" name=\"user\" value=\"\" />" });
+	output.append(::gpk::view_const_string{ "\n<input type=\"hidden\" id=\"b64pass\" name=\"pass\" value=\"\" />" });
 
 	output.append(::gpk::view_const_string{"\n</td>"});
 	output.append(::gpk::view_const_string{"\n</tr>"});
@@ -107,7 +107,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 			{ "GET"
 			, "POST"
 			};
-		if(0 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
+		if(-1 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
 			output.append(::gpk::view_const_string{"{ \"status\" : 403, \"description\" :\"forbidden\" }\r\n"});
 			return 1;
 		}
