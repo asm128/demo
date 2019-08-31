@@ -18,14 +18,14 @@ function							formOnClickSubmit				(signup)	{
 		var										inputTest						= document.getElementById('test');
 		if(inputPass.value != inputTest.value) {
 			var										inputTestRow					= document.getElementById('test_row');
-			inputTestRow	.style.visibility = "visible";
+			inputTestRow.style.visibility		= "visible";
 			return false;
 		}
 	}
 	var										inputb64User					= document.getElementById('b64user');
 	var										inputb64Pass					= document.getElementById('b64pass');
 	var										lowerUser						= inputUser.value.toLowerCase();
-	inputb64User.value						= btoa(lowerUser);
-	inputb64Pass.value						= btoa(inputPass.value);
+	inputb64User.value					= btoa(lowerUser);
+	inputb64Pass.value					= btoa(inputPass.value);
 	formLogin.submit();
 }
