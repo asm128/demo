@@ -19,8 +19,8 @@ GPK_CGI_JSON_APP_IMPL();
 	::gpk::SHTTPAPIRequest									requestReceived					= {};
 	bool													isCGIEnviron					= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
 	if (isCGIEnviron) {
-		gpk_necall(output.append(::gpk::view_const_string{"Content-type: text/html\r\nCache-control: no-cache\r\n"}), "%s", "Out of memory?");
-		gpk_necall(output.append(::gpk::view_const_string{"\r\n"}), "%s", "Out of memory?");
+		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache\r\n"), "%s", "Out of memory?");
+		gpk_necall(output.append_string("\r\n"), "%s", "Out of memory?");
 		::gpk::view_const_string							methodsValid	[]				=
 			{ "GET"
 			, "POST"
@@ -28,7 +28,7 @@ GPK_CGI_JSON_APP_IMPL();
 			, "post"
 			};
 		if(-1 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
-			output.append(::gpk::view_const_string{"{ \"status\" : 403, \"description\" :\"forbidden\" }\r\n"});
+			output.append_string("{ \"status\" : 403, \"description\" :\"forbidden\" }\r\n");
 			return 1;
 		}
 	}
@@ -115,13 +115,13 @@ GPK_CGI_JSON_APP_IMPL();
 	::ntl::htmlHeaderScriptFile	({fileScriptHeader	.begin(), fileScriptHeader	.size()}, output);
 	::ntl::htmlHeaderStyleLink	({fileStyle			.begin(), fileStyle			.size()}, output);
 
-	output.append(::gpk::view_const_string{"\n<link rel=\"icon\" type=\"image/png\" href=\"/favicon.png\">"});
-	output.append(::gpk::view_const_string{"\n</head>"});
-	output.append(::gpk::view_const_string{"\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('tuMainFrame', '"	}); // onresize=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
+	output.append_string("\n<link rel=\"icon\" type=\"image/png\" href=\"/favicon.png\">");
+	output.append_string("\n</head>");
+	output.append_string("\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('tuMainFrame', '"); // onresize=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
 	output.append(section);
-	output.append(::gpk::view_const_string{"', '"});
+	output.append_string("', '");
 	output.append(fileProgramContent);
-	output.append(::gpk::view_const_string{"', document.getElementById('l').value, document.getElementById('s').value);\">"
+	output.append_string("', document.getElementById('l').value, document.getElementById('s').value);\">"
 		"\n	<table style=\"width:100%;height:100%;\">"
 		"\n		<tr >"
 		"\n			<td style=\"text-align:left\" >"
@@ -133,17 +133,17 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n					<input style=\"width:0px;height:0px;\" id=\"p\"	type=\"hidden\" value=\"0\" />"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"l\"	type=\"hidden\" value=\"es\" />"
 		"\n					<input style=\"width:0px;height:0px;\" id=\"s\"	type=\"hidden\" value=\""
-		});
+		);
 	output.append(qsArgs.Session);
-	output.append(::gpk::view_const_string{
+	output.append_string(
 		"\" />"
 		"\n				</form>"
 		"\n				<a href=\""
-		});
+		);
 	output.append(fileProgramHeader);
-	output.append(::gpk::view_const_string{"\"><img style=\"height:72px\" src=\""});
+	output.append_string("\"><img style=\"height:72px\" src=\"");
 	output.append(fileLogo);
-	output.append(::gpk::view_const_string{
+	output.append_string(
 		"\" /></a>"
 		"\n			</td>"
 		"\n			<td style=\"width:100%;font-family:Arial;text-align:right;\" >"
@@ -180,10 +180,10 @@ GPK_CGI_JSON_APP_IMPL();
 ///*<!-- Yummly		-->*/ "	<a href=\"http://www.yummly.com/urb/verify?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">				<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/yummly.png\" alt=\"Yummly\" /></a>"
 ///*<!-- Print		-->*/ "	<a href=\"javascript:;\" onclick=\"window.print()\">																		<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/print.png\" alt=\"Print\" /></a>"
 //"</div>"
-		});
-	output.append(::gpk::view_const_string{"\n</td><td onclick=\"reframe('tuMainFrame', 'copyright', 'copyright.exe', document.getElementById('l').value, document.getElementById('s').value);\" ><img style=\"\" src=\""});
+		);
+	output.append_string("\n</td><td onclick=\"reframe('tuMainFrame', 'copyright', 'copyright.exe', document.getElementById('l').value, document.getElementById('s').value);\" ><img style=\"\" src=\"");
 	output.append(fileImageCopysign);
-	output.append(::gpk::view_const_string{
+	output.append_string(
 		"\" >"
 		"\n</td></tr>															"
 		"\n<tr>																	"
@@ -194,7 +194,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n</tbody></table>														"
 		//"\n				<img src=\"/obelisco/image/blank.png\"/>"
 		"\n			</td>"
-		});
+		);
 //-----------------------------------------------------------------
 
 #if defined(ENABLE_MAINFRAME_BARRIO)
@@ -208,17 +208,17 @@ GPK_CGI_JSON_APP_IMPL();
 	else
 		sprintf_s(fontSize, "%u", sizeScreen.y ? sizeScreen.y / 44 : 24);
 
-	output.append(::gpk::view_const_string{"\n<td style=\"font-weight:bold;font-size:"});
-	output.append(::gpk::view_const_string{fontSize});
-	output.append(::gpk::view_const_string{ "px;\" >"});
-	output.append(::gpk::view_const_string{"<h5>Barrio:<h5>"});
-	output.append(::gpk::view_const_string{"</td>"});
-	output.append(::gpk::view_const_string{
+	output.append_string("\n<td style=\"font-weight:bold;font-size:");
+	output.append_string(fontSize);
+	output.append_string("px;\" >");
+	output.append_string("<h5>Barrio:<h5>");
+	output.append_string("</td>");
+	output.append_string(
 		"\n<td>"
 		"<select id=\"testSelect1\" onchange=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\" style=\"font-size:"
-		});
-	output.append(::gpk::view_const_string{fontSize});
-	output.append(::gpk::view_const_string{ "px;\" >"});
+		);
+	output.append_string(fontSize);
+	output.append_string("px;\" >");
 
 	::gpk::SJSONFile										barrios							;
 	::gpk::jsonFileRead(barrios, "barrios.json");
@@ -226,53 +226,53 @@ GPK_CGI_JSON_APP_IMPL();
 	char													tempBarrioOption[256]			= {};
 	::gpk::view_const_string								barrioName;
 	//if(lang == ::gpk::view_const_string{"es"})
-		output.append(::gpk::view_const_string{"\n<option id=\"barrioOption\" value=\"-1\" style=\"\">Todos</option>"});
+		output.append_string("\n<option id=\"barrioOption\" value=\"-1\" style=\"\">Todos</option>");
 	//else
-	//	output.append(::gpk::view_const_string{"\n<option id=\"barrioOption\" value=\"-1\" style=\"\">All</option>"});
+	//	output.append_string("\n<option id=\"barrioOption\" value=\"-1\" style=\"\">All</option>");
 	for(int32_t iBarrio = 0; iBarrio < countBarrios; ++iBarrio) {
 		int32_t													indexBarrioNode					= ::gpk::jsonArrayValueGet(*barrios.Reader[0], iBarrio);
 		int32_t													indexBarrioName					= ::gpk::jsonObjectValueGet(*barrios.Reader[indexBarrioNode], barrios.Reader.View, "name");
 		sprintf_s(tempBarrioOption, "\n<option value=\"%u\" style=\"\">", iBarrio);
-		output.append(::gpk::view_const_string{tempBarrioOption});
+		output.append_string(tempBarrioOption);
 		output.append(barrios.Reader.View[indexBarrioName]);
-		output.append(::gpk::view_const_string{"</option>"});
+		output.append_string("</option>");
 	}
 
-	output.append(::gpk::view_const_string{
+	output.append_string(
 		"</select>"
 		"\n</td>"
-		});
+		);
 #endif
 //-----------------------------------------------------------------
-	output.append(::gpk::view_const_string{
+	output.append_string(
 		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'en', document.getElementById('s').value);setLang('en');\" >"
 		"\n				<img src=\""
-		});
+		);
 	output.append(fileImageLangEng);
-	output.append(::gpk::view_const_string{
+	output.append_string(
 		"\" /> English"
 		"\n			</td>"
 		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'es', document.getElementById('s').value);setLang('es');\" >"
 		"\n				<img src=\""
-		});
+		);
 	output.append(fileImageLangEsp);
 
 
-	output.append(::gpk::view_const_string{
+	output.append_string(
 		"\" /> Español"
 		"\n			</td>"
 		"\n			<td style=\"text-align:center;vertical-align:center;\" >"	// onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
-		});
-	output.append(::gpk::view_const_string{
+		);
+	output.append_string(
 		"\n				<a onclick=\"var frameRect = document.getElementById('tuMainFrame').getBoundingClientRect(); window.location = 'session.exe?w=' + frameRect.width + '&h=' + frameRect.height + '&l="
-		});
+		);
 	output.append(qsArgs.Language);
-	output.append(::gpk::view_const_string{"';\" >"});
-	output.append(::gpk::view_const_string{
+	output.append_string("';\" >");
+	output.append_string(
 		"\n<img src=\""
-		});
+		);
 	output.append(fileImageSignedOut);
-	output.append(::gpk::view_const_string{
+	output.append_string(
 		"\" /></a>"
 		"\n			</td>"
 		"\n		</tr>"
@@ -289,7 +289,7 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n		</tr>"
 		"\n		<tr >"
 		"\n			<td style=\"width:100%;height:72px;font-family:Arial;\" >"
-		});
+		);
 	const ::ntl::SHTMLIcon									icons[]							=
 		{ {"tours"	, "shops"	, "Turismo y<br/> Guías"			}
 		, {"shops"	, "shops"	, "Comercios y<br/> Servicios"	}
@@ -299,13 +299,13 @@ GPK_CGI_JSON_APP_IMPL();
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 
-	output.append(::gpk::view_const_string{
+	output.append_string(
 		"\n			</td>"
 		"\n		</tr>"
 		"\n	</table>"
 		"\n</body>"
 		"\n</html>"
-		});
+		);
 	if(output.size()) {
 		OutputDebugStringA(output.begin());
 		OutputDebugStringA("\n");
