@@ -23,8 +23,27 @@ static	::gpk::error_t								keyGen							(::gpk::view_byte key)	{
 	return 0;
 }
 
+static	::gpk::error_t								sessionLoad
+	( const ::gpk::view_const_string						& cookie
+	, ::gpk::array_pod<char_t>								& sessionFileContents
+	, ::gpk::array_obj<::gpk::TKeyValConstString>			& cookieValues
+	) {
+	::gpk::array_obj<::gpk::view_const_string>				cookiePairs;
+	::gpk::split(cookie, ';', cookiePairs);
+	cookieValues.resize(cookiePairs.size());
+	for(uint32_t iPair = 0; iPair < cookiePairs.size(); ++iPair) {
+		::gpk::view_const_string								& pair					= cookiePairs[iPair];
+		::gpk::trim(pair);
+		::gpk::keyval_split(pair, cookieValues[iPair]);
+	}
+	::gpk::view_const_string								sessionFileName;
+	::gpk::find("tumama", cookieValues, sessionFileName);
+	ree_if(-1 == ::gpk::fileToMemory(sessionFileName, sessionFileContents), "Invalid session name: '%s'. Already exists!", sessionFileName.begin());
+	return 0;
+}
+
 static	::gpk::error_t								sessionInitialize
-	( ::gpk::SHTTPAPIRequest								& requestReceived
+	( const ::gpk::SHTTPAPIRequest							& requestReceived
 	, ::gpk::view_const_string								& cookie
 	, ::gpk::view_const_string								& sessionFileName
 	, ::gpk::array_pod<byte_t>								& digested
@@ -52,7 +71,7 @@ static	::gpk::error_t								sessionInitialize
 	::gpk::array_pod<char_t>								strCookie							= ::gpk::view_const_string{"tumama="};
 	strCookie.append(sessionFileName);
 	strCookie.push_back(';');
-	gpk_necall(strCookie.append_string(" Secure;"), "%s", "Out of memory?");
+	//gpk_necall(strCookie.append_string(" Secure;"), "%s", "Out of memory?");
 
 	::gpk::array_pod<byte_t>								b64Key;
 	::gpk::base64Encode(keyAES, b64Key);
@@ -62,7 +81,9 @@ static	::gpk::error_t								sessionInitialize
 	gpk_necall(sessionFileContents.append(cookie), "%s", "Out of memory?");
 	sessionFileContents.append_string("\",\"key\":\"");
 	gpk_necall(sessionFileContents.append(b64Key), "%s", "Out of memory?");
-	sessionFileContents.append_string("\",\"user\":\"anon\"");
+	sessionFileContents.append_string("\",\"ip\":[\"");
+	gpk_necall(sessionFileContents.append(requestReceived.Ip), "%s", "Out of memory?");
+	sessionFileContents.append_string("\"],\"user\":\"anon\"");
 	sessionFileContents.push_back('}');
 	gpk_necall(::gpk::fileFromMemory(sessionFileName, sessionFileContents), "Failed to write seesion file: '%s'. Disk full?", sessionFileName.begin());
 	return 0;
@@ -77,7 +98,6 @@ static	::gpk::error_t								sessionInitialize
 	::gpk::array_pod<char_t>								sessionFileContents					= {};
 	::gpk::array_pod<byte_t>								digested;
 	::gpk::array_obj<::gpk::TKeyValConstString>				cookieValues;
-	::gpk::array_obj<::gpk::view_const_string>				cookiePairs;
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache"), "%s", "Out of memory?");
 		::gpk::find("HTTP_COOKIE", runtimeValues.EnvironViews, cookie);
@@ -88,19 +108,8 @@ static	::gpk::error_t								sessionInitialize
 		}
 		else {
 		}
-		//::gpk::array_pod<char_t>								strCookie;
-		::gpk::split(cookie, ';', cookiePairs);
-		cookieValues.resize(cookiePairs.size());
-		for(uint32_t iPair = 0; iPair < cookiePairs.size(); ++iPair) {
-			::gpk::view_const_string								& pair					= cookiePairs[iPair];
-			::gpk::ltrim(pair);
-			::gpk::rtrim(pair);
-			::gpk::keyval_split(pair, cookieValues[iPair]);
-		}
-		::gpk::find("tumama", cookieValues, sessionFileName);
-		sessionFileContents.clear();
-		ree_if(-1 == ::gpk::fileToMemory(sessionFileName, sessionFileContents), "Invalid session name: '%s'. Already exists!", sessionFileName.begin());
 		gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
+		gpk_necall(::sessionLoad(cookie, sessionFileContents, cookieValues), "%s", "Failed to load session!");
 		::gpk::view_const_string							methodsValid	[]				=
 			{ "GET"
 			, "POST"
@@ -384,31 +393,31 @@ static	::gpk::error_t								sessionInitialize
 		"\n		</tr>"
 		"\n	</table>"
 		);
-	output.append_string("\n<code>");
-	output.append(sessionFileName);
-	output.append_string( "\n</code>");
-	output.append_string("\n<code>");
-	for(uint32_t iPair = 0; iPair < cookieValues.size(); ++iPair) {
-		output.append(cookieValues[iPair].Key);
-		output.push_back('*');
-		output.append(cookieValues[iPair].Val);
-		output.push_back('\n');
-	}
-	output.append_string( "\n</code>");
-	output.append_string("\n<code>");
-	for(uint32_t iPair = 0; iPair < cookiePairs.size(); ++iPair) {
-		output.append(cookiePairs[iPair]);
-		output.push_back('*');
-		output.push_back('\n');
-	}
-	output.append_string( "\n</code>");
-
-	output.append_string("\n<code>");
-	output.append(digested);
-	output.append_string( "\n</code>");
-	output.append_string("\n<code>");
-	output.append(cookie);
-	output.append_string( "\n</code>");
+	//output.append_string("\n<code>");
+	//output.append(sessionFileName);
+	//output.append_string( "\n</code>");
+	//output.append_string("\n<code>");
+	//for(uint32_t iPair = 0; iPair < cookieValues.size(); ++iPair) {
+	//	output.append(cookieValues[iPair].Key);
+	//	output.push_back('*');
+	//	output.append(cookieValues[iPair].Val);
+	//	output.push_back('\n');
+	//}
+	//output.append_string( "\n</code>");
+	//output.append_string("\n<code>");
+	//for(uint32_t iPair = 0; iPair < cookiePairs.size(); ++iPair) {
+	//	output.append(cookiePairs[iPair]);
+	//	output.push_back('*');
+	//	output.push_back('\n');
+	//}
+	//output.append_string( "\n</code>");
+	//
+	//output.append_string("\n<code>");
+	//output.append(digested);
+	//output.append_string( "\n</code>");
+	//output.append_string("\n<code>");
+	//output.append(cookie);
+	//output.append_string( "\n</code>");
 	output.append_string("\n<code>");
 	output.append(sessionFileContents);
 	output.append_string( "\n</code>");

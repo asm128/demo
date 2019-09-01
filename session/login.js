@@ -37,6 +37,7 @@ function							qdg								(str)		{
 		result								+= filtered[i].toString();
 	return result;
 }
+
 function							formOnClickSubmit				(signup)	{
 	var										inputCheckUser					= document.getElementById('user_used');
 	var										inputCheckPass					= document.getElementById('pass_used');
