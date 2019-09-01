@@ -150,6 +150,7 @@ static	::gpk::error_t								getWordList							(const ::SItemViews& item, ::gpk:
 		finalWord.resize(upper[iWord].size());
 		memcpy(finalWord.begin(), upper[iWord].begin(), upper[iWord].size());
 		::gpk::tolower(finalWord);
+		info_printf("finalWord: %s.", finalWord.begin());
 		fixedWord											= finalWord;
 		bool													replaced		= false;
 		for(uint32_t iChar = 0; iChar < fixedWord.size(); ++iChar) {
@@ -167,7 +168,6 @@ static	::gpk::error_t								getWordList							(const ::SItemViews& item, ::gpk:
 			itemWords.push_back(fixedWord);
 			info_printf("fixedWord: %s.", fixedWord.begin());
 		}
-		info_printf("finalWord: %s.", finalWord.begin());
 	}
 	return 0;
 }

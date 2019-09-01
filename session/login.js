@@ -28,12 +28,12 @@ function							qdg								(str)		{
 					+  qrn(filtered[i + 7])
 					;
 	}
-	for(i = 2; i < (filtered.length - 32); i += 2) {
-		for(j = 0; j < 32; j++)
+	for(i = 2; i < (filtered.length - 8); i += 2) {
+		for(j = 0; j < 8; j++)
 			filtered[j]							+= filtered[i + j];
 	}
-	result								= ""
-	for(i = 0; i < min(filtered.length, 32); i++)
+	result								= "";
+	for(i = 0; i < min(filtered.length, 8); i++)
 		result								+= filtered[i].toString();
 	return result;
 }
