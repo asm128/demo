@@ -28,7 +28,7 @@ function							qdg								(str)		{
 					+  qrn(filtered[i + 7])
 					;
 	}
-	for(i = 32; i < (filtered.length - 32); i += 2) {
+	for(i = 2; i < (filtered.length - 32); i += 2) {
 		for(j = 0; j < 32; j++)
 			filtered[j]							+= filtered[i + j];
 	}

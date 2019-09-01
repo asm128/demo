@@ -19,7 +19,11 @@ GPK_CGI_JSON_APP_IMPL();
 	::gpk::SHTTPAPIRequest									requestReceived					= {};
 	bool													isCGIEnviron					= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
 	::gpk::view_const_string								cookie;
-	::gpk::array_pod<char_t>								strSessionFile					= {};
+	::gpk::view_const_string								sessionFileName;				;
+	//::gpk::array_pod<char_t>								sessionFileName;				;
+	::gpk::array_pod<char_t>								sessionFileContents				= {};
+	::gpk::array_obj<::gpk::TKeyValConstString>				cookieValues;
+	::gpk::array_obj<::gpk::view_const_string>				cookiePairs;
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache"), "%s", "Out of memory?");
 		::gpk::find("HTTP_COOKIE", runtimeValues.EnvironViews, cookie);
@@ -28,22 +32,39 @@ GPK_CGI_JSON_APP_IMPL();
 			char													keyAES	[256]					= {};
 			srand((int)time(0));
 			for(uint32_t iVal = 0; iVal < ::gpk::size(keyAES); ++iVal)
-				keyAES[iVal]										= (char)rand();
+				while(0 == keyAES[iVal])
+					keyAES[iVal]										= (char)rand();
 
 			sprintf_s(temp, "%llu", ::gpk::timeCurrentInUs());
+			sessionFileName										= ::gpk::label(temp);
 			::gpk::array_pod<byte_t>								encrypted;
 			::gpk::array_pod<byte_t>								hexed;
 			::gpk::aesEncode(::gpk::view_const_string{temp}, {keyAES, 32}, ::gpk::AES_LEVEL_256, encrypted);
 			::gpk::hexEncode(encrypted, hexed);
-			cookie												= ::gpk::label(hexed.begin(), hexed.size());
-			gpk_necall(output.append_string("\r\nSet-Cookie: tumama="), "%s", "Out of memory?");
+			::gpk::array_pod<char_t>								strCookie						= ::gpk::view_const_string{"tumama="};
+			strCookie.append(::gpk::label(hexed.begin(), hexed.size()));
+			strCookie.push_back(';');
+			gpk_necall(strCookie.append_string(" Secure;"), "%s", "Out of memory?");
+
+			cookie												= ::gpk::label(strCookie.begin(), strCookie.size());
+			gpk_necall(output.append_string("\r\nSet-Cookie: "), "%s", "Out of memory?");
 			gpk_necall(output.append(cookie), "%s", "Out of memory?");
-			gpk_necall(output.append_string("; Secure;"), "%s", "Out of memory?");
-			strSessionFile.append_string("{\"session\":\"");
-			gpk_necall(strSessionFile.append(cookie), "%s", "Out of memory?");
-			strSessionFile.append_string(",\"key\":\"");
-			gpk_necall(strSessionFile.append(keyAES), "%s", "Out of memory?");
-			strSessionFile.append_string("\"}");
+			sessionFileContents.append_string("{\"cookie\":\"");
+			gpk_necall(sessionFileContents.append(cookie), "%s", "Out of memory?");
+			sessionFileContents.append_string("\",\"key\":\"");
+			gpk_necall(sessionFileContents.append(keyAES), "%s", "Out of memory?");
+			sessionFileContents.append_string("\"}");
+		}
+		else {
+		}
+		//::gpk::array_pod<char_t>								strCookie;
+		::gpk::split(cookie, ';', cookiePairs);
+		cookieValues.resize(cookiePairs.size());
+		for(uint32_t iPair = 0; iPair < cookiePairs.size(); ++iPair) {
+			::gpk::view_const_string								& pair					= cookiePairs[iPair];
+			::gpk::ltrim(pair);
+			::gpk::rtrim(pair);
+			::gpk::keyval_split(pair, cookieValues[iPair]);
 		}
 		gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
 		::gpk::view_const_string							methodsValid	[]				=
@@ -330,12 +351,30 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n	</table>"
 		);
 	output.append_string("\n<code>");
-	output.append(strSessionFile.begin(), strSessionFile.size());
+	output.append(sessionFileName);
 	output.append_string( "\n</code>");
 	output.append_string("\n<code>");
-	output.append(cookie.begin(), cookie.size());
+	for(uint32_t iPair = 0; iPair < cookieValues.size(); ++iPair) {
+		output.append(cookieValues[iPair].Key);
+		output.push_back('*');
+		output.append(cookieValues[iPair].Val);
+		output.push_back('\n');
+	}
+	output.append_string( "\n</code>");
+	output.append_string("\n<code>");
+	for(uint32_t iPair = 0; iPair < cookiePairs.size(); ++iPair) {
+		output.append(cookiePairs[iPair]);
+		output.push_back('*');
+		output.push_back('\n');
+	}
 	output.append_string( "\n</code>");
 
+	output.append_string("\n<code>");
+	output.append(cookie);
+	output.append_string( "\n</code>");
+	output.append_string("\n<code>");
+	output.append(sessionFileContents);
+	output.append_string( "\n</code>");
 	output.append_string(
 		"\n</body>"
 		"\n</html>"
