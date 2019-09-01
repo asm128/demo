@@ -10,7 +10,7 @@
 #include "gpk_encoding.h"
 #include "gpk_base64.h"
 #include "gpk_noise.h"
-
+#include "gpk_aes.h"
 
 GPK_CGI_JSON_APP_IMPL();
 // today 1565740800
@@ -18,9 +18,34 @@ GPK_CGI_JSON_APP_IMPL();
 ::gpk::error_t										gpk_cgi_generate_output			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::array_pod<char_t> & output)	{
 	::gpk::SHTTPAPIRequest									requestReceived					= {};
 	bool													isCGIEnviron					= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
+	::gpk::view_const_string								cookie;
+	::gpk::array_pod<char_t>								strSessionFile					= {};
 	if (isCGIEnviron) {
-		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache\r\n"), "%s", "Out of memory?");
-		gpk_necall(output.append_string("\r\n"), "%s", "Out of memory?");
+		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache"), "%s", "Out of memory?");
+		::gpk::find("HTTP_COOKIE", runtimeValues.EnvironViews, cookie);
+		if(0 == cookie.size()) {
+			char													temp	[256]					= {};
+			char													keyAES	[256]					= {};
+			srand((int)time(0));
+			for(uint32_t iVal = 0; iVal < ::gpk::size(keyAES); ++iVal)
+				keyAES[iVal]										= (char)rand();
+
+			sprintf_s(temp, "%llu", ::gpk::timeCurrentInUs());
+			::gpk::array_pod<byte_t>								encrypted;
+			::gpk::array_pod<byte_t>								hexed;
+			::gpk::aesEncode(::gpk::view_const_string{temp}, {keyAES, 32}, ::gpk::AES_LEVEL_256, encrypted);
+			::gpk::hexEncode(encrypted, hexed);
+			cookie												= ::gpk::label(hexed.begin(), hexed.size());
+			gpk_necall(output.append_string("\r\nSet-Cookie: tumama="), "%s", "Out of memory?");
+			gpk_necall(output.append(cookie), "%s", "Out of memory?");
+			gpk_necall(output.append_string("; Secure;"), "%s", "Out of memory?");
+			strSessionFile.append_string("{\"session\":\"");
+			gpk_necall(strSessionFile.append(cookie), "%s", "Out of memory?");
+			strSessionFile.append_string(",\"key\":\"");
+			gpk_necall(strSessionFile.append(keyAES), "%s", "Out of memory?");
+			strSessionFile.append_string("\"}");
+		}
+		gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
 		::gpk::view_const_string							methodsValid	[]				=
 			{ "GET"
 			, "POST"
@@ -303,6 +328,15 @@ GPK_CGI_JSON_APP_IMPL();
 		"\n			</td>"
 		"\n		</tr>"
 		"\n	</table>"
+		);
+	output.append_string("\n<code>");
+	output.append(strSessionFile.begin(), strSessionFile.size());
+	output.append_string( "\n</code>");
+	output.append_string("\n<code>");
+	output.append(cookie.begin(), cookie.size());
+	output.append_string( "\n</code>");
+
+	output.append_string(
 		"\n</body>"
 		"\n</html>"
 		);

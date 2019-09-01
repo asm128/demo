@@ -2,9 +2,35 @@ function							qrn								(x)			{ x = (x << 13) ^ x; return ( x * (x * x * 15661
 function							qdg								(str)		{
 	var										x								= 0;
 	var										i								= 0;
-	for(i = 0; i < str.length; i++)
-		x									+= qrn(str[i]);
-	return x;
+	var										filtered						= [];
+	for(i = 0; i < str.length - 8; i++) {
+		x	+= qrn(str[i])
+			+  qrn(str[i + 1])
+			+  qrn(str[i + 2])
+			+  qrn(str[i + 3])
+			+  qrn(str[i + 4])
+			+  qrn(str[i + 5])
+			+  qrn(str[i + 6])
+			+  qrn(str[i + 7])
+			;
+		x									+= x ^ (x << 11);
+		filtered.push(x);
+	}
+	for(i = 0; i < filtered.length - 8; i++) {
+		filtered[i]	^= qrn(filtered[i])
+					+  qrn(filtered[i + 1])
+					+  qrn(filtered[i + 2])
+					+  qrn(filtered[i + 3])
+					+  qrn(filtered[i + 4])
+					+  qrn(filtered[i + 5])
+					+  qrn(filtered[i + 6])
+					+  qrn(filtered[i + 7])
+					;
+	}
+	result								= ""
+	for(i = 0; i < filtered.length; i++)
+		result								+= filtered[i].toString();
+	return result;
 }
 function							formOnClickSubmit				(signup)	{
 	var										inputCheckUser					= document.getElementById('user_used');
@@ -26,6 +52,6 @@ function							formOnClickSubmit				(signup)	{
 	var										inputb64Pass					= document.getElementById('b64pass');
 	var										lowerUser						= inputUser.value.toLowerCase();
 	inputb64User.value					= btoa(lowerUser);
-	inputb64Pass.value					= btoa(inputPass.value);
+	inputb64Pass.value					= btoa(qdg(inputPass.value));
 	formLogin.submit();
 }

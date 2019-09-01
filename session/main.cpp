@@ -1,6 +1,7 @@
 #include "neutralizer.h"
 #include "gpk_json_expression.h"
 #include "gpk_parse.h"
+#include "gpk_find.h"
 
 #include "gpk_cgi_app_impl_v2.h"
 
@@ -99,8 +100,8 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 		output.append_string("\n</table>");
 
 	output.append_string("\n</td>");
-	//output.append(::gpk::view_const_string{"\n</tr>"});
-	//output.append(::gpk::view_const_string{"\n<tr>"});
+	//output.append_string("\n</tr>");
+	//output.append_string("\n<tr>");
 	output.append_string("\n<td>");
 
 	output.append_string("\n<input type=\"button\" name=\"signin\" onclick=\"formOnClickSubmit(false)\" value=\"");
@@ -126,15 +127,43 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	return 0;
 }
 
+// Set-Cookie: <cookie-name>=<cookie-value>
+// Set-Cookie: <cookie-name>=<cookie-value>; Expires=<date>
+// Set-Cookie: <cookie-name>=<cookie-value>; Max-Age=<non-zero-digit>	// seconds
+// Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>
+// Set-Cookie: <cookie-name>=<cookie-value>; Path=<path-value>
+// Set-Cookie: <cookie-name>=<cookie-value>; Secure
+// Set-Cookie: <cookie-name>=<cookie-value>; HttpOnly
+//
+// Set-Cookie: <cookie-name>=<cookie-value>; SameSite=Strict
+// Set-Cookie: <cookie-name>=<cookie-value>; SameSite=Lax
+// Set-Cookie: <cookie-name>=<cookie-value>; SameSite=None
+//
+// // Multiple directives are also possible, for example:
+// Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>; Secure; HttpOnly
+
 ::gpk::error_t										gpk_cgi_generate_output			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::array_pod<char_t> & output)	{
 	::gpk::SHTTPAPIRequest									requestReceived					= {};
 	bool													isCGIEnviron					= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
+	::gpk::view_const_string								cookie;
 	if (isCGIEnviron) {
-		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache\r\n"), "%s", "Out of memory?");
-		gpk_necall(output.append_string("\r\n"), "%s", "Out of memory?");
+		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache"), "%s", "Out of memory?");
+		::gpk::find("HTTP_COOKIE", runtimeValues.EnvironViews, cookie);
+		if(0 == cookie.size()) {
+			char													temp	[256]					= {};
+			sprintf_s(temp, "%u", 5U);
+			cookie												= ::gpk::label(temp);
+			gpk_necall(output.append_string("\r\nSet-Cookie: tumama="), "%s", "Out of memory?");
+			gpk_necall(output.append(cookie), "%s", "Out of memory?");
+			gpk_necall(output.append_string("; Secure;"), "%s", "Out of memory?");
+
+		}
+		gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
 		::gpk::view_const_string							methodsValid	[]				=
 			{ "GET"
 			, "POST"
+			, "get"
+			, "post"
 			};
 		if(-1 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
 			output.append_string("{ \"status\" : 403, \"description\" :\"forbidden\" }\r\n");
@@ -153,8 +182,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 		::ntl::loadConfig(programState, indexRoot);
 	}
 	::gpk::array_pod<char_t>								fileStyle			;
-	::ntl::httpPath(programState.Path.Style, "blankstyle", "css", fileStyle			);
-
+	::ntl::httpPath(programState.Path.Style, "blankstyle", "css", fileStyle);
 
 	char													fontSize	[32]				= {};
 	::gpk::SCoord2<uint32_t>								sizeScreen						= {};
@@ -173,8 +201,8 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 
 	output.append_string("\n<table style=\"width:100%;background-color:#c0c0c0;\">");
 	output.append_string("\n<tr style=\"height:100%;\">");
-	//output.append(::gpk::view_const_string{"\n<td id=\"padding\" style=\"width:100%;background-color:#800080;\" >"});
-	//output.append(::gpk::view_const_string{"\n</td>"});
+	//output.append_string("\n<td id=\"padding\" style=\"width:100%;background-color:#800080;\" >");
+	//output.append_string("\n</td>");
 	output.append_string("\n<td style=\"background-color:#fc9116;font-size:");
 	output.append_string(fontSize);
 	output.append_string("px;\">");
