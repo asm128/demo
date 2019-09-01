@@ -1,3 +1,4 @@
+function							min								(a, b)		{ if(a < b) return a; else return b; }
 function							qrn								(x)			{ x = (x << 13) ^ x; return ( x * (x * x * 15661 + 715827883)  + 1500450271); }
 function							qdg								(str)		{
 	var										x								= 0;
@@ -27,8 +28,12 @@ function							qdg								(str)		{
 					+  qrn(filtered[i + 7])
 					;
 	}
+	for(i = 32; i < (filtered.length - 32); i += 2) {
+		for(j = 0; j < 32; j++)
+			filtered[j]							+= filtered[i + j];
+	}
 	result								= ""
-	for(i = 0; i < filtered.length; i++)
+	for(i = 0; i < min(filtered.length, 32); i++)
 		result								+= filtered[i].toString();
 	return result;
 }
