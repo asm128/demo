@@ -1,4 +1,5 @@
 #include "neutralizer.h"
+#include "ntl_session.h"
 
 #include "gpk_cgi_app_impl_v2.h"
 
@@ -20,25 +21,6 @@ static	::gpk::error_t								keyGen							(::gpk::view_byte key)	{
 	for(uint32_t iVal = 0; iVal < key.size(); ++iVal)
 		while(0 == key[iVal])
 			key[iVal]										= (char)rand();
-	return 0;
-}
-
-static	::gpk::error_t								sessionLoad
-	( const ::gpk::view_const_string						& cookie
-	, ::gpk::array_pod<char_t>								& sessionFileContents
-	, ::gpk::array_obj<::gpk::TKeyValConstString>			& cookieValues
-	) {
-	::gpk::array_obj<::gpk::view_const_string>				cookiePairs;
-	::gpk::split(cookie, ';', cookiePairs);
-	cookieValues.resize(cookiePairs.size());
-	for(uint32_t iPair = 0; iPair < cookiePairs.size(); ++iPair) {
-		::gpk::view_const_string								& pair					= cookiePairs[iPair];
-		::gpk::trim(pair);
-		::gpk::keyval_split(pair, cookieValues[iPair]);
-	}
-	::gpk::view_const_string								sessionFileName;
-	::gpk::find("tumama", cookieValues, sessionFileName);
-	ree_if(-1 == ::gpk::fileToMemory(sessionFileName, sessionFileContents), "Invalid session name: '%s'. Already exists!", sessionFileName.begin());
 	return 0;
 }
 
@@ -92,7 +74,6 @@ static	::gpk::error_t								sessionInitialize
 ::gpk::error_t										gpk_cgi_generate_output				(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::array_pod<char_t> & output)	{
 	::gpk::SHTTPAPIRequest									requestReceived						= {};
 	bool													isCGIEnviron						= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
-	//::gpk::array_pod<char_t>								sessionFileName;					;
 	::gpk::view_const_string								cookie;
 	::gpk::view_const_string								sessionFileName;					;
 	::gpk::array_pod<char_t>								sessionFileContents					= {};
@@ -109,7 +90,7 @@ static	::gpk::error_t								sessionInitialize
 		else {
 		}
 		gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
-		gpk_necall(::sessionLoad(cookie, sessionFileContents, cookieValues), "%s", "Failed to load session!");
+		gpk_necall(::ntl::sessionFileLoad(cookie, sessionFileContents, cookieValues), "%s", "Failed to load session!");
 		::gpk::view_const_string							methodsValid	[]				=
 			{ "GET"
 			, "POST"

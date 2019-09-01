@@ -1,10 +1,12 @@
 #include "neutralizer.h"
+#include "ntl_session.h"
+
+#include "gpk_cgi_app_impl_v2.h"
+
 #include "gpk_json_expression.h"
 #include "gpk_parse.h"
 #include "gpk_stdstring.h"
 #include "gpk_find.h"
-
-#include "gpk_cgi_app_impl_v2.h"
 
 GPK_CGI_JSON_APP_IMPL();
 
@@ -19,9 +21,28 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_string & 
 ::gpk::error_t										gpk_cgi_generate_output			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::array_pod<char_t> & output)	{
 	::gpk::SHTTPAPIRequest									requestReceived					= {};
 	bool													isCGIEnviron					= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
+	::gpk::view_const_string								cookie;
+	::gpk::view_const_string								sessionFileName;					;
+	::gpk::array_pod<char_t>								sessionFileContents					= {};
+	::gpk::array_obj<::gpk::TKeyValConstString>				cookieValues;
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache\r\n"), "%s", "Out of memory?");
 		gpk_necall(output.append_string("\r\n"), "%s", "Out of memory?");
+		::gpk::find("HTTP_COOKIE", runtimeValues.EnvironViews, cookie);
+		if(0 == cookie.size()) {
+			output.append_string("{ \"status\" : 403, \"description\" :\"forbidden - The server currently doesn't accept requests to this frame without a cookie set.\" }\r\n");
+			return 1;
+			//::sessionInitialize(requestReceived, cookie, sessionFileName, digested);
+			//gpk_necall(output.append_string("\r\nSet-Cookie: "), "%s", "Out of memory?");
+			//gpk_necall(output.append(cookie), "%s", "Out of memory?");
+		}
+		else {
+		}
+		gpk_necall(output.append_string("\r\nSet-Cookie: "), "%s", "Out of memory?");
+		gpk_necall(output.append(cookie), "%s", "Out of memory?");
+		gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
+		gpk_necall(::ntl::sessionFileLoad(cookie, sessionFileContents, cookieValues), "%s", "Failed to load session!");
+
 		::gpk::view_const_string							methodsValid	[]				=
 			{ "GET"
 			, "POST"
