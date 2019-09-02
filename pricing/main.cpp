@@ -1,4 +1,4 @@
-#include "neutralizer.h"
+#include "ntl_front.h"
 
 #include "gpk_cgi_app_impl_v2.h"
 
@@ -29,7 +29,7 @@ GPK_CGI_JSON_APP_IMPL();
 	{
 		::gpk::view_const_string								rootNode;
 		const ::gpk::error_t									indexRoot					= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
-		::ntl::loadConfig(programState, indexRoot);
+		::ntl::frontConfigLoad(programState, indexRoot);
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
 	::ntl::httpPath(programState.Path.Image, "logo_home"	, programState.Extension.Image, fileLogo);

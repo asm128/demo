@@ -1,4 +1,4 @@
-#include "neutralizer.h"
+#include "ntl_front.h"
 #include "ntl_session.h"
 
 #include "gpk_cgi_app_impl_v2.h"
@@ -37,11 +37,11 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_string & 
 			//gpk_necall(output.append(cookie), "%s", "Out of memory?");
 		}
 		else {
+			gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
+			gpk_necall(::ntl::sessionFileLoad(cookie, sessionFileContents, cookieValues), "%s", "Failed to load session!");
 		}
-		gpk_necall(output.append_string("\r\nSet-Cookie: "), "%s", "Out of memory?");
-		gpk_necall(output.append(cookie), "%s", "Out of memory?");
-		gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
-		gpk_necall(::ntl::sessionFileLoad(cookie, sessionFileContents, cookieValues), "%s", "Failed to load session!");
+		//gpk_necall(output.append_string("\r\nSet-Cookie: "), "%s", "Out of memory?");
+		//gpk_necall(output.append(cookie), "%s", "Out of memory?");
 
 		::gpk::view_const_string							methodsValid	[]				=
 			{ "GET"
@@ -61,7 +61,7 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_string & 
 	{
 		::gpk::view_const_string								rootNode;
 		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
-		::ntl::loadConfig(programState, indexRoot);
+		::ntl::frontConfigLoad(programState, indexRoot);
 	}
 	::gpk::view_const_string								title;
 

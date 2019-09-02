@@ -1,4 +1,4 @@
-#include "neutralizer.h"
+#include "ntl_front.h"
 #include "ntl_session.h"
 
 #include "gpk_cgi_app_impl_v2.h"
@@ -146,7 +146,7 @@ static	::gpk::error_t								sessionInitialize
 	{
 		::gpk::view_const_string								rootNode;
 		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
-		::ntl::loadConfig(programState, indexRoot);
+		::ntl::frontConfigLoad(programState, indexRoot);
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
 	::gpk::array_pod<char_t>								fileImageLangEng	;

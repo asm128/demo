@@ -1,4 +1,4 @@
-#include "neutralizer.h"
+#include "ntl_front.h"
 #include "gpk_json_expression.h"
 #include "gpk_parse.h"
 #include "gpk_find.h"
@@ -179,8 +179,19 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	{
 		::gpk::view_const_string								rootNode;
 		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
-		::ntl::loadConfig(programState, indexRoot);
+		::ntl::frontConfigLoad(programState, indexRoot);
 	}
+
+	//::gpk::SIPv4							backendAddress				= {};
+	//::gpk::view_const_string				udpLanIpString				= {};
+	//::gpk::view_const_string				udpLanPortString			= {};
+	//::gpk::error_t							indexNodeUdpLanIp			= ::gpk::jsonExpressionResolve("mineback.udp_lan_address", config.Reader, 0, udpLanIpString	);
+	//::gpk::error_t							indexNodeUdpLanPort			= ::gpk::jsonExpressionResolve("mineback.udp_lan_port"	, config.Reader, 0, udpLanPortString);
+	//gwarn_if(errored(indexNodeUdpLanIp		), "Backend address not found in config file: %s.", configFileName);
+	//gwarn_if(errored(indexNodeUdpLanPort	), "Backend address not found in config file: %s.", configFileName);
+	//::gpk::tcpipInitialize();
+	//gpk_necall(::gpk::tcpipAddress(udpLanIpString, udpLanPortString, backendAddress), "%s", "Cannot resolve host.");
+
 	::gpk::array_pod<char_t>								fileStyle			;
 	::ntl::httpPath(programState.Path.Style, "blankstyle", "css", fileStyle);
 

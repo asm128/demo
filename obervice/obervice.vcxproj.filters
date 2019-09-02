@@ -15,6 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="neighborhoods.json" />
+    <ClInclude Include="application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="obervice.json" />
+    <None Include="obervice.bat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
