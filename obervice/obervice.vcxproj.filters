@@ -21,9 +21,6 @@
     <ClInclude Include="business.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="demographics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="session.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -31,6 +28,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="domainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="infinireply.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obe_core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="demographer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

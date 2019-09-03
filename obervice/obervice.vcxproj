@@ -177,8 +177,10 @@
   <ItemGroup>
     <ClInclude Include="application.h" />
     <ClInclude Include="business.h" />
-    <ClInclude Include="demographics.h" />
+    <ClInclude Include="demographer.h" />
     <ClInclude Include="domainer.h" />
+    <ClInclude Include="infinireply.h" />
+    <ClInclude Include="obe_core.h" />
     <ClInclude Include="session.h" />
     <ClInclude Include="vocabulary.h" />
   </ItemGroup>
