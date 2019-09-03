@@ -18,6 +18,21 @@
     <ClInclude Include="application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="business.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="demographics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vocabulary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="domainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp">

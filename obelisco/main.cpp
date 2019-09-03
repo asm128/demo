@@ -157,6 +157,7 @@ static	::gpk::error_t								sessionInitialize
 	::gpk::array_pod<char_t>								fileScriptHeader	;
 	::gpk::array_pod<char_t>								fileProgramContent	;
 	::gpk::array_pod<char_t>								fileProgramHeader	;
+	::gpk::array_pod<char_t>								fileProgramSession	;
 	::ntl::httpPath(programState.Path.Image		, "logo_home"				, programState.Extension.Image, fileLogo			);
 	::ntl::httpPath(programState.Path.Image		, "flag_uk"					, programState.Extension.Image, fileImageLangEng	);
 	::ntl::httpPath(programState.Path.Image		, "flag_ar"					, programState.Extension.Image, fileImageLangEsp	);
@@ -167,7 +168,7 @@ static	::gpk::error_t								sessionInitialize
 
 	::ntl::httpPath(programState.Path.Program	, "shops"		, programState.Extension.Program, fileProgramContent);
 	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
-	::ntl::httpPath(programState.Path.Program	, "session"		, programState.Extension.Program, fileProgramHeader);
+	::ntl::httpPath(programState.Path.Program	, "session"		, programState.Extension.Program, fileProgramSession);
 
 	const ::gpk::view_const_string							htmlDefaultAnte					=
 		"\n<html>"

@@ -176,6 +176,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
+    <ClInclude Include="business.h" />
+    <ClInclude Include="demographics.h" />
+    <ClInclude Include="domainer.h" />
+    <ClInclude Include="session.h" />
+    <ClInclude Include="vocabulary.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />

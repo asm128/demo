@@ -24,6 +24,33 @@ namespace brt // I'm gonna use a different namespace in order to test a few thin
 		STARTUPINFOA				StartInfo				= {sizeof(STARTUPINFOA)};
 	};
 
+	struct SBackUserTable {
+		::gpk::array_obj<::gpk::view_const_string>						Name;
+		::gpk::array_obj<::gpk::view_const_string>						Pass;
+		::gpk::array_pod<int32_t>										IdPeople;
+	};
+
+	struct SBackAddress {
+		::gpk::array_obj<::gpk::view_const_string>						AddressLine1;
+		::gpk::array_obj<::gpk::view_const_string>						AddressLine2;
+	};
+
+	struct SBackNames {
+		::gpk::array_obj<::gpk::view_const_string>						First;
+		::gpk::array_obj<::gpk::view_const_string>						Last;
+	};
+
+	struct SBackPeopleTable {
+		::gpk::array_pod<int32_t>										NameFirst;
+		::gpk::array_pod<int32_t>										NameLast;
+		::gpk::array_pod<int32_t>										AddressLine1;
+		::gpk::array_pod<int32_t>										AddressLine2;
+	};
+
+
+
+
+
 	struct SApplication {
 		::gpk::SFramework																	Framework;
 		::gpk::ptr_obj<::gpk::SRenderTarget<::gpk::SColorBGRA, uint32_t>>					Offscreen							= {};
