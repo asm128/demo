@@ -15,6 +15,7 @@ namespace obe
 		::gpk::array_obj<::gpk::view_const_string>		Name;
 		::gpk::array_obj<::gpk::view_array<uint32_t>>	Provinces;
 		::gpk::array_pod<uint32_t>						Country;
+		::gpk::array_pod<uint8_t>						MapToCity;
 	};
 
 	struct SProvince			{
