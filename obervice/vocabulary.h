@@ -9,7 +9,6 @@ namespace obe
 {
 	//-------------------------
 	struct SParagraph		{
-		::gpk::array_pod<uint16_t>											Language;
 		::gpk::array_obj<::gpk::view_const_string>							B64Text;
 		::gpk::array_obj<::gpk::array_pod<uint32_t>>						Words;
 	};
@@ -28,7 +27,13 @@ namespace obe
 		::gpk::array_obj<::gpk::view_const_string>							Name;
 		::gpk::array_obj<::gpk::view_const_string>							CodeISO;
 		::gpk::array_obj<::gpk::view_const_string>							Code1;
-		::gpk::array_pod<uint16_t>											Dictionary;
+	};
+
+	struct SVocabulary		{
+		::gpk::array_obj<::obe::STags>										Tag;		// Tags are common for all languages.
+		::gpk::array_obj<::obe::SLanguages>									Language;
+		::gpk::array_obj<::gpk::array_obj<::obe::SParagraph>>				Paragraph;	// for each language, an array of paragraphs.
+		::gpk::array_obj<::obe::SDictionary>								Dictionary;	// for each language, a dictionary.
 	};
 } // namespace
 

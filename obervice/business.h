@@ -24,13 +24,6 @@ namespace obe
 		::gpk::array_pod<SImageProperty>									Property;
 	};
 
-	struct SAddressMap		{
-		::gpk::array_pod<int32_t>											AddressLine2;
-		::gpk::array_pod<int32_t>											AddressLine1;
-		::gpk::array_pod<int32_t>											Neighbour;
-		::gpk::array_pod<int32_t>											City;
-	};
-
 	struct SHours			{
 		::gpk::array_obj<::gpk::view_array<::gpk::SRange<uint16_t>>>		Ranges;
 		::gpk::array_obj<::gpk::view_array<int8_t>>							WeekDays;
@@ -45,13 +38,20 @@ namespace obe
 		::gpk::array_pod<::gpk::SCoord2<float>>								MapCoords;
 	};
 
+	struct SAddressMap		{
+		int32_t																AddressLine2;
+		int32_t																AddressLine1;
+		int32_t																Neighbour;
+		int32_t																City;
+	};
+
 	struct SAddressBook		{
 		::gpk::array_pod<int64_t>											Images;
 		::gpk::array_pod<int64_t>											Websites;
 		::gpk::array_pod<int64_t>											Mails;
 		::gpk::array_pod<int64_t>											Phones;
 		::gpk::array_pod<int64_t>											Hours;
-		::gpk::array_pod<int64_t>											Addresses;
+		::gpk::array_pod<SAddressMap>										Addresses;
 	};
 
 	//////////////////////----------------------------------------------------------------------

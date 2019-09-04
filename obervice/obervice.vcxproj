@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="domainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="obervice.bat" />
