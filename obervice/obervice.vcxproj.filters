@@ -18,33 +18,9 @@
     <ClInclude Include="application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="business.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="session.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vocabulary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="domainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="infinireply.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="obe_core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="demographer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="domainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
