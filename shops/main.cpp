@@ -65,7 +65,9 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_string & 
 	}
 	::gpk::view_const_string								title;
 
-	const ::AD_SHOP_CATEGORY								category						= ::gpk::get_value<::AD_SHOP_CATEGORY>(qsArgs.Module);
+	::AD_SHOP_CATEGORY								category						= ::gpk::get_value<::AD_SHOP_CATEGORY>(qsArgs.Module);
+	if(::AD_SHOP_CATEGORY_INVALID == category)
+		category = ::AD_SHOP_CATEGORY_tours;
 	switch(category) {
 	case ::AD_SHOP_CATEGORY_tours: title = (qsArgs.Language == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Turismo"		}) : (::gpk::view_const_string{ "Tourism"	}); break;
 	case ::AD_SHOP_CATEGORY_shops: title = (qsArgs.Language == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Comercios"		}) : (::gpk::view_const_string{ "Shopping"	}); break;
@@ -78,7 +80,7 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_string & 
 	::gpk::parseIntegerDecimal(qsArgs.Width	, &sizeScreen.x);
 	::gpk::parseIntegerDecimal(qsArgs.Height, &sizeScreen.y);
 
-	::pageCatalog("ads.json", programState.Path.Script, sizeScreen, programState.Path.Style, category, title, qsArgs.Language, output);
+	::pageCatalog("ads.json", programState.Path.Script, sizeScreen, programState.Path.Style, category, title, qsArgs.Language.size() ? qsArgs.Language : "es", output);
 
 	if(output.size()) {
 		OutputDebugStringA(output.begin());
@@ -167,11 +169,42 @@ static	::gpk::error_t								getWordList							(const ::SItemViews& item, ::gpk:
 		};
 	::gpk::array_pod<char_t>								fixedWord;
 	for(uint32_t iWord = 0, countWords = upper.size(); iWord < countWords; ++iWord) {
-		::gpk::array_pod<char_t> & finalWord = itemWords[iWord];
-		finalWord.resize(upper[iWord].size());
-		memcpy(finalWord.begin(), upper[iWord].begin(), upper[iWord].size());
+		const ::gpk::view_const_char							& originalWord						= upper[iWord];
+		::gpk::array_pod<char_t>								& finalWord							= itemWords[iWord];
+			 if(originalWord == ::gpk::view_const_string{"the"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"is"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"in"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"as"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"for"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"of"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"up"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"es"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"en"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"de"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"la"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"el"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"para"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"los"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"las"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"The"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"Is"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"In"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"As"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"For"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"Of"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"Up"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"Es"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"En"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"De"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"La"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"El"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"Para"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"Los"}) continue;
+		else if(originalWord == ::gpk::view_const_string{"Las"}) continue;
+		finalWord.resize(originalWord.size());
+		memcpy(finalWord.begin(), originalWord.begin(), originalWord.size());
 		::gpk::tolower(finalWord);
-		info_printf("finalWord: %s.", finalWord.begin());
+		info_printf("finalWord: %s.", ::gpk::toString(finalWord).begin());
 		fixedWord											= finalWord;
 		bool													replaced		= false;
 		for(uint32_t iChar = 0; iChar < fixedWord.size(); ++iChar) {
@@ -187,7 +220,7 @@ static	::gpk::error_t								getWordList							(const ::SItemViews& item, ::gpk:
 		}
 		if(replaced) {
 			itemWords.push_back(fixedWord);
-			info_printf("fixedWord: %s.", fixedWord.begin());
+			info_printf("fixedWord: %s.", ::gpk::toString(fixedWord).begin());
 		}
 	}
 	return 0;
@@ -202,7 +235,7 @@ static	::gpk::error_t								getWordDict							(const ::SItemViews& item, uint32
 	::getWordList(item, cacheItemWords);
 	for(uint32_t iItemWord = 0; iItemWord < cacheItemWords.size(); ++iItemWord) {
 		::gpk::view_const_string								itemWord						= {cacheItemWords[iItemWord].begin(), cacheItemWords[iItemWord].size()};
-		info_printf("itemWord: %s.", itemWord.begin());
+		info_printf("itemWord: %s.", ::gpk::toString(itemWord).begin());
 		if(1 >= itemWord.size())
 			continue;
 		bool													bFound							= false;
@@ -242,7 +275,7 @@ static	::gpk::error_t								outputSearchScript					(const ::gpk::view_array<con
 	output.append_string("\nvar names=[");
 	for(uint32_t iWord = 0, countWords = wordSet.size(); iWord < countWords; ++iWord) {
 		const SWordIndices										& element							= wordSet[iWord];
-		info_printf("Word: %s.", element.Text.begin());
+		info_printf("Word: %s.", ::gpk::toString(element.Text).begin());
 		if(0 <= ::gpk::find('\'', ::gpk::view_array{element.Text.begin(), element.Text.size()})) {
 			if(0 <= ::gpk::find('"', ::gpk::view_array{element.Text.begin(), element.Text.size()}))
 				continue;
