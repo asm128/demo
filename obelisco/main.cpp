@@ -25,10 +25,10 @@ static	::gpk::error_t								keyGen							(::gpk::view_byte key)	{
 }
 
 static	::gpk::error_t								sessionInitialize
-	( const ::gpk::SHTTPAPIRequest							& requestReceived
-	, ::gpk::view_const_string								& cookie
-	, ::gpk::view_const_string								& sessionFileName
-	, ::gpk::array_pod<byte_t>								& digested
+	( const ::gpk::SHTTPAPIRequest	& requestReceived
+	, ::gpk::view_const_string		& cookie
+	, ::gpk::view_const_string		& sessionFileName
+	, ::gpk::array_pod<byte_t>		& digested
 	) {
 	char													temp		[256]					= {};
 	char													keyAES		[256]					= {};
@@ -400,9 +400,10 @@ static	::gpk::error_t								sessionInitialize
 	//output.append_string("\n<code>");
 	//output.append(cookie);
 	//output.append_string( "\n</code>");
-	output.append_string("\n<code>");
-	output.append(sessionFileContents);
-	output.append_string( "\n</code>");
+	//output.append_string("\n<code>");
+	//output.append(sessionFileContents);
+	//output.append_string( "\n</code>");
+
 	output.append_string(
 		"\n</body>"
 		"\n</html>"

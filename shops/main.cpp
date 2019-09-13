@@ -169,41 +169,44 @@ static	::gpk::error_t								getWordList							(const ::SItemViews& item, ::gpk:
 		};
 	::gpk::array_pod<char_t>								fixedWord;
 	for(uint32_t iWord = 0, countWords = upper.size(); iWord < countWords; ++iWord) {
-		const ::gpk::view_const_char							& originalWord						= upper[iWord];
+		::gpk::view_const_char									originalWord						= upper[iWord];
+		::gpk::trim(originalWord);
 		::gpk::array_pod<char_t>								& finalWord							= itemWords[iWord];
-			 if(originalWord == ::gpk::view_const_string{"the"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"is"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"in"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"as"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"for"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"of"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"up"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"es"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"en"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"de"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"la"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"el"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"para"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"los"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"las"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"The"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"Is"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"In"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"As"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"For"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"Of"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"Up"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"Es"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"En"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"De"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"La"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"El"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"Para"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"Los"}) continue;
-		else if(originalWord == ::gpk::view_const_string{"Las"}) continue;
 		finalWord.resize(originalWord.size());
 		memcpy(finalWord.begin(), originalWord.begin(), originalWord.size());
 		::gpk::tolower(finalWord);
+		if( finalWord == ::gpk::view_const_string{"the"		}
+		 || finalWord == ::gpk::view_const_string{"and"		}
+		 || finalWord == ::gpk::view_const_string{"it"		}
+		 || finalWord == ::gpk::view_const_string{"to"		}
+		 || finalWord == ::gpk::view_const_string{"an"		}
+		 || finalWord == ::gpk::view_const_string{"by"		}
+		 || finalWord == ::gpk::view_const_string{"was"		}
+		 || finalWord == ::gpk::view_const_string{"is"		}
+		 || finalWord == ::gpk::view_const_string{"in"		}
+		 || finalWord == ::gpk::view_const_string{"as"		}
+		 || finalWord == ::gpk::view_const_string{"for"		}
+		 || finalWord == ::gpk::view_const_string{"of"		}
+		 || finalWord == ::gpk::view_const_string{"up"		}
+
+		 || finalWord == ::gpk::view_const_string{"a"		}
+		 || finalWord == ::gpk::view_const_string{"un"		}
+		 || finalWord == ::gpk::view_const_string{"con"		}
+		 || finalWord == ::gpk::view_const_string{"del"		}
+		 || finalWord == ::gpk::view_const_string{"por"		}
+		 || finalWord == ::gpk::view_const_string{"que"		}
+		 || finalWord == ::gpk::view_const_string{"es"		}
+		 || finalWord == ::gpk::view_const_string{"en"		}
+		 || finalWord == ::gpk::view_const_string{"de"		}
+		 || finalWord == ::gpk::view_const_string{"la"		}
+		 || finalWord == ::gpk::view_const_string{"el"		}
+		 || finalWord == ::gpk::view_const_string{"para"	}
+		 || finalWord == ::gpk::view_const_string{"los"		}
+		 || finalWord == ::gpk::view_const_string{"las"		}
+		 )	{
+			finalWord.clear();
+			continue;
+		}
 		info_printf("finalWord: %s.", ::gpk::toString(finalWord).begin());
 		fixedWord											= finalWord;
 		bool													replaced		= false;
