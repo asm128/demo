@@ -1,43 +1,32 @@
-function							min								(a, b)		{ if(a < b) return a; else return b; }
+function							min								(a, b)		{ return (a < b) ? a : b; }
+function							max								(a, b)		{ return (a > b) ? a : b; }
 function							qrn								(x)			{ x = (x << 13) ^ x; return ( x * (x * x * 15661 + 715827883)  + 1500450271); }
 function							qdg								(str)		{
 	var										x								= 0;
 	var										i								= 0;
+	var 									j								= 0;
 	var										filtered						= [];
-	var										count							= str.length - 6;
+	var										count							= max(1, str.length - 6);
 	for(i = 0; i < count; i++) {
-		x	+= qrn(str[i])
-			+  qrn(str[i + 1])
-			+  qrn(str[i + 2])
-			+  qrn(str[i + 3])
-			+  qrn(str[i + 4])
-			+  qrn(str[i + 5])
-			//+  qrn(str[i + 6])
-			//+  qrn(str[i + 7])
-			;
+		for(j = 0; j < 6; j++)
+			x									+= qrn(str[i + j]);
 		x									+= x ^ (x << 11);
 		filtered.push(x);
 	}
-	count							= filtered.length - 6;
+	count								= max(filtered.length - 6, 1);
 	for(i = 0; i < count; i++) {
-		filtered[i]	^= qrn(filtered[i])
-					+  qrn(filtered[i + 1])
-					+  qrn(filtered[i + 2])
-					+  qrn(filtered[i + 3])
-					+  qrn(filtered[i + 4])
-					+  qrn(filtered[i + 5])
-					//+  qrn(filtered[i + 6])
-					//+  qrn(filtered[i + 7])
-					;
+		for(j = 0; j < 6; j++)
+			filtered[i]							^= qrn(filtered[i + j]);
+		filtered[i]							+= qrn(filtered[count - 1 - i]);
 	}
-	for(i = 2; i < (filtered.length - 6); i += 2) {
-		for(j = 0; j < 8; j++) {
+	for(i = 1; i < count; i++) {
+		for(j = 0; j < 6; j++) {
 			filtered[j]							+= filtered[i + j];
 			filtered[j]							+= filtered[filtered.length - 1 - i];
 		}
 	}
-	result								= "";
-	for(i = 0; i < min(filtered.length, 8); i++)
+	var										result								= "";
+	for(i = 0; i < min(filtered.length, 6); i++)
 		result								+= filtered[i].toString();
 	return result;
 }
