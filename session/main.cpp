@@ -50,7 +50,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 			output.append_string("usuario@ej.com");
 		else
 			output.append_string("user@example.com");
-		output.append_string("\" style=\"width:100%;font-size:");
+		output.append_string("\" style=\"color:#c0c0c0;width:100%;font-size:");
 		output.append(fontSize);
 		output.append_string("px;\" />");	// document.getElementById('user_used');
 
@@ -74,7 +74,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 			output.append_string("contraseña");
 		else
 			output.append_string("password");
-		output.append_string("\" style=\"width:100%;font-size:");
+		output.append_string("\" style=\"color:#c0c0c0;width:100%;font-size:");
 		output.append(fontSize);
 		output.append_string("px;\" />");
 		output.append_string("\n</td>");
@@ -96,6 +96,12 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 		output.append(fontSize);
 		output.append_string("px;\" />");
 		output.append_string("\n</td>");
+		output.append_string("\n<tr >");
+		output.append_string("\n<td id=\"message_box\" style=\"background-color:#808000;font-size:");
+		output.append(fontSize);
+		output.append_string("px;\" />");
+		output.append_string("");
+		output.append_string("\n</td>");
 		output.append_string("\n</tr>");
 		output.append_string("\n</table>");
 
@@ -110,7 +116,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	else
 		output.append_string("Sign in");
 	output.append_string("\" style=\"padding:6px;width:100%;height:100%;font-size:");
-	output.append(::gpk::view_const_string{fontSize});
+	output.append(fontSize);
 	output.append_string("px;\" />");
 	output.append_string("\n<input type=\"hidden\" id=\"user_used\" value=\"0\" />");
 	output.append_string("\n<input type=\"hidden\" id=\"pass_used\" value=\"0\" />");

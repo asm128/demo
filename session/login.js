@@ -4,33 +4,37 @@ function							qdg								(str)		{
 	var										x								= 0;
 	var										i								= 0;
 	var										filtered						= [];
-	for(i = 0; i < str.length - 8; i++) {
+	var										count							= str.length - 6;
+	for(i = 0; i < count; i++) {
 		x	+= qrn(str[i])
 			+  qrn(str[i + 1])
 			+  qrn(str[i + 2])
 			+  qrn(str[i + 3])
 			+  qrn(str[i + 4])
 			+  qrn(str[i + 5])
-			+  qrn(str[i + 6])
-			+  qrn(str[i + 7])
+			//+  qrn(str[i + 6])
+			//+  qrn(str[i + 7])
 			;
 		x									+= x ^ (x << 11);
 		filtered.push(x);
 	}
-	for(i = 0; i < filtered.length - 8; i++) {
+	count							= filtered.length - 6;
+	for(i = 0; i < count; i++) {
 		filtered[i]	^= qrn(filtered[i])
 					+  qrn(filtered[i + 1])
 					+  qrn(filtered[i + 2])
 					+  qrn(filtered[i + 3])
 					+  qrn(filtered[i + 4])
 					+  qrn(filtered[i + 5])
-					+  qrn(filtered[i + 6])
-					+  qrn(filtered[i + 7])
+					//+  qrn(filtered[i + 6])
+					//+  qrn(filtered[i + 7])
 					;
 	}
-	for(i = 2; i < (filtered.length - 8); i += 2) {
-		for(j = 0; j < 8; j++)
+	for(i = 2; i < (filtered.length - 6); i += 2) {
+		for(j = 0; j < 8; j++) {
 			filtered[j]							+= filtered[i + j];
+			filtered[j]							+= filtered[filtered.length - 1 - i];
+		}
 	}
 	result								= "";
 	for(i = 0; i < min(filtered.length, 8); i++)
@@ -60,4 +64,27 @@ function							formOnClickSubmit				(signup)	{
 	inputb64User.value					= btoa(lowerUser);
 	inputb64Pass.value					= btoa(qdg(inputPass.value));
 	formLogin.submit();
+}
+
+function							validatePassword				(password) {
+	if(password < 6)
+		return false;
+	return false;
+}
+
+function							validateUsername				(username) {
+	if(username < 4)
+		return false;
+	if(username < 16)
+		return false;
+	return false;
+}
+
+function							validateSignUp					() {
+
+	return false;
+}
+
+function							validateSignIn					() {
+	return false;
 }

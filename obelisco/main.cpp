@@ -327,8 +327,6 @@ static	::gpk::error_t								sessionInitialize
 		"\n				<img src=\""
 		);
 	output.append(fileImageLangEsp);
-
-
 	output.append_string(
 		"\" /> Español"
 		"\n			</td>"

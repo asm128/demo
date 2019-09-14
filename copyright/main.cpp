@@ -94,7 +94,7 @@ GPK_CGI_JSON_APP_IMPL();
 			::ntl::htmlTag("p", viewWikiImageTitle, "style=\"text-align:left;text-decoration:none;font-weight:normal;font-size:14px;\"", output);
 			output.append_string("</p>");
 		}
-		output.append_string("\n<br/><h3 style=\"text-align:center;\" >Copyright - TuBelisco.com:</h3>");
+		output.append_string("\n<br/><h3 style=\"text-align:center;\" >Copyright - TuObelisco.com:</h3>");
 		output.append_string("\n<br/><p  style=\"text-align:center;text-decoration:none;font-weight:normal;\" >TuObelisco.com es una creación de Pablo Ariel Zorrilla Cepeda - asm128 - The Dragon <br/> pabloarielz@outlook.com <br/> Todos los derechos reservados</p>");
 		output.append_string("\n</td>");
 		output.append_string("\n</tr>");
@@ -138,7 +138,7 @@ GPK_CGI_JSON_APP_IMPL();
 			::ntl::htmlTag("p", viewWikiImageTitle, "style=\"text-align:left;text-decoration:none;font-weight:normal;font-size:14px;\"", output);
 			output.append_string("</p>");
 		}
-		output.append_string("\n<br/><h3 style=\"text-align:center;\" >Copyright - TuBelisco.com:</h3>");
+		output.append_string("\n<br/><h3 style=\"text-align:center;\" >Copyright - TuObelisco.com:</h3>");
 		output.append_string("\n<br/><p  style=\"text-align:center;text-decoration:none;font-weight:normal;\" >TuObelisco.com is a product by Pablo Ariel Zorrilla Cepeda - asm128 - The Dragon <br/> pabloarielz@outlook.com <br/> All rights reserved</p>");
 		output.append_string("\n</td>");
 		output.append_string("\n</tr>");
