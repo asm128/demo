@@ -105,7 +105,7 @@ static	::gpk::error_t								sessionInitialize
 	::ntl::SNTLArgs											qsArgs;
 	::ntl::loadNTLArgs(qsArgs, requestReceived.QueryStringKeyVals);
 	if(0 == qsArgs.Language.size())
-		qsArgs.Language										= "es";
+		qsArgs.Language										= ::gpk::view_const_string{"es"};
 
 	::gpk::SJSONFile										sessionFile;
 	::gpk::view_const_string								section;
@@ -163,8 +163,8 @@ static	::gpk::error_t								sessionInitialize
 	::ntl::httpPath(programState.Path.Image		, "flag_ar"					, programState.Extension.Image, fileImageLangEsp	);
 	::ntl::httpPath(programState.Path.Image		, "icon_small_signed_out"	, programState.Extension.Image, fileImageSignedOut	);
 	::ntl::httpPath(programState.Path.Image		, "icon_small_copyright"	, programState.Extension.Image, fileImageCopysign	);
-	::ntl::httpPath(programState.Path.Style		, "blankstyle"				, "css"	, fileStyle			);
-	::ntl::httpPath(programState.Path.Script	, "header"					, "js"	, fileScriptHeader	);
+	::ntl::httpPath(programState.Path.Style		, "blankstyle"				, ::gpk::view_const_string{"css"}, fileStyle		);
+	::ntl::httpPath(programState.Path.Script	, "header"					, ::gpk::view_const_string{"js"	}, fileScriptHeader	);
 
 	::ntl::httpPath(programState.Path.Program	, "shops"		, programState.Extension.Program, fileProgramContent);
 	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
@@ -360,11 +360,11 @@ static	::gpk::error_t								sessionInitialize
 		"\n			<td style=\"width:100%;height:72px;font-family:Arial;\" >"
 		);
 	const ::ntl::SHTMLIcon									icons[]							=
-		{ {"tours"	, "shops"	, "Turismo y<br/> Guías"			}
-		, {"shops"	, "shops"	, "Comercios y<br/> Servicios"	}
-		, {"shows"	, "shops"	, "Shows y<br/> Arte"			}
-		, {"meals"	, "shops"	, "Comidas y<br/> Snacks"		}
-		//, {"pricing", "pricing"	, "Publicar"			}
+		{ {::gpk::view_const_string{"tours"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Turismo y<br/> Guías"		}}
+		, {::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Comercios y<br/> Servicios"}}
+		, {::gpk::view_const_string{"shows"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Shows y<br/> Arte"			}}
+		, {::gpk::view_const_string{"meals"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Comidas y<br/> Snacks"		}}
+		//, {::gpk::view_const_string{"pricing"	}, ::gpk::view_const_string{"pricing"	}, ::gpk::view_const_string{"Publicar"					}}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 

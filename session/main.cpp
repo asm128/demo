@@ -7,7 +7,7 @@
 
 GPK_CGI_JSON_APP_IMPL();
 
-static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs & qsArgs, const ::gpk::view_const_string fontSize, const ::gpk::view_const_string & pathScript, ::gpk::array_pod<char_t> & output)	{
+static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs & qsArgs, const ::gpk::view_const_char fontSize, const ::gpk::view_const_char & pathScript, ::gpk::array_pod<char_t> & output)	{
 	output.append_string("\n<form id=\"login\" style=\"background-color:#008080;\" method=\"POST\" enctype=\"application/x-www-form-urlencoded\" action=\"session.exe?w=");
 	output.append(qsArgs.Width);
 	output.append_string("&h=");
@@ -128,7 +128,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	output.append_string("\n</table>");
 	output.append_string("\n</form>");
 	::gpk::array_pod<char_t>								fileScriptMenu;
-	::ntl::httpPath(pathScript, "login", "js", fileScriptMenu);
+	::ntl::httpPath(pathScript, "login", ::gpk::view_const_string{"js"}, fileScriptMenu);
 	::ntl::htmlHeaderScriptFile({fileScriptMenu.begin(), fileScriptMenu.size()}, output);
 	return 0;
 }
@@ -180,7 +180,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	::ntl::loadNTLArgs(qsArgs, requestReceived.QueryStringKeyVals);
 
 	::ntl::SHTMLEndpoint									programState;
-	const char												configFileName	[]				= "./neutralizer.json";
+	const ::gpk::view_const_string							configFileName					= "./neutralizer.json";
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
 	{
 		::gpk::view_const_string								rootNode;
@@ -199,7 +199,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	//gpk_necall(::gpk::tcpipAddress(udpLanIpString, udpLanPortString, backendAddress), "%s", "Cannot resolve host.");
 
 	::gpk::array_pod<char_t>								fileStyle			;
-	::ntl::httpPath(programState.Path.Style, "blankstyle", "css", fileStyle);
+	::ntl::httpPath(programState.Path.Style, "blankstyle", ::gpk::view_const_string{"css"}, fileStyle);
 
 	char													fontSize	[32]				= {};
 	::gpk::SCoord2<uint32_t>								sizeScreen						= {};
@@ -223,7 +223,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	output.append_string("\n<td style=\"background-color:#fc9116;font-size:");
 	output.append_string(fontSize);
 	output.append_string("px;\">");
-	::ntl::htmlTag("h1", "tuobelisco.com", "style=\"font-family:Arial;\"", output);
+	::ntl::htmlTag("h1", ::gpk::view_const_string{"tuobelisco.com"}, ::gpk::view_const_string{"style=\"font-family:Arial;\""}, output);
 	output.append_string("\n</td>");
 	output.append_string("\n</tr>");
 	output.append_string("\n<tr>");
@@ -231,7 +231,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	//output.append_string("\n</td>");
 	output.append_string("\n<td style=\"background-color:#808080;\" >");
 
-	::generate_output_login_form(qsArgs, fontSize, programState.Path.Script, output);
+	::generate_output_login_form(qsArgs, ::gpk::view_const_string{fontSize}, programState.Path.Script, output);
 
 	output.append_string("\n<code>");
 	output.append(runtimeValues.Content.Body.begin(), runtimeValues.Content.Length);
