@@ -3,21 +3,17 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>?m=shops&amp;h=823&amp;w=1916&amp;l=es&amp;s=3VGN9en7-fpFNdKovTzV31IMpMkUTxQ-</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>?m=shops&amp;h=823&amp;w=1916&amp;l=es&amp;s=3VGN9en7-fpFNdKovTzV31IMpMkUTxQ-</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>?m=shops&amp;h=823&amp;w=1916&amp;l=es&amp;s=3VGN9en7-fpFNdKovTzV31IMpMkUTxQ-</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>?m=shops&amp;h=823&amp;w=1916&amp;l=es&amp;s=3VGN9en7-fpFNdKovTzV31IMpMkUTxQ-</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

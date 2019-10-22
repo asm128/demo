@@ -184,7 +184,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
 	{
 		::gpk::view_const_string								rootNode;
-		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
+		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("whynot", programState.Config.Reader, 0, rootNode);
 		::ntl::frontConfigLoad(programState, indexRoot);
 	}
 
@@ -223,7 +223,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	output.append_string("\n<td style=\"background-color:#fc9116;font-size:");
 	output.append_string(fontSize);
 	output.append_string("px;\">");
-	::ntl::htmlTag("h1", ::gpk::view_const_string{"tuobelisco.com"}, ::gpk::view_const_string{"style=\"font-family:Arial;\""}, output);
+	::ntl::htmlTag("h1", ::gpk::view_const_string{"whynot.com"}, ::gpk::view_const_string{"style=\"font-family:Arial;\""}, output);
 	output.append_string("\n</td>");
 	output.append_string("\n</tr>");
 	output.append_string("\n<tr>");

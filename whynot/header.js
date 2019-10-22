@@ -31,23 +31,20 @@ function							reframe							(namframe, m, p, l, s) {
 }
 
 function							setLang							(language) {
-	//var										inputPricing					= document.getElementById('pricing'	);
 	var										inputTourism					= document.getElementById('tours'	);
 	var										inputShow	  					= document.getElementById('shows'	);
 	var										inputShopping  					= document.getElementById('shops'	);
 	var										inputMeals  					= document.getElementById('meals'	);
 	if(language === 'es') {
-		inputTourism	.innerHTML = "Turismo y<br/> Guías"		;
-		inputShopping	.innerHTML = "Comercio y<br/> Servicios"	;
-		inputShow		.innerHTML = "Shows y<br/> Arte"			;
-		inputMeals		.innerHTML = "Comidas y<br/> Snacks"		;
-		//inputPricing	.innerHTML = "Publicar"				;
+		inputTourism	.innerHTML = "Remeras"	;
+		inputShopping	.innerHTML = "Remeras"	;
+		inputShow		.innerHTML = "Remeras"	;
+		inputMeals		.innerHTML = "Tazas"	;
 	}
 	else {
-		inputTourism	.innerHTML = "Tourism &<br/> Guides"		;
-		inputShopping	.innerHTML = "Shopping &<br/> Services"	;
-		inputShow		.innerHTML = "Shows &<br/> Arts"			;
-		inputMeals		.innerHTML = "Meals &<br/> Snacks"		;
-		//inputPricing	.innerHTML = "Advertise"			;
+		inputTourism	.innerHTML = "T-Shirts"	;
+		inputShopping	.innerHTML = "T-Shirts"	;
+		inputShow		.innerHTML = "T-Shirts"	;
+		inputMeals		.innerHTML = "Cups"		;
 	}
 }

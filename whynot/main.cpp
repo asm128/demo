@@ -108,7 +108,7 @@ static	::gpk::error_t								sessionInitialize
 		qsArgs.Language										= ::gpk::view_const_string{"es"};
 
 	::gpk::SJSONFile										sessionFile;
-	::gpk::view_const_string								section;
+	::gpk::view_const_string								section							= "shops";
 	const ::gpk::view_const_string							folderSession					= {};
 	const ::gpk::view_const_string							folderUser						= {};
 	if(0 == qsArgs.Session.size()) {
@@ -124,12 +124,6 @@ static	::gpk::error_t								sessionInitialize
 		FILE													* fp							= 0;
 		fopen_s(&fp, qsArgs.Session.begin(), "rb");
 		ree_if(fp, "%s", "Some invalid access caused a redundant anon session.");
-		switch(rand() % 4) {
-		case 0: section = "shops"; break;
-		case 1: section = "meals"; break;
-		case 2: section = "shows"; break;
-		case 3: section = "tours"; break;
-		}
 	}
 	else {
 		::gpk::array_pod<char_t>								finalPath						= ::gpk::view_const_string{"session/"};
@@ -145,14 +139,14 @@ static	::gpk::error_t								sessionInitialize
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
 	{
 		::gpk::view_const_string								rootNode;
-		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
+		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("whynot", programState.Config.Reader, 0, rootNode);
 		::ntl::frontConfigLoad(programState, indexRoot);
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
 	::gpk::array_pod<char_t>								fileImageLangEng	;
 	::gpk::array_pod<char_t>								fileImageLangEsp	;
 	::gpk::array_pod<char_t>								fileImageCopysign	;
-	::gpk::array_pod<char_t>								fileImageSignedOut	;
+	//::gpk::array_pod<char_t>								fileImageSignedOut	;
 	::gpk::array_pod<char_t>								fileStyle			;
 	::gpk::array_pod<char_t>								fileScriptHeader	;
 	::gpk::array_pod<char_t>								fileProgramContent	;
@@ -161,22 +155,22 @@ static	::gpk::error_t								sessionInitialize
 	::ntl::httpPath(programState.Path.Image		, "logo_home"				, programState.Extension.Image, fileLogo			);
 	::ntl::httpPath(programState.Path.Image		, "flag_uk"					, programState.Extension.Image, fileImageLangEng	);
 	::ntl::httpPath(programState.Path.Image		, "flag_ar"					, programState.Extension.Image, fileImageLangEsp	);
-	::ntl::httpPath(programState.Path.Image		, "icon_small_signed_out"	, programState.Extension.Image, fileImageSignedOut	);
+	//::ntl::httpPath(programState.Path.Image		, "icon_small_signed_out"	, programState.Extension.Image, fileImageSignedOut	);
 	::ntl::httpPath(programState.Path.Image		, "icon_small_copyright"	, programState.Extension.Image, fileImageCopysign	);
 	::ntl::httpPath(programState.Path.Style		, "blankstyle"				, ::gpk::view_const_string{"css"}, fileStyle		);
 	::ntl::httpPath(programState.Path.Script	, "header"					, ::gpk::view_const_string{"js"	}, fileScriptHeader	);
 
-	::ntl::httpPath(programState.Path.Program	, "shops"		, programState.Extension.Program, fileProgramContent);
-	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
-	::ntl::httpPath(programState.Path.Program	, "session"		, programState.Extension.Program, fileProgramSession);
+	::ntl::httpPath(programState.Path.Program	, "shops"	, programState.Extension.Program, fileProgramContent);
+	::ntl::httpPath(programState.Path.Program	, "whynot"	, programState.Extension.Program, fileProgramHeader);
+	::ntl::httpPath(programState.Path.Program	, "session"	, programState.Extension.Program, fileProgramSession);
 
 	const ::gpk::view_const_string							htmlDefaultAnte					=
 		"\n<html>"
 		"\n<head>"
 		"\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />"
-		"\n<meta name=\"copyright\"		content=\"tuobelisco.com is a registered trademark of Pablo Ariel Zorrilla Cepeda\" />"
+		"\n<meta name=\"copyright\"		content=\"whynot.com is a registered trademark of Pablo Ariel Zorrilla Cepeda\" />"
 		"\n<meta name=\"description\"	content=\"Lugares\" />"
-		"\n<meta name=\"keywords\"		content=\"obelisco, microcentro, tuobelisco, tu obelisco, tu-obelisco, tuobelisco.com, buenos aires, turismo, publicidad, publicidad online\" />"
+		"\n<meta name=\"keywords\"		content=\"whynot, microcentro, whynot, tu whynot, tu-whynot, whynot.com, buenos aires, turismo, publicidad, publicidad online\" />"
 		"\n<meta name=\"robots\"		content=\"index,follow\" />"
 		"\n<meta name=\"DC.title\"		content=\"Publicidad Online\" />"
 		"\n<meta name=\"viewport\"		content=\"width=device-width, initial-scale=0.5\" />"
@@ -188,7 +182,8 @@ static	::gpk::error_t								sessionInitialize
 
 	output.append_string("\n<link rel=\"icon\" type=\"image/png\" href=\"/favicon.png\">");
 	output.append_string("\n</head>");
-	output.append_string("\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('tuMainFrame', '"); // onresize=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
+	//output.append_string("\n	<body style=\"background-color:#fc9116;\" onload=\"reframe('tuMainFrame', '"); // onresize=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
+	output.append_string("\n	<body style=\"background-color:#808080;\" onload=\"reframe('tuMainFrame', '"); // onresize=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
 	output.append(section);
 	output.append_string("', '");
 	output.append(fileProgramContent);
@@ -235,35 +230,27 @@ static	::gpk::error_t								sessionInitialize
 //"\n}"
 //"\n</style>"
 //"<div id=\"share-buttons\">"
-/*<!-- Facebook		-->*/ "	<a href=\"http://www.facebook.com/sharer.php?u=http://tuobelisco.com\" target=\"_blank\">										<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/facebook.png\" alt=\"Facebook\" /></a>"
-/*<!-- LinkedIn		-->*/ "	<a href=\"http://www.linkedin.com/shareArticle?mini=true&amp;url=http://tuobelisco.com\" target=\"_blank\">						<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/linkedin.png\" alt=\"LinkedIn\" /></a>"
-/*<!-- Reddit		-->*/ "	<a href=\"http://reddit.com/submit?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">							<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/reddit.png\" alt=\"Reddit\" /></a>"
-/*<!-- Tumblr		-->*/ "	<a href=\"http://www.tumblr.com/share/link?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">					<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/tumblr.png\" alt=\"Tumblr\" /></a>"
-/*<!-- Twitter		-->*/ "	<a href=\"https://twitter.com/share?url=http://tuobelisco.com&amp;text=TuObelisco&amp;hashtags=tuobelisco\" target=\"_blank\">	<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/twitter.png\" alt=\"Twitter\" /></a>"
+/*<!-- Facebook		-->*/ "	<a href=\"http://www.facebook.com/sharer.php?u=http://whynot.com\" target=\"_blank\">										<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/facebook.png\" alt=\"Facebook\" /></a>"
+/*<!-- LinkedIn		-->*/ "	<a href=\"http://www.linkedin.com/shareArticle?mini=true&amp;url=http://whynot.com\" target=\"_blank\">						<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/linkedin.png\" alt=\"LinkedIn\" /></a>"
+/*<!-- Reddit		-->*/ "	<a href=\"http://reddit.com/submit?url=http://whynot.com&amp;title=TuObelisco\" target=\"_blank\">							<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/reddit.png\" alt=\"Reddit\" /></a>"
+/*<!-- Tumblr		-->*/ "	<a href=\"http://www.tumblr.com/share/link?url=http://whynot.com&amp;title=TuObelisco\" target=\"_blank\">					<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/tumblr.png\" alt=\"Tumblr\" /></a>"
+/*<!-- Twitter		-->*/ "	<a href=\"https://twitter.com/share?url=http://whynot.com&amp;text=TuObelisco&amp;hashtags=whynot\" target=\"_blank\">	<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/twitter.png\" alt=\"Twitter\" /></a>"
 ///*<!-- Pinterest	-->*/ "	<a href=\"javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());\">"
 //"<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/pinterest.png\" alt=\"Pinterest\" /></a>"
-///*<!-- Buffer		-->*/ "	<a href=\"https://bufferapp.com/add?url=http://tuobelisco.com&amp;text=TuObelisco\" target=\"_blank\">						<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/buffer.png\" alt=\"Buffer\" /></a>"
-///*<!-- Digg			-->*/ "	<a href=\"http://www.digg.com/submit?url=http://tuobelisco.com\" target=\"_blank\">											<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/diggit.png\" alt=\"Digg\" /></a>"
-///*<!-- Email		-->*/ "	<a href=\"mailto:?Subject=Tu Obelisco&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://tuobelisco.com\">		<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/email.png\" alt=\"Email\" /></a>"
-///*<!-- Google+		-->*/ "	<a href=\"https://plus.google.com/share?url=http://tuobelisco.com\" target=\"_blank\">										<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/google.png\" alt=\"Google\" /></a>"
-///*<!-- StumbleUpon	-->*/ "	<a href=\"http://www.stumbleupon.com/submit?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">				<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/stumbleupon.png\" alt=\"StumbleUpon\" /></a>"
-///*<!-- VK			-->*/ "	<a href=\"http://vkontakte.ru/share.php?url=http://tuobelisco.com\" target=\"_blank\">										<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/vk.png\" alt=\"VK\" /></a>"
-///*<!-- Yummly		-->*/ "	<a href=\"http://www.yummly.com/urb/verify?url=http://tuobelisco.com&amp;title=TuObelisco\" target=\"_blank\">				<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/yummly.png\" alt=\"Yummly\" /></a>"
+///*<!-- Buffer		-->*/ "	<a href=\"https://bufferapp.com/add?url=http://whynot.com&amp;text=TuObelisco\" target=\"_blank\">						<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/buffer.png\" alt=\"Buffer\" /></a>"
+///*<!-- Digg			-->*/ "	<a href=\"http://www.digg.com/submit?url=http://whynot.com\" target=\"_blank\">											<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/diggit.png\" alt=\"Digg\" /></a>"
+///*<!-- Email		-->*/ "	<a href=\"mailto:?Subject=Tu Obelisco&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://whynot.com\">		<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/email.png\" alt=\"Email\" /></a>"
+///*<!-- Google+		-->*/ "	<a href=\"https://plus.google.com/share?url=http://whynot.com\" target=\"_blank\">										<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/google.png\" alt=\"Google\" /></a>"
+///*<!-- StumbleUpon	-->*/ "	<a href=\"http://www.stumbleupon.com/submit?url=http://whynot.com&amp;title=TuObelisco\" target=\"_blank\">				<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/stumbleupon.png\" alt=\"StumbleUpon\" /></a>"
+///*<!-- VK			-->*/ "	<a href=\"http://vkontakte.ru/share.php?url=http://whynot.com\" target=\"_blank\">										<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/vk.png\" alt=\"VK\" /></a>"
+///*<!-- Yummly		-->*/ "	<a href=\"http://www.yummly.com/urb/verify?url=http://whynot.com&amp;title=TuObelisco\" target=\"_blank\">				<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/yummly.png\" alt=\"Yummly\" /></a>"
 ///*<!-- Print		-->*/ "	<a href=\"javascript:;\" onclick=\"window.print()\">																		<img style=\"width:32px;\" src=\"https://simplesharebuttons.com/images/somacro/print.png\" alt=\"Print\" /></a>"
 //"</div>"
 		);
-	output.append_string("\n</td><td onclick=\"reframe('tuMainFrame', 'copyright', 'copyright.exe', document.getElementById('l').value, document.getElementById('s').value);\" ><img style=\"\" src=\"");
-	output.append(fileImageCopysign);
-	output.append_string(
-		"\" >"
+	output.append_string("\n</td><td>"
 		"\n</td></tr>															"
-		"\n<tr>																	"
-		"\n<td style=\"ont-size:1.5em;&quot;\">									"
-		"\n<p style=\"color:black;font-size:1.5em;\" id=\"copyright\"></p>		"
-		"\n</td>																"
-		"\n</tr>																"
 		"\n</tbody></table>														"
-		//"\n				<img src=\"/obelisco/image/blank.png\"/>"
+		//"\n				<img src=\"/whynot/image/blank.png\"/>"
 		"\n			</td>"
 		);
 //-----------------------------------------------------------------
@@ -315,34 +302,37 @@ static	::gpk::error_t								sessionInitialize
 		);
 #endif
 //-----------------------------------------------------------------
+	//output.append_string(
+	//	"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'en', document.getElementById('s').value);setLang('en');\" >"
+	//	"\n				<img src=\""
+	//	);
+	//output.append(fileImageLangEng);
+	//output.append_string(
+	//	"\" /> English"
+	//	"\n			</td>"
+	//	"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'es', document.getElementById('s').value);setLang('es');\" >"
+	//	"\n				<img src=\""
+	//	);
+	//output.append(fileImageLangEsp);
+	//output.append_string(
+	//	"\" /> Español"
+	//	"\n			</td>"
+	//	);
 	output.append_string(
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'en', document.getElementById('s').value);setLang('en');\" >"
-		"\n				<img src=\""
-		);
-	output.append(fileImageLangEng);
-	output.append_string(
-		"\" /> English"
-		"\n			</td>"
-		"\n			<td style=\"text-align:center;vertical-align:center;\" onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, 'es', document.getElementById('s').value);setLang('es');\" >"
-		"\n				<img src=\""
-		);
-	output.append(fileImageLangEsp);
-	output.append_string(
-		"\" /> Español"
-		"\n			</td>"
 		"\n			<td style=\"text-align:center;vertical-align:center;\" >"	// onclick=\"reframe('tuMainFrame', document.getElementById('m').value, document.getElementById('p').value, document.getElementById('l').value, document.getElementById('s').value);\"
 		);
+	//output.append_string(
+	//	"\n				<a onclick=\"var frameRect = document.getElementById('tuMainFrame').getBoundingClientRect(); window.location = 'session.exe?w=' + frameRect.width + '&h=' + frameRect.height + '&l="
+	//	);
+	//output.append(qsArgs.Language);
+	//output.append_string("';\" >");
+	//output.append_string(
+	//	"\n<img src=\""
+	//	);
+	//output.append(fileImageSignedOut);
+	//output.append_string("\" />");
+	output.append_string("</a>");
 	output.append_string(
-		"\n				<a onclick=\"var frameRect = document.getElementById('tuMainFrame').getBoundingClientRect(); window.location = 'session.exe?w=' + frameRect.width + '&h=' + frameRect.height + '&l="
-		);
-	output.append(qsArgs.Language);
-	output.append_string("';\" >");
-	output.append_string(
-		"\n<img src=\""
-		);
-	output.append(fileImageSignedOut);
-	output.append_string(
-		"\" /></a>"
 		"\n			</td>"
 		"\n		</tr>"
 		"\n	</table>"
@@ -359,14 +349,14 @@ static	::gpk::error_t								sessionInitialize
 		"\n		<tr >"
 		"\n			<td style=\"width:100%;height:72px;font-family:Arial;\" >"
 		);
-	const ::ntl::SHTMLIcon									icons[]							=
-		{ {::gpk::view_const_string{"tours"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Turismo y<br/> Guías"		}}
-		, {::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Comercios y<br/> Servicios"}}
-		, {::gpk::view_const_string{"shows"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Shows y<br/> Arte"			}}
-		, {::gpk::view_const_string{"meals"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Comidas y<br/> Snacks"		}}
-		//, {::gpk::view_const_string{"pricing"	}, ::gpk::view_const_string{"pricing"	}, ::gpk::view_const_string{"Publicar"					}}
-		};
-	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
+	//const ::ntl::SHTMLIcon									icons[]							=
+	//	{ {::gpk::view_const_string{"tours"}, ::gpk::view_const_string{"shops"}, ::gpk::view_const_string{"Remeras"	}}
+	//	, {::gpk::view_const_string{"shops"}, ::gpk::view_const_string{"shops"}, ::gpk::view_const_string{"Remeras"	}}
+	//	, {::gpk::view_const_string{"shows"}, ::gpk::view_const_string{"shops"}, ::gpk::view_const_string{"Remeras"	}}
+	//	, {::gpk::view_const_string{"meals"}, ::gpk::view_const_string{"shops"}, ::gpk::view_const_string{"Tazas"	}}
+	//	//, {::gpk::view_const_string{"pricing"}, ::gpk::view_const_string{"pricing"}, ::gpk::view_const_string{"Publicar"}}
+	//	};
+	//::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 
 	output.append_string(
 		"\n			</td>"
