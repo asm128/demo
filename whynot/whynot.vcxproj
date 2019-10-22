@@ -190,14 +190,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ad_category.json" />
-    <None Include="ad_subcategory.json" />
     <None Include="barrios.json" />
     <None Include="header.js" />
-    <None Include="keypad.json" />
     <None Include="shirts.json" />
     <None Include="whynot.bat" />
-    <None Include="pokemon.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
