@@ -43,9 +43,9 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_char & co
 		//gpk_necall(output.append_string("\r\nSet-Cookie: "), "%s", "Out of memory?");
 		//gpk_necall(output.append(cookie), "%s", "Out of memory?");
 
-		::gpk::view_const_string							methodsValid	[]				=
-			{ "GET"
-			, "POST"
+		::gpk::view_const_char							methodsValid	[]				=
+			{ ::gpk::vcs{"GET" }
+			, ::gpk::vcs{"POST"}
 			};
 		if(-1 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
 			output.append_string("{ \"status\" : 403, \"description\" :\"forbidden\" }\r\n");
@@ -60,7 +60,7 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_char & co
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
 	{
 		::gpk::view_const_string								rootNode;
-		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
+		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve(::gpk::vcs{"tuobelisco"}, programState.Config.Reader, 0, rootNode);
 		::ntl::frontConfigLoad(programState, indexRoot);
 	}
 	::gpk::view_const_string								title;
@@ -69,10 +69,10 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_char & co
 	if(::AD_SHOP_CATEGORY_INVALID == category)
 		category = ::AD_SHOP_CATEGORY_tours;
 	switch(category) {
-	case ::AD_SHOP_CATEGORY_tours: title = (qsArgs.Language == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Turismo"		}) : (::gpk::view_const_string{ "Tourism"	}); break;
-	case ::AD_SHOP_CATEGORY_shops: title = (qsArgs.Language == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Comercios"		}) : (::gpk::view_const_string{ "Shopping"	}); break;
-	case ::AD_SHOP_CATEGORY_meals: title = (qsArgs.Language == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Comidas"		}) : (::gpk::view_const_string{ "Meals"		}); break;
-	case ::AD_SHOP_CATEGORY_shows: title = (qsArgs.Language == ::gpk::view_const_string{"es"}) ? (::gpk::view_const_string{ "Espectáculos"	}) : (::gpk::view_const_string{ "Shows"		}); break;
+	case ::AD_SHOP_CATEGORY_tours: title = (qsArgs.Language == ::gpk::vcs{"es"}) ? (::gpk::vcs{ "Turismo"		}) : (::gpk::vcs{"Tourism"	}); break;
+	case ::AD_SHOP_CATEGORY_shops: title = (qsArgs.Language == ::gpk::vcs{"es"}) ? (::gpk::vcs{ "Comercios"		}) : (::gpk::vcs{"Shopping"	}); break;
+	case ::AD_SHOP_CATEGORY_meals: title = (qsArgs.Language == ::gpk::vcs{"es"}) ? (::gpk::vcs{ "Comidas"		}) : (::gpk::vcs{"Meals"	}); break;
+	case ::AD_SHOP_CATEGORY_shows: title = (qsArgs.Language == ::gpk::vcs{"es"}) ? (::gpk::vcs{ "Espectáculos"	}) : (::gpk::vcs{"Shows"	}); break;
 	default: break;
 	}
 
@@ -80,7 +80,7 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_char & co
 	::gpk::parseIntegerDecimal(qsArgs.Width	, &sizeScreen.x);
 	::gpk::parseIntegerDecimal(qsArgs.Height, &sizeScreen.y);
 
-	::pageCatalog(::gpk::view_const_string{"ads.json"}, programState.Path.Script, sizeScreen, programState.Path.Style, category, title, qsArgs.Language.size() ? qsArgs.Language : ::gpk::view_const_string{"es"}, output);
+	::pageCatalog(::gpk::vcs{"ads.json"}, programState.Path.Script, sizeScreen, programState.Path.Style, category, title, qsArgs.Language.size() ? qsArgs.Language : ::gpk::view_const_string{"es"}, output);
 
 	if(output.size()) {
 		OutputDebugStringA(output.begin());
@@ -112,7 +112,7 @@ static	::gpk::error_t								getItemViews						(::gpk::SJSONReader & content, co
 		SItemViews												views								= {(uint32_t)iItem};
 		const ::gpk::error_t									jsonIndexCurrentItem				= ::gpk::jsonArrayValueGet(*content[0], iItem);
 		::gpk::view_const_string								viewWikiCategory					= {};
-		const ::gpk::error_t									jsonIndexArrayCategory				= ::gpk::jsonExpressionResolve("category", content, jsonIndexCurrentItem, viewWikiCategory);
+		const ::gpk::error_t									jsonIndexArrayCategory				= ::gpk::jsonExpressionResolve(::gpk::vcs{"category"}, content, jsonIndexCurrentItem, viewWikiCategory);
 		bool													isCategory							= false;
 		for(uint32_t iCat = 0, countCat = (uint32_t)::gpk::jsonArraySize(*content[jsonIndexArrayCategory]); iCat < countCat; ++iCat) {
 			const ::gpk::error_t									jsonIndexNodeCategory				= ::gpk::jsonArrayValueGet(*content[jsonIndexArrayCategory], iCat);
@@ -126,22 +126,22 @@ static	::gpk::error_t								getItemViews						(::gpk::SJSONReader & content, co
 			continue;
 
 		// ---- Root arrays.
-		const ::gpk::error_t									jsonIndexArrayPhone					= ::gpk::jsonExpressionResolve("phone"		, content, jsonIndexCurrentItem, views.MapURL		);
-		const ::gpk::error_t									jsonIndexArrayWP					= ::gpk::jsonExpressionResolve("whatsapp"	, content, jsonIndexCurrentItem, views.MapURL		);
-		const ::gpk::error_t									jsonIndexArrayAddr					= ::gpk::jsonExpressionResolve("address"	, content, jsonIndexCurrentItem, views.MapURL		);
-		const ::gpk::error_t									jsonIndexArrayBarrios				= ::gpk::jsonExpressionResolve("barrio"		, content, jsonIndexCurrentItem, views.MapURL		);
-		// ---- Root properties.
-		const ::gpk::error_t									jsonIndexName						= ::gpk::jsonExpressionResolve("name"		, content, jsonIndexCurrentItem, views.Name		);
-		const ::gpk::error_t									jsonIndexMap						= ::gpk::jsonExpressionResolve("location"	, content, jsonIndexCurrentItem, views.MapURL		);
-		// ---- Language-based properties.
-		const ::gpk::error_t									jsonIndexLang						= ::gpk::jsonExpressionResolve({lang.begin(), lang.size()}, content, jsonIndexCurrentItem, views.URL		);
-		const ::gpk::error_t									jsonIndexWiki						= ::gpk::jsonExpressionResolve("wiki"		, content, jsonIndexLang, views.URL				);
-		const ::gpk::error_t									jsonIndexTitle						= ::gpk::jsonExpressionResolve("title"		, content, jsonIndexLang, views.Title				);
-		const ::gpk::error_t									jsonIndexText						= ::gpk::jsonExpressionResolve("text"		, content, jsonIndexLang, views.Text				);
-		const ::gpk::error_t									jsonIndexImageHRef					= ::gpk::jsonExpressionResolve("image.href"	, content, jsonIndexLang, views.ImageHRef			);
-		const ::gpk::error_t									jsonIndexImageSrc					= ::gpk::jsonExpressionResolve("image.src"	, content, jsonIndexLang, views.ImageSrc			);
-		const ::gpk::error_t									jsonIndexImageTitle					= ::gpk::jsonExpressionResolve("image.title", content, jsonIndexLang, views.ImageTitle		);
-		const ::gpk::error_t									jsonIndexImageAlt					= ::gpk::jsonExpressionResolve("image.alt"	, content, jsonIndexLang, views.ImageAlt			);
+		const ::gpk::error_t									jsonIndexArrayPhone					= ::gpk::jsonExpressionResolve(::gpk::vcs{"phone"		}, content, jsonIndexCurrentItem, views.MapURL	);
+		const ::gpk::error_t									jsonIndexArrayWP					= ::gpk::jsonExpressionResolve(::gpk::vcs{"whatsapp"	}, content, jsonIndexCurrentItem, views.MapURL	);
+		const ::gpk::error_t									jsonIndexArrayAddr					= ::gpk::jsonExpressionResolve(::gpk::vcs{"address"		}, content, jsonIndexCurrentItem, views.MapURL	);
+		const ::gpk::error_t									jsonIndexArrayBarrios				= ::gpk::jsonExpressionResolve(::gpk::vcs{"barrio"		}, content, jsonIndexCurrentItem, views.MapURL	);
+		// ---- Root properties.																								   ::gpk::vcs{
+		const ::gpk::error_t									jsonIndexName						= ::gpk::jsonExpressionResolve(::gpk::vcs{"name"		}, content, jsonIndexCurrentItem, views.Name	);
+		const ::gpk::error_t									jsonIndexMap						= ::gpk::jsonExpressionResolve(::gpk::vcs{"location"	}, content, jsonIndexCurrentItem, views.MapURL	);
+		// ---- Language-based properties.																						   ::gpk::vcs{
+		const ::gpk::error_t									jsonIndexLang						= ::gpk::jsonExpressionResolve(lang						 , content, jsonIndexCurrentItem, views.URL		);
+		const ::gpk::error_t									jsonIndexWiki						= ::gpk::jsonExpressionResolve(::gpk::vcs{"wiki"		}, content, jsonIndexLang, views.URL			);
+		const ::gpk::error_t									jsonIndexTitle						= ::gpk::jsonExpressionResolve(::gpk::vcs{"title"		}, content, jsonIndexLang, views.Title			);
+		const ::gpk::error_t									jsonIndexText						= ::gpk::jsonExpressionResolve(::gpk::vcs{"text"		}, content, jsonIndexLang, views.Text			);
+		const ::gpk::error_t									jsonIndexImageHRef					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.href"	}, content, jsonIndexLang, views.ImageHRef		);
+		const ::gpk::error_t									jsonIndexImageSrc					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.src"	}, content, jsonIndexLang, views.ImageSrc		);
+		const ::gpk::error_t									jsonIndexImageTitle					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.title" }, content, jsonIndexLang, views.ImageTitle		);
+		const ::gpk::error_t									jsonIndexImageAlt					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.alt"	}, content, jsonIndexLang, views.ImageAlt		);
 
 		for(int32_t iPhone	= 0, countAddr		= ::gpk::jsonArraySize(*content[jsonIndexArrayAddr		]); iPhone	< countAddr		; ++iPhone	)	views.Addresses	.push_back(content.View[::gpk::jsonArrayValueGet(*content[jsonIndexArrayAddr	], iPhone	)]);
 		for(int32_t iPhone	= 0, countPhones	= ::gpk::jsonArraySize(*content[jsonIndexArrayPhone		]); iPhone	< countPhones	; ++iPhone	)	views.Phones	.push_back(content.View[::gpk::jsonArrayValueGet(*content[jsonIndexArrayPhone	], iPhone	)]);
@@ -165,12 +165,14 @@ static	::gpk::error_t								getWordList							(const ::SItemViews& item, ::gpk:
 
 	gpk_necall(itemWords.resize(upper.size()), "%s", "Out of memory?");
 	const ::gpk::TKeyValConstString							replaceDict	[]						=
-		{ ::gpk::TKeyValConstString{"áéíóúàèìòùäëïöüãõñçºª", "aeiouaeiouaeiouaoncoa"}
-		};
+	{ ::gpk::TKeyValConstString
+		{ ::gpk::vcs{"áéíóúàèìòùäëïöüãõñçºª"}
+		, ::gpk::vcs{"aeiouaeiouaeiouaoncoa"}}
+	};
 	::gpk::array_pod<char_t>								fixedWord;
 	for(uint32_t iWord = 0, countWords = upper.size(); iWord < countWords; ++iWord) {
 		::gpk::view_const_char									originalWord						= upper[iWord];
-		::gpk::trim(originalWord);
+		::gpk::trim(originalWord, originalWord);
 		::gpk::array_pod<char_t>								& finalWord							= itemWords[iWord];
 		finalWord.resize(originalWord.size());
 		memcpy(finalWord.begin(), originalWord.begin(), originalWord.size());

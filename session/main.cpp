@@ -165,11 +165,9 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 
 		}
 		gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
-		::gpk::view_const_string							methodsValid	[]				=
-			{ "GET"
-			, "POST"
-			, "get"
-			, "post"
+		::gpk::view_const_char							methodsValid	[]				=
+			{ ::gpk::vcs{"GET" }
+			, ::gpk::vcs{"POST"}
 			};
 		if(-1 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
 			output.append_string("{ \"status\" : 403, \"description\" :\"forbidden\" }\r\n");
@@ -184,15 +182,15 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
 	{
 		::gpk::view_const_string								rootNode;
-		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
+		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve(::gpk::vcs{"tuobelisco"}, programState.Config.Reader, 0, rootNode);
 		::ntl::frontConfigLoad(programState, indexRoot);
 	}
 
 	//::gpk::SIPv4							backendAddress				= {};
 	//::gpk::view_const_string				udpLanIpString				= {};
 	//::gpk::view_const_string				udpLanPortString			= {};
-	//::gpk::error_t							indexNodeUdpLanIp			= ::gpk::jsonExpressionResolve("mineback.udp_lan_address", config.Reader, 0, udpLanIpString	);
-	//::gpk::error_t							indexNodeUdpLanPort			= ::gpk::jsonExpressionResolve("mineback.udp_lan_port"	, config.Reader, 0, udpLanPortString);
+	//::gpk::error_t							indexNodeUdpLanIp			= ::gpk::jsonExpressionResolve(::gpk::vcs{"mineback.udp_lan_address"}, config.Reader, 0, udpLanIpString	);
+	//::gpk::error_t							indexNodeUdpLanPort			= ::gpk::jsonExpressionResolve(::gpk::vcs{"mineback.udp_lan_port"	}, config.Reader, 0, udpLanPortString);
 	//gwarn_if(errored(indexNodeUdpLanIp		), "Backend address not found in config file: %s.", configFileName);
 	//gwarn_if(errored(indexNodeUdpLanPort	), "Backend address not found in config file: %s.", configFileName);
 	//::gpk::tcpipInitialize();

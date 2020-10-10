@@ -14,9 +14,9 @@ GPK_CGI_JSON_APP_IMPL();
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache\r\n"), "%s", "Out of memory?");
 		gpk_necall(output.append_string("\r\n")								, "%s", "Out of memory?");
-		::gpk::view_const_string							methodsValid	[]				=
-			{ "GET"
-			, "POST"
+		::gpk::view_const_char							methodsValid	[]				=
+			{ ::gpk::vcs{"GET" }
+			, ::gpk::vcs{"POST"}
 			};
 		if(-1 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
 			output.append_string("{ \"status\" : 403, \"description\" :\"forbidden\" }\r\n");
@@ -28,7 +28,7 @@ GPK_CGI_JSON_APP_IMPL();
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
 	{
 		::gpk::view_const_string								rootNode;
-		const ::gpk::error_t									indexRoot					= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
+		const ::gpk::error_t									indexRoot					= ::gpk::jsonExpressionResolve(::gpk::vcs{"tuobelisco"}, programState.Config.Reader, 0, rootNode);
 		::ntl::frontConfigLoad(programState, indexRoot);
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
@@ -72,7 +72,7 @@ GPK_CGI_JSON_APP_IMPL();
 		for(int32_t iPic = 0; iPic < countItems; ++iPic) {
 			const ::gpk::error_t									jsonIndexCurrentItem			= ::gpk::jsonArrayValueGet(*config.Reader[0], iPic);
 			::gpk::view_const_string								viewWikiCategory				= {};
-			const ::gpk::error_t									jsonIndexArrayCategory			= ::gpk::jsonExpressionResolve("category"	, config.Reader, jsonIndexCurrentItem, viewWikiCategory);
+			const ::gpk::error_t									jsonIndexArrayCategory			= ::gpk::jsonExpressionResolve(::gpk::vcs{"category"}	, config.Reader, jsonIndexCurrentItem, viewWikiCategory);
 			bool													isCategory						= false;
 			for(uint32_t iCat = 0, countCat = (uint32_t)::gpk::jsonArraySize(*config.Reader[jsonIndexArrayCategory]); iCat < countCat; ++iCat) {
 				const ::gpk::error_t									jsonIndexNodeCategory			= ::gpk::jsonArrayValueGet(*config.Reader[jsonIndexArrayCategory], iCat);
@@ -86,8 +86,8 @@ GPK_CGI_JSON_APP_IMPL();
 				continue;
 			::gpk::view_const_string								viewWikiImageTitle				= {};
 			::gpk::view_const_string								viewWikiImageAlt				= {};
-			const ::gpk::error_t									jsonIndexImageTitle				= ::gpk::jsonExpressionResolve("es.image.title"	, config.Reader, jsonIndexCurrentItem, viewWikiImageTitle	);
-			const ::gpk::error_t									jsonIndexImageAlt				= ::gpk::jsonExpressionResolve("es.image.alt"	, config.Reader, jsonIndexCurrentItem, viewWikiImageAlt		);
+			const ::gpk::error_t									jsonIndexImageTitle				= ::gpk::jsonExpressionResolve(::gpk::vcs{"es.image.title"	}, config.Reader, jsonIndexCurrentItem, viewWikiImageTitle	);
+			const ::gpk::error_t									jsonIndexImageAlt				= ::gpk::jsonExpressionResolve(::gpk::vcs{"es.image.alt"	}, config.Reader, jsonIndexCurrentItem, viewWikiImageAlt		);
 			output.append_string("\n<p style=\"text-align:left;text-decoration:none;font-weight:bold;font-size:14px;\" >");
 			output.append(viewWikiImageAlt);
 			output.append_string(":");
@@ -116,7 +116,7 @@ GPK_CGI_JSON_APP_IMPL();
 		for(int32_t iPic = 0; iPic < countItems; ++iPic) {
 			const ::gpk::error_t									jsonIndexCurrentItem			= ::gpk::jsonArrayValueGet(*config.Reader[0], iPic);
 			::gpk::view_const_string								viewWikiCategory				= {};
-			const ::gpk::error_t									jsonIndexArrayCategory			= ::gpk::jsonExpressionResolve("category"	, config.Reader, jsonIndexCurrentItem, viewWikiCategory);
+			const ::gpk::error_t									jsonIndexArrayCategory			= ::gpk::jsonExpressionResolve(::gpk::vcs{"category"}, config.Reader, jsonIndexCurrentItem, viewWikiCategory);
 			bool													isCategory						= false;
 			for(uint32_t iCat = 0, countCat = (uint32_t)::gpk::jsonArraySize(*config.Reader[jsonIndexArrayCategory]); iCat < countCat; ++iCat) {
 				const ::gpk::error_t									jsonIndexNodeCategory			= ::gpk::jsonArrayValueGet(*config.Reader[jsonIndexArrayCategory], iCat);
@@ -130,8 +130,8 @@ GPK_CGI_JSON_APP_IMPL();
 				continue;
 			::gpk::view_const_string								viewWikiImageTitle				= {};
 			::gpk::view_const_string								viewWikiImageAlt				= {};
-			const ::gpk::error_t									jsonIndexImageTitle				= ::gpk::jsonExpressionResolve("en.image.title"	, config.Reader, jsonIndexCurrentItem, viewWikiImageTitle	);
-			const ::gpk::error_t									jsonIndexImageAlt				= ::gpk::jsonExpressionResolve("en.image.alt"	, config.Reader, jsonIndexCurrentItem, viewWikiImageAlt		);
+			const ::gpk::error_t									jsonIndexImageTitle				= ::gpk::jsonExpressionResolve(::gpk::vcs{"en.image.title"	}, config.Reader, jsonIndexCurrentItem, viewWikiImageTitle	);
+			const ::gpk::error_t									jsonIndexImageAlt				= ::gpk::jsonExpressionResolve(::gpk::vcs{"en.image.alt"	}, config.Reader, jsonIndexCurrentItem, viewWikiImageAlt		);
 			output.append_string("\n<p style=\"text-align:left;text-decoration:none;font-weight:bold;font-size:14px;\" >");
 			output.append(viewWikiImageAlt);
 			output.append_string(":");

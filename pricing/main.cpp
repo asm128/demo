@@ -14,9 +14,9 @@ GPK_CGI_JSON_APP_IMPL();
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache\r\n"), "%s", "Out of memory?");
 		gpk_necall(output.append_string("\r\n"), "%s", "Out of memory?");
-		::gpk::view_const_string							methodsValid	[]				=
-			{ "GET"
-			, "POST"
+		::gpk::view_const_char							methodsValid	[]				=
+			{ ::gpk::vcs{"GET" }
+			, ::gpk::vcs{"POST"}
 			};
 		if(-1 == ::gpk::keyValVerify(runtimeValues.EnvironViews, "REQUEST_METHOD", methodsValid)) {
 			output.append_string("{ \"status\" : 403, \"description\" :\"forbidden\" }\r\n");
@@ -28,7 +28,7 @@ GPK_CGI_JSON_APP_IMPL();
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
 	{
 		::gpk::view_const_string								rootNode;
-		const ::gpk::error_t									indexRoot					= ::gpk::jsonExpressionResolve("tuobelisco", programState.Config.Reader, 0, rootNode);
+		const ::gpk::error_t									indexRoot					= ::gpk::jsonExpressionResolve(::gpk::vcs{"tuobelisco"}, programState.Config.Reader, 0, rootNode);
 		::ntl::frontConfigLoad(programState, indexRoot);
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
