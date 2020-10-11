@@ -28,7 +28,7 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_char & co
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache\r\n"), "%s", "Out of memory?");
 		gpk_necall(output.append_string("\r\n"), "%s", "Out of memory?");
-		::gpk::find("HTTP_COOKIE", runtimeValues.EnvironViews, cookie);
+		::gpk::find(::gpk::vcs{"HTTP_COOKIE"}, runtimeValues.EnvironViews, cookie);
 		if(0 == cookie.size()) {
 			output.append_string("{ \"status\" : 403, \"description\" :\"forbidden - The server currently doesn't accept requests to this frame without a cookie set.\" }\r\n");
 			return 1;

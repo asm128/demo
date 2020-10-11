@@ -32,9 +32,9 @@ GPK_CGI_JSON_APP_IMPL();
 		::ntl::frontConfigLoad(programState, indexRoot);
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
-	::ntl::httpPath(programState.Path.Image, "logo_home"	, programState.Extension.Image, fileLogo);
+	::ntl::httpPath(programState.Path.Image, ::gpk::vcs{"logo_home"}, programState.Extension.Image, fileLogo);
 	::gpk::array_pod<char_t>								fileStyle			;
-	::ntl::httpPath(programState.Path.Style, "blankstyle"	, "css"	, fileStyle			);
+	::ntl::httpPath(programState.Path.Style, ::gpk::vcs{"blankstyle"}, ::gpk::vcs{"css"}, fileStyle);
 
 	output.append_string("\n<html>");
 	output.append_string("\n<head>");
@@ -54,7 +54,7 @@ GPK_CGI_JSON_APP_IMPL();
 	output.append_string("\n<td style=\"width:100%;font-size:24px; font-weight:bold; vertical-align:top;\">");
 
 	::gpk::view_const_string								lang;
-	::gpk::find("l", requestReceived.QueryStringKeyVals, lang);
+	::gpk::find(::gpk::vcs{"l"}, requestReceived.QueryStringKeyVals, lang);
 	if(lang == ::gpk::view_const_string{"es"})
 		output.append_string("\n<h1>Publicidad</h1>");
 	else

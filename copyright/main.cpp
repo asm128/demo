@@ -33,8 +33,8 @@ GPK_CGI_JSON_APP_IMPL();
 	}
 	::gpk::array_pod<char_t>								fileLogo			;
 	::gpk::array_pod<char_t>								fileStyle			;
-	::ntl::httpPath(programState.Path.Image, "logo_home"	, programState.Extension.Image, fileLogo);
-	::ntl::httpPath(programState.Path.Style, "blankstyle"	, "css"	, fileStyle);
+	::ntl::httpPath(programState.Path.Image, ::gpk::vcs{"logo_home"	}, programState.Extension.Image, fileLogo);
+	::ntl::httpPath(programState.Path.Style, ::gpk::vcs{"blankstyle"}, "css"	, fileStyle);
 
 	output.append_string("\n<html>");
 	output.append_string("\n<head>");
@@ -55,7 +55,7 @@ GPK_CGI_JSON_APP_IMPL();
 
 	//---------------------
 	::gpk::view_const_string								lang;
-	::gpk::find("l", requestReceived.QueryStringKeyVals, lang);
+	::gpk::find(::gpk::vcs{"l"}, requestReceived.QueryStringKeyVals, lang);
 	if(lang == ::gpk::view_const_string{"es"}) {
 		output.append_string("\n<table style=\"width:100%;height:100%;text-align:center;\">");
 		output.append_string("\n<tr style=\"\" >");

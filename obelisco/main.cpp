@@ -81,7 +81,7 @@ static	::gpk::error_t								sessionInitialize
 	::gpk::array_obj<::gpk::TKeyValConstString>				cookieValues;
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache"), "%s", "Out of memory?");
-		::gpk::find("HTTP_COOKIE", runtimeValues.EnvironViews, cookie);
+		::gpk::find(::gpk::vcs{"HTTP_COOKIE"}, runtimeValues.EnvironViews, cookie);
 		if(0 == cookie.size()) {
 			::sessionInitialize(requestReceived, cookie, sessionFileName, digested);
 			gpk_necall(output.append_string("\r\nSet-Cookie: "), "%s", "Out of memory?");
@@ -157,17 +157,17 @@ static	::gpk::error_t								sessionInitialize
 	::gpk::array_pod<char_t>								fileProgramContent	;
 	::gpk::array_pod<char_t>								fileProgramHeader	;
 	::gpk::array_pod<char_t>								fileProgramSession	;
-	::ntl::httpPath(programState.Path.Image		, "logo_home"				, programState.Extension.Image, fileLogo			);
-	::ntl::httpPath(programState.Path.Image		, "flag_uk"					, programState.Extension.Image, fileImageLangEng	);
-	::ntl::httpPath(programState.Path.Image		, "flag_ar"					, programState.Extension.Image, fileImageLangEsp	);
-	::ntl::httpPath(programState.Path.Image		, "icon_small_signed_out"	, programState.Extension.Image, fileImageSignedOut	);
-	::ntl::httpPath(programState.Path.Image		, "icon_small_copyright"	, programState.Extension.Image, fileImageCopysign	);
-	::ntl::httpPath(programState.Path.Style		, "blankstyle"				, ::gpk::view_const_string{"css"}, fileStyle		);
-	::ntl::httpPath(programState.Path.Script	, "header"					, ::gpk::view_const_string{"js"	}, fileScriptHeader	);
+	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"logo_home"			}, programState.Extension.Image, fileLogo			);
+	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"flag_uk"				}, programState.Extension.Image, fileImageLangEng	);
+	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"flag_ar"				}, programState.Extension.Image, fileImageLangEsp	);
+	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"icon_small_signed_out"}, programState.Extension.Image, fileImageSignedOut	);
+	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"icon_small_copyright"	}, programState.Extension.Image, fileImageCopysign	);
+	::ntl::httpPath(programState.Path.Style		, ::gpk::vcs{"blankstyle"			}, ::gpk::view_const_string{"css"	}, fileStyle		);
+	::ntl::httpPath(programState.Path.Script	, ::gpk::vcs{"header"				}, ::gpk::view_const_string{"js"	}, fileScriptHeader	);
 
-	::ntl::httpPath(programState.Path.Program	, "shops"		, programState.Extension.Program, fileProgramContent);
-	::ntl::httpPath(programState.Path.Program	, "obelisco"	, programState.Extension.Program, fileProgramHeader);
-	::ntl::httpPath(programState.Path.Program	, "session"		, programState.Extension.Program, fileProgramSession);
+	::ntl::httpPath(programState.Path.Program	, ::gpk::vcs{"shops"	}, programState.Extension.Program, fileProgramContent);
+	::ntl::httpPath(programState.Path.Program	, ::gpk::vcs{"obelisco"	}, programState.Extension.Program, fileProgramHeader);
+	::ntl::httpPath(programState.Path.Program	, ::gpk::vcs{"session"	}, programState.Extension.Program, fileProgramSession);
 
 	const ::gpk::view_const_string							htmlDefaultAnte					=
 		"\n<html>"

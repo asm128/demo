@@ -154,7 +154,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	::gpk::view_const_string								cookie;
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache"), "%s", "Out of memory?");
-		::gpk::find("HTTP_COOKIE", runtimeValues.EnvironViews, cookie);
+		::gpk::find(::gpk::vcs{"HTTP_COOKIE"}, runtimeValues.EnvironViews, cookie);
 		if(0 == cookie.size()) {
 			char													temp	[256]					= {};
 			sprintf_s(temp, "%u", 5U);
