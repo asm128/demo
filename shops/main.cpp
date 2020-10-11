@@ -6,7 +6,6 @@
 #include "gpk_json_expression.h"
 #include "gpk_parse.h"
 #include "gpk_stdstring.h"
-#include "gpk_find.h"
 
 GPK_CGI_JSON_APP_IMPL();
 

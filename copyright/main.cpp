@@ -2,7 +2,6 @@
 
 #include "gpk_cgi_app_impl_v2.h"
 
-#include "gpk_find.h"
 #include "gpk_process.h"
 #include "gpk_json_expression.h"
 
