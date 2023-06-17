@@ -15,14 +15,14 @@ GDEFINE_ENUM_VALUE(AD_SHOP_CATEGORY, meals, 1);
 GDEFINE_ENUM_VALUE(AD_SHOP_CATEGORY, shops, 2);
 GDEFINE_ENUM_VALUE(AD_SHOP_CATEGORY, shows, 3);
 
-static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_char & contentFileName, const ::gpk::view_const_char & pathScript, const ::gpk::SCoord2<uint32_t> sizeScreen, const ::gpk::view_const_char & pathStyles, const AD_SHOP_CATEGORY category, const ::gpk::view_const_char & title, const ::gpk::view_const_char & lang, ::gpk::array_pod<char_t> & output);
+static	::gpk::error_t								pageCatalog						(const ::gpk::vcc & contentFileName, const ::gpk::vcc & pathScript, const ::gpk::n2u32 sizeScreen, const ::gpk::vcc & pathStyles, const AD_SHOP_CATEGORY category, const ::gpk::vcc & title, const ::gpk::vcc & lang, ::gpk::achar & output);
 
-::gpk::error_t										gpk_cgi_generate_output			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::array_pod<char_t> & output)	{
+::gpk::error_t										gpk_cgi_generate_output			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::achar & output)	{
 	::gpk::SHTTPAPIRequest									requestReceived					= {};
 	bool													isCGIEnviron					= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
 	::gpk::view_const_string								cookie;
 	::gpk::view_const_string								sessionFileName;					;
-	::gpk::array_pod<char_t>								sessionFileContents					= {};
+	::gpk::achar								sessionFileContents					= {};
 	::gpk::array_obj<::gpk::TKeyValConstString>				cookieValues;
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache\r\n"), "%s", "Out of memory?");
@@ -42,7 +42,7 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_char & co
 		//gpk_necall(output.append_string("\r\nSet-Cookie: "), "%s", "Out of memory?");
 		//gpk_necall(output.append(cookie), "%s", "Out of memory?");
 
-		::gpk::view_const_char							methodsValid	[]				=
+		::gpk::vcc							methodsValid	[]				=
 			{ ::gpk::vcs{"GET" }
 			, ::gpk::vcs{"POST"}
 			};
@@ -65,7 +65,7 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_char & co
 	::gpk::view_const_string								title;
 
 	::AD_SHOP_CATEGORY								category						= ::gpk::get_value<::AD_SHOP_CATEGORY>(qsArgs.Module);
-	if(::AD_SHOP_CATEGORY_INVALID == category)
+	if(::gpk::enum_definition<::AD_SHOP_CATEGORY>::INVALID_VALUE == category)
 		category = ::AD_SHOP_CATEGORY_tours;
 	switch(category) {
 	case ::AD_SHOP_CATEGORY_tours: title = (qsArgs.Language == ::gpk::vcs{"es"}) ? (::gpk::vcs{ "Turismo"		}) : (::gpk::vcs{"Tourism"	}); break;
@@ -75,9 +75,9 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_char & co
 	default: break;
 	}
 
-	::gpk::SCoord2<uint32_t>								sizeScreen						= {};
-	::gpk::parseIntegerDecimal(qsArgs.Width	, &sizeScreen.x);
-	::gpk::parseIntegerDecimal(qsArgs.Height, &sizeScreen.y);
+	::gpk::n2u32								sizeScreen						= {};
+	::gpk::parseIntegerDecimal(qsArgs.Width	, sizeScreen.x);
+	::gpk::parseIntegerDecimal(qsArgs.Height, sizeScreen.y);
 
 	::pageCatalog(::gpk::vcs{"ads.json"}, programState.Path.Script, sizeScreen, programState.Path.Style, category, title, qsArgs.Language.size() ? qsArgs.Language : ::gpk::view_const_string{"es"}, output);
 
@@ -90,23 +90,23 @@ static	::gpk::error_t								pageCatalog						(const ::gpk::view_const_char & co
 
 
 struct SItemViews {
-	uint32_t											ItemIndex					= 0;
-	::gpk::view_const_char								URL							= {};
-	::gpk::view_const_char								Name						= {};
-	::gpk::view_const_char								Title						= {};
-	::gpk::view_const_char								Text						= {};
-	::gpk::view_const_char								ImageHRef					= {};
-	::gpk::view_const_char								ImageSrc					= {};
-	::gpk::view_const_char								ImageTitle					= {};
-	::gpk::view_const_char								ImageAlt					= {};
-	::gpk::view_const_char								MapURL						= {};
-	::gpk::array_pod<uint32_t>							Barrio						= {};
-	::gpk::array_obj<::gpk::view_const_char>			Phones						= {};
-	::gpk::array_obj<::gpk::view_const_char>			Addresses					= {};
-	::gpk::array_obj<::gpk::view_const_char>			WPs							= {};
+	uint32_t				ItemIndex			= 0;
+	::gpk::vcc				URL					= {};
+	::gpk::vcc				Name				= {};
+	::gpk::vcc				Title				= {};
+	::gpk::vcc				Text				= {};
+	::gpk::vcc				ImageHRef			= {};
+	::gpk::vcc				ImageSrc			= {};
+	::gpk::vcc				ImageTitle			= {};
+	::gpk::vcc				ImageAlt			= {};
+	::gpk::vcc				MapURL				= {};
+	::gpk::au32				Barrio				= {};
+	::gpk::avcc				Phones				= {};
+	::gpk::avcc				Addresses			= {};
+	::gpk::avcc				WPs					= {};
 };
 
-static	::gpk::error_t								getItemViews						(::gpk::SJSONReader & content, const ::AD_SHOP_CATEGORY category, const ::gpk::view_const_char & lang, ::gpk::array_obj<::SItemViews> & indicesToDisplay)	{
+static	::gpk::error_t	getItemViews		(::gpk::SJSONReader & content, const ::AD_SHOP_CATEGORY category, const ::gpk::vcc & /*lang*/, ::gpk::array_obj<::SItemViews> & indicesToDisplay)	{
 	for(int32_t iItem = 0, countItems = ::gpk::jsonArraySize(*content[0]); iItem < countItems; ++iItem) {
 		SItemViews												views								= {(uint32_t)iItem};
 		const ::gpk::error_t									jsonIndexCurrentItem				= ::gpk::jsonArrayValueGet(*content[0], iItem);
@@ -130,17 +130,17 @@ static	::gpk::error_t								getItemViews						(::gpk::SJSONReader & content, co
 		const ::gpk::error_t									jsonIndexArrayAddr					= ::gpk::jsonExpressionResolve(::gpk::vcs{"address"		}, content, jsonIndexCurrentItem, views.MapURL	);
 		const ::gpk::error_t									jsonIndexArrayBarrios				= ::gpk::jsonExpressionResolve(::gpk::vcs{"barrio"		}, content, jsonIndexCurrentItem, views.MapURL	);
 		// ---- Root properties.																								   ::gpk::vcs{
-		const ::gpk::error_t									jsonIndexName						= ::gpk::jsonExpressionResolve(::gpk::vcs{"name"		}, content, jsonIndexCurrentItem, views.Name	);
-		const ::gpk::error_t									jsonIndexMap						= ::gpk::jsonExpressionResolve(::gpk::vcs{"location"	}, content, jsonIndexCurrentItem, views.MapURL	);
+		//const ::gpk::error_t									jsonIndexName						= ::gpk::jsonExpressionResolve(::gpk::vcs{"name"		}, content, jsonIndexCurrentItem, views.Name	);
+		//const ::gpk::error_t									jsonIndexMap						= ::gpk::jsonExpressionResolve(::gpk::vcs{"location"	}, content, jsonIndexCurrentItem, views.MapURL	);
 		// ---- Language-based properties.																						   ::gpk::vcs{
-		const ::gpk::error_t									jsonIndexLang						= ::gpk::jsonExpressionResolve(lang						 , content, jsonIndexCurrentItem, views.URL		);
-		const ::gpk::error_t									jsonIndexWiki						= ::gpk::jsonExpressionResolve(::gpk::vcs{"wiki"		}, content, jsonIndexLang, views.URL			);
-		const ::gpk::error_t									jsonIndexTitle						= ::gpk::jsonExpressionResolve(::gpk::vcs{"title"		}, content, jsonIndexLang, views.Title			);
-		const ::gpk::error_t									jsonIndexText						= ::gpk::jsonExpressionResolve(::gpk::vcs{"text"		}, content, jsonIndexLang, views.Text			);
-		const ::gpk::error_t									jsonIndexImageHRef					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.href"	}, content, jsonIndexLang, views.ImageHRef		);
-		const ::gpk::error_t									jsonIndexImageSrc					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.src"	}, content, jsonIndexLang, views.ImageSrc		);
-		const ::gpk::error_t									jsonIndexImageTitle					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.title" }, content, jsonIndexLang, views.ImageTitle		);
-		const ::gpk::error_t									jsonIndexImageAlt					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.alt"	}, content, jsonIndexLang, views.ImageAlt		);
+		//const ::gpk::error_t									jsonIndexLang						= ::gpk::jsonExpressionResolve(lang						 , content, jsonIndexCurrentItem, views.URL		);
+		//const ::gpk::error_t									jsonIndexWiki						= ::gpk::jsonExpressionResolve(::gpk::vcs{"wiki"		}, content, jsonIndexLang, views.URL			);
+		//const ::gpk::error_t									jsonIndexTitle						= ::gpk::jsonExpressionResolve(::gpk::vcs{"title"		}, content, jsonIndexLang, views.Title			);
+		//const ::gpk::error_t									jsonIndexText						= ::gpk::jsonExpressionResolve(::gpk::vcs{"text"		}, content, jsonIndexLang, views.Text			);
+		//const ::gpk::error_t									jsonIndexImageHRef					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.href"	}, content, jsonIndexLang, views.ImageHRef		);
+		//const ::gpk::error_t									jsonIndexImageSrc					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.src"	}, content, jsonIndexLang, views.ImageSrc		);
+		//const ::gpk::error_t									jsonIndexImageTitle					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.title" }, content, jsonIndexLang, views.ImageTitle		);
+		//const ::gpk::error_t									jsonIndexImageAlt					= ::gpk::jsonExpressionResolve(::gpk::vcs{"image.alt"	}, content, jsonIndexLang, views.ImageAlt		);
 
 		for(int32_t iPhone	= 0, countAddr		= ::gpk::jsonArraySize(*content[jsonIndexArrayAddr		]); iPhone	< countAddr		; ++iPhone	)	views.Addresses	.push_back(content.View[::gpk::jsonArrayValueGet(*content[jsonIndexArrayAddr	], iPhone	)]);
 		for(int32_t iPhone	= 0, countPhones	= ::gpk::jsonArraySize(*content[jsonIndexArrayPhone		]); iPhone	< countPhones	; ++iPhone	)	views.Phones	.push_back(content.View[::gpk::jsonArrayValueGet(*content[jsonIndexArrayPhone	], iPhone	)]);
@@ -152,8 +152,8 @@ static	::gpk::error_t								getItemViews						(::gpk::SJSONReader & content, co
 	return 0;
 }
 
-static	::gpk::error_t								getWordList							(const ::SItemViews& item, ::gpk::array_obj<::gpk::array_pod<char_t>> & itemWords) {
-	::gpk::array_obj<::gpk::view_const_char>				upper								= {};
+static	::gpk::error_t								getWordList							(const ::SItemViews& item, ::gpk::array_obj<::gpk::achar> & itemWords) {
+	::gpk::array_obj<::gpk::vcc>				upper								= {};
 	gpk_necall(::gpk::split(item.Text	, ' ', upper), "%s", "Out of memory?");
 	gpk_necall(::gpk::split(item.Title	, ' ', upper), "%s", "Out of memory?");
 	gpk_necall(::gpk::split(item.URL	, ' ', upper), "%s", "Out of memory?");
@@ -168,11 +168,11 @@ static	::gpk::error_t								getWordList							(const ::SItemViews& item, ::gpk:
 		{ ::gpk::vcs{"áéíóúàèìòùäëïöüãõñçºª"}
 		, ::gpk::vcs{"aeiouaeiouaeiouaoncoa"}}
 	};
-	::gpk::array_pod<char_t>								fixedWord;
+	::gpk::achar								fixedWord;
 	for(uint32_t iWord = 0, countWords = upper.size(); iWord < countWords; ++iWord) {
-		::gpk::view_const_char									originalWord						= upper[iWord];
+		::gpk::vcc									originalWord						= upper[iWord];
 		::gpk::trim(originalWord, originalWord);
-		::gpk::array_pod<char_t>								& finalWord							= itemWords[iWord];
+		::gpk::achar								& finalWord							= itemWords[iWord];
 		finalWord.resize(originalWord.size());
 		memcpy(finalWord.begin(), originalWord.begin(), originalWord.size());
 		::gpk::tolower(finalWord);
@@ -231,11 +231,11 @@ static	::gpk::error_t								getWordList							(const ::SItemViews& item, ::gpk:
 }
 
 struct SWordIndices {
-	::gpk::array_pod<char_t>							Text;
-	::gpk::array_pod<uint32_t>							Indices;
+	::gpk::achar			Text;
+	::gpk::au32				Indices;
 };
 
-static	::gpk::error_t								getWordDict							(const ::SItemViews& item, uint32_t iItem, ::gpk::array_obj<::SWordIndices> & wordSet, ::gpk::array_obj<::gpk::array_pod<char_t>> & cacheItemWords) {
+static	::gpk::error_t	getWordDict			(const ::SItemViews& item, uint32_t iItem, ::gpk::array_obj<::SWordIndices> & wordSet, ::gpk::aachar & cacheItemWords) {
 	::getWordList(item, cacheItemWords);
 	for(uint32_t iItemWord = 0; iItemWord < cacheItemWords.size(); ++iItemWord) {
 		::gpk::view_const_string								itemWord						= {cacheItemWords[iItemWord].begin(), cacheItemWords[iItemWord].size()};
@@ -263,15 +263,15 @@ static	::gpk::error_t								getWordDict							(const ::SItemViews& item, uint32
 }
 
 struct SBarrio {
-			::gpk::view_const_char						Name						= {};
-			::gpk::view_const_char						Area						= {};
-			::gpk::view_const_char						Population					= {};
-			::gpk::view_const_char						Commune						= {};
+			::gpk::vcc						Name						= {};
+			::gpk::vcc						Area						= {};
+			::gpk::vcc						Population					= {};
+			::gpk::vcc						Commune						= {};
 };
 
-static	::gpk::error_t								outputSearchScript					(const ::gpk::view_array<const ::SItemViews> & indicesToDisplay, ::gpk::array_pod<char_t> & output) {
+static	::gpk::error_t								outputSearchScript					(const ::gpk::view_array<const ::SItemViews> & indicesToDisplay, ::gpk::achar & output) {
 	::gpk::array_obj<::SWordIndices>						wordSet;
-	::gpk::array_obj<::gpk::array_pod<char_t>>				cacheItemWords;
+	::gpk::array_obj<::gpk::achar>				cacheItemWords;
 
 	for(uint32_t iItem = 0, countItems = indicesToDisplay.size(); iItem < countItems; ++iItem)
 		::getWordDict(indicesToDisplay[iItem], iItem, wordSet, cacheItemWords);
@@ -280,8 +280,8 @@ static	::gpk::error_t								outputSearchScript					(const ::gpk::view_array<con
 	for(uint32_t iWord = 0, countWords = wordSet.size(); iWord < countWords; ++iWord) {
 		const SWordIndices										& element							= wordSet[iWord];
 		info_printf("Word: %s.", ::gpk::toString(element.Text).begin());
-		if(0 <= ::gpk::find('\'', ::gpk::view_array{element.Text.begin(), element.Text.size()})) {
-			if(0 <= ::gpk::find('"', ::gpk::view_array{element.Text.begin(), element.Text.size()}))
+		if(0 <= ::gpk::find('\'', {element.Text})) {
+			if(0 <= ::gpk::find('"', {element.Text}))
 				continue;
 			output.push_back('"');
 			output.append(element.Text);
@@ -340,7 +340,7 @@ static	::gpk::error_t								outputSearchScript					(const ::gpk::view_array<con
 	return 0;
 }
 
-static ::gpk::error_t								htmlBoardGenerate					(const ::gpk::view_array<const ::SItemViews> indicesToDisplay, const ::gpk::view_const_char & fontSize, const ::gpk::view_const_char & title, const ::gpk::view_const_char & lang, ::gpk::array_pod<char_t> & output)	{
+static ::gpk::error_t								htmlBoardGenerate					(const ::gpk::view_array<const ::SItemViews> indicesToDisplay, const ::gpk::vcc & fontSize, const ::gpk::vcc & title, const ::gpk::vcc & lang, ::gpk::achar & output)	{
 	output.append_string("\n<table style=\"width:100%;height:100%;text-align:center;font-size:");
 	output.append(fontSize);
 	output.append_string("px;\" >");
@@ -355,7 +355,7 @@ static ::gpk::error_t								htmlBoardGenerate					(const ::gpk::view_array<cons
 		output.append_string("\n<table style=\"width:100%;text-align:center;border-style:solid;border-width:2px;font-size:");
 		output.append(fontSize);
 		output.append_string("px;\" >");
-		::gpk::array_pod<char_t>								base64Id;
+		::gpk::achar								base64Id;
 		char													tempIntStr[256]				= {};
 		for(int32_t iItem = 0, countItems = indicesToDisplay.size(); iItem < countItems; ++iItem) {
 			const SItemViews										& views						= indicesToDisplay[iItem];
@@ -372,7 +372,7 @@ static ::gpk::error_t								htmlBoardGenerate					(const ::gpk::view_array<cons
 				output.append_string("\n<tr>");
 				output.append_string("\n<td style=\"background-color:lightgrey;border-radius:8px;text-align:left;vertical-align:top;\">");
 				//
-				::gpk::array_pod<char_t> pTitle;
+				::gpk::achar pTitle;
 				::ntl::htmlTag("h3", views.Title, ::gpk::view_const_string{"style=\"text-align:left;\""}, pTitle);
 				::ntl::htmlHRefLink({pTitle.begin(), pTitle.size()}, views.URL, ::gpk::view_const_string{"style=\"text-decoration:none;font-weight:bold;\""}, output);
 				output.append_string("\n</td>");
@@ -451,7 +451,7 @@ static ::gpk::error_t								htmlBoardGenerate					(const ::gpk::view_array<cons
 							output.append_string("\n<br />");
 						}
 						for(uint32_t iPhone = 0, countWPs	 = views.WPs	.size(); iPhone < countWPs		; ++iPhone) {
-							::gpk::view_const_char									textPhone						= views.WPs[iPhone];
+							::gpk::vcc									textPhone						= views.WPs[iPhone];
 							output.append_string("\n<a target=\"blank\" href=\"https://wa.me/");
 							output.append(textPhone);
 							output.append_string("\" >");
@@ -483,14 +483,14 @@ static ::gpk::error_t								htmlBoardGenerate					(const ::gpk::view_array<cons
 	return 0;
 }
 
-static	::gpk::error_t								pageCatalog					(const ::gpk::view_const_char & contentFileName, const ::gpk::view_const_char & pathScript, const ::gpk::SCoord2<uint32_t> screenSize, const ::gpk::view_const_char & pathStyles, const AD_SHOP_CATEGORY category, const ::gpk::view_const_char & title, const ::gpk::view_const_char & lang, ::gpk::array_pod<char_t> & output) {
+static	::gpk::error_t								pageCatalog					(const ::gpk::vcc & contentFileName, const ::gpk::vcc & pathScript, const ::gpk::n2u32 screenSize, const ::gpk::vcc & pathStyles, const AD_SHOP_CATEGORY category, const ::gpk::vcc & title, const ::gpk::vcc & lang, ::gpk::achar & output) {
 
 	output.append_string("\n<html>");
 	// --- Head
 	output.append_string("\n<head>");
 	output.append_string("\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=0.5\" />");
 	output.append_string("\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />");
-	::gpk::array_pod<char_t>								fileStyle			;
+	::gpk::achar								fileStyle			;
 	::ntl::httpPath(pathStyles, ::gpk::view_const_string{"blankstyle"}, ::gpk::view_const_string{"css"}, fileStyle);
 	::ntl::htmlHeaderTitle		(title, output);
 	::ntl::htmlHeaderStyleLink	({fileStyle.begin(), fileStyle.size()}, output);
@@ -602,7 +602,7 @@ static	::gpk::error_t								pageCatalog					(const ::gpk::view_const_char & con
 	::outputSearchScript(indicesToDisplay, output);
 	output.append_string("\n</script>");
 
-	::gpk::array_pod<char_t>								fileScriptMenu;
+	::gpk::achar								fileScriptMenu;
 	::ntl::httpPath(pathScript, ::gpk::view_const_string{"filter"}, ::gpk::view_const_string{"js"}, fileScriptMenu);
 	::ntl::htmlHeaderScriptFile({fileScriptMenu.begin(), fileScriptMenu.size()}, output);
 

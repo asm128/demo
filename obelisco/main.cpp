@@ -11,12 +11,13 @@
 #include "gpk_base64.h"
 #include "gpk_noise.h"
 #include "gpk_aes.h"
-#include "gpk_storage.h"
+#include "gpk_file.h"
+#include <ctime>
 
 GPK_CGI_JSON_APP_IMPL();
 // today 1565740800
 // tomow 1587363200
-static	::gpk::error_t								keyGen							(::gpk::view_byte key)	{
+static	::gpk::error_t								keyGen							(::gpk::vc key)	{
 	for(uint32_t iVal = 0; iVal < key.size(); ++iVal)
 		while(0 == key[iVal])
 			key[iVal]										= (char)rand();
@@ -27,7 +28,7 @@ static	::gpk::error_t								sessionInitialize
 	( const ::gpk::SHTTPAPIRequest	& requestReceived
 	, ::gpk::view_const_string		& cookie
 	, ::gpk::view_const_string		& sessionFileName
-	, ::gpk::array_pod<byte_t>		& digested
+	, ::gpk::ac						& digested
 	) {
 	char													temp		[256]					= {};
 	char													keyAES		[256]					= {};
@@ -37,24 +38,24 @@ static	::gpk::error_t								sessionInitialize
 	for(uint32_t iRound = 0, countRounds = rand(); iRound < countRounds; ++iRound)
 		keyArdell											+= ::gpk::noise1DBase(::gpk::timeCurrentInUs());;
 	sprintf_s(temp, "%llu", keyArdell);
-	digested.append(requestReceived.Ip);
+	digested.append_string(requestReceived.Ip);
 	digested.append_string("_");
-	::gpk::digest(temp, digested);
+	::gpk::digest(::gpk::vcs{temp}, digested);
 
-	::gpk::array_pod<byte_t>								encryptedName;
-	::gpk::array_pod<byte_t>								hexedName;
-	::gpk::aesEncode(digested, {keyAES, 32}, ::gpk::AES_LEVEL_256, encryptedName);
+	::gpk::au8									encryptedName;
+	::gpk::achar								hexedName;
+	::gpk::aesEncode({digested}, ::gpk::vcc{keyAES, 32}, ::gpk::AES_LEVEL_256, encryptedName);
 	::gpk::hexEncode(encryptedName, hexedName);
 	sessionFileName										= ::gpk::label(hexedName.begin(), ::gpk::min(hexedName.size(), 64U));
-	::gpk::array_pod<char_t>								sessionFileContents					= {};
+	::gpk::achar								sessionFileContents					= {};
 	ree_if(0 == ::gpk::fileToMemory(sessionFileName, sessionFileContents), "Invalid session name: '%s'. Already exists!", sessionFileName.begin());
 
-	::gpk::array_pod<char_t>								strCookie							= ::gpk::view_const_string{"tumama="};
+	::gpk::achar								strCookie							= ::gpk::view_const_string{"tumama="};
 	strCookie.append(sessionFileName);
 	strCookie.push_back(';');
 	//gpk_necall(strCookie.append_string(" Secure;"), "%s", "Out of memory?");
 
-	::gpk::array_pod<byte_t>								b64Key;
+	::gpk::achar								b64Key;
 	::gpk::base64Encode(keyAES, b64Key);
 	cookie												= ::gpk::label(strCookie.begin(), strCookie.size());
 	sessionFileContents.push_back('{');
@@ -70,14 +71,14 @@ static	::gpk::error_t								sessionInitialize
 	return 0;
 }
 
-::gpk::error_t										gpk_cgi_generate_output				(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::array_pod<char_t> & output)	{
-	::gpk::SHTTPAPIRequest									requestReceived						= {};
-	bool													isCGIEnviron						= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
-	::gpk::view_const_string								cookie;
-	::gpk::view_const_string								sessionFileName;					;
-	::gpk::array_pod<char_t>								sessionFileContents					= {};
-	::gpk::array_pod<byte_t>								digested;
-	::gpk::array_obj<::gpk::TKeyValConstString>				cookieValues;
+::gpk::error_t			gpk_cgi_generate_output				(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::achar & output)	{
+	::gpk::SHTTPAPIRequest		requestReceived						= {};
+	bool						isCGIEnviron						= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
+	::gpk::vcs					cookie;
+	::gpk::vcs					sessionFileName;					;
+	::gpk::achar				sessionFileContents					= {};
+	::gpk::ac					digested;
+	::gpk::aobj<::gpk::TKeyValConstString>				cookieValues;
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache"), "%s", "Out of memory?");
 		::gpk::find(::gpk::vcs{"HTTP_COOKIE"}, runtimeValues.EnvironViews, cookie);
@@ -90,7 +91,7 @@ static	::gpk::error_t								sessionInitialize
 		}
 		gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
 		gpk_necall(::ntl::sessionFileLoad(cookie, sessionFileContents, cookieValues), "%s", "Failed to load session!");
-		::gpk::view_const_char							methodsValid	[]				=
+		::gpk::vcc							methodsValid	[]				=
 			{ ::gpk::vcs{"GET" }
 			, ::gpk::vcs{"POST"}
 			};
@@ -113,10 +114,10 @@ static	::gpk::error_t								sessionInitialize
 		const uint64_t											timeInUs						= ::gpk::timeCurrentInUs();
 		char													strTempSession	[2048]			= {};
 		sprintf_s(strTempSession, "%s_%llu", requestReceived.Ip.begin(), timeInUs);
-		::gpk::array_pod<char_t>								encrypted;
+		::gpk::au8								encrypted;
 		srand((uint32_t)::gpk::noise1DBase(::gpk::timeCurrentInUs()));
-		::gpk::ardellEncode(::gpk::view_const_string{strTempSession}, (uint32_t)rand(), true, encrypted);
-		::gpk::array_pod<char_t>								encoded;
+		::gpk::ardellEncode(::gpk::vcs{strTempSession}, (uint32_t)rand(), true, encrypted);
+		::gpk::achar								encoded;
 		::gpk::base64EncodeFS(encrypted, encoded);
 		qsArgs.Session										= ::gpk::label(encoded.begin(), encoded.size());
 		FILE													* fp							= 0;
@@ -130,7 +131,7 @@ static	::gpk::error_t								sessionInitialize
 		}
 	}
 	else {
-		::gpk::array_pod<char_t>								finalPath						= ::gpk::view_const_string{"session/"};
+		::gpk::achar								finalPath						= ::gpk::view_const_string{"session/"};
 		gpk_necall(finalPath.append(qsArgs.Session), "Failed to append path. Invalid session id?");
 		::gpk::jsonFileRead(sessionFile, {finalPath.begin(), finalPath.size()});
 		section												= "tours";
@@ -146,16 +147,16 @@ static	::gpk::error_t								sessionInitialize
 		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve(::gpk::vcs{"tuobelisco"}, programState.Config.Reader, 0, rootNode);
 		::ntl::frontConfigLoad(programState, indexRoot);
 	}
-	::gpk::array_pod<char_t>								fileLogo			;
-	::gpk::array_pod<char_t>								fileImageLangEng	;
-	::gpk::array_pod<char_t>								fileImageLangEsp	;
-	::gpk::array_pod<char_t>								fileImageCopysign	;
-	::gpk::array_pod<char_t>								fileImageSignedOut	;
-	::gpk::array_pod<char_t>								fileStyle			;
-	::gpk::array_pod<char_t>								fileScriptHeader	;
-	::gpk::array_pod<char_t>								fileProgramContent	;
-	::gpk::array_pod<char_t>								fileProgramHeader	;
-	::gpk::array_pod<char_t>								fileProgramSession	;
+	::gpk::achar								fileLogo			;
+	::gpk::achar								fileImageLangEng	;
+	::gpk::achar								fileImageLangEsp	;
+	::gpk::achar								fileImageCopysign	;
+	::gpk::achar								fileImageSignedOut	;
+	::gpk::achar								fileStyle			;
+	::gpk::achar								fileScriptHeader	;
+	::gpk::achar								fileProgramContent	;
+	::gpk::achar								fileProgramHeader	;
+	::gpk::achar								fileProgramSession	;
 	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"logo_home"			}, programState.Extension.Image, fileLogo			);
 	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"flag_uk"				}, programState.Extension.Image, fileImageLangEng	);
 	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"flag_ar"				}, programState.Extension.Image, fileImageLangEsp	);
@@ -267,9 +268,10 @@ static	::gpk::error_t								sessionInitialize
 //-----------------------------------------------------------------
 
 #if defined(ENABLE_MAINFRAME_BARRIO)
-	::gpk::SCoord2<uint32_t>								sizeScreen						= {};
-	::gpk::parseIntegerDecimal(width	, &sizeScreen.x);
-	::gpk::parseIntegerDecimal(height	, &sizeScreen.y);
+	::gpk::
+		n2u32								sizeScreen						= {};
+	::gpk::parseIntegerDecimal(width	, sizeScreen.x);
+	::gpk::parseIntegerDecimal(height	, sizeScreen.y);
 
 	char													fontSize	[32]					= {};
 	if(sizeScreen.x > sizeScreen.y)

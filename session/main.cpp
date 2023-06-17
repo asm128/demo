@@ -6,7 +6,7 @@
 
 GPK_CGI_JSON_APP_IMPL();
 
-static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs & qsArgs, const ::gpk::view_const_char fontSize, const ::gpk::view_const_char & pathScript, ::gpk::array_pod<char_t> & output)	{
+static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs & qsArgs, const ::gpk::vcc fontSize, const ::gpk::vcc & pathScript, ::gpk::achar & output)	{
 	output.append_string("\n<form id=\"login\" style=\"background-color:#008080;\" method=\"POST\" enctype=\"application/x-www-form-urlencoded\" action=\"session.exe?w=");
 	output.append(qsArgs.Width);
 	output.append_string("&h=");
@@ -126,7 +126,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	output.append_string("\n</tr>");
 	output.append_string("\n</table>");
 	output.append_string("\n</form>");
-	::gpk::array_pod<char_t>								fileScriptMenu;
+	::gpk::achar								fileScriptMenu;
 	::ntl::httpPath(pathScript, "login", ::gpk::view_const_string{"js"}, fileScriptMenu);
 	::ntl::htmlHeaderScriptFile({fileScriptMenu.begin(), fileScriptMenu.size()}, output);
 	return 0;
@@ -147,7 +147,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 // // Multiple directives are also possible, for example:
 // Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>; Secure; HttpOnly
 
-::gpk::error_t										gpk_cgi_generate_output			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::array_pod<char_t> & output)	{
+::gpk::error_t										gpk_cgi_generate_output			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::achar & output)	{
 	::gpk::SHTTPAPIRequest									requestReceived					= {};
 	bool													isCGIEnviron					= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
 	::gpk::view_const_string								cookie;
@@ -164,7 +164,7 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 
 		}
 		gpk_necall(output.append_string("\r\n\r\n"), "%s", "Out of memory?");
-		::gpk::view_const_char							methodsValid	[]				=
+		::gpk::vcc							methodsValid	[]				=
 			{ ::gpk::vcs{"GET" }
 			, ::gpk::vcs{"POST"}
 			};
@@ -195,13 +195,13 @@ static	::gpk::error_t								generate_output_login_form		(const ::ntl::SNTLArgs 
 	//::gpk::tcpipInitialize();
 	//gpk_necall(::gpk::tcpipAddress(udpLanIpString, udpLanPortString, backendAddress), "%s", "Cannot resolve host.");
 
-	::gpk::array_pod<char_t>								fileStyle			;
+	::gpk::achar								fileStyle			;
 	::ntl::httpPath(programState.Path.Style, "blankstyle", ::gpk::view_const_string{"css"}, fileStyle);
 
 	char													fontSize	[32]				= {};
-	::gpk::SCoord2<uint32_t>								sizeScreen						= {};
-	::gpk::parseIntegerDecimal(qsArgs.Width	, &sizeScreen.x);
-	::gpk::parseIntegerDecimal(qsArgs.Height, &sizeScreen.y);
+	::gpk::n2u32								sizeScreen						= {};
+	::gpk::parseIntegerDecimal(qsArgs.Width	, sizeScreen.x);
+	::gpk::parseIntegerDecimal(qsArgs.Height, sizeScreen.y);
 	const uint32_t											baseSize						= (sizeScreen.x > sizeScreen.y) ? 55 : 44;
 	sprintf_s(fontSize, "%u", sizeScreen.x ? sizeScreen.x / baseSize * 2 : 24);
 

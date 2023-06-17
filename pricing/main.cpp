@@ -7,13 +7,13 @@
 
 GPK_CGI_JSON_APP_IMPL();
 
-::gpk::error_t										gpk_cgi_generate_output			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::array_pod<char_t> & output)	{
+::gpk::error_t										gpk_cgi_generate_output			(::gpk::SCGIRuntimeValues & runtimeValues, ::gpk::achar & output)	{
 	::gpk::SHTTPAPIRequest									requestReceived					= {};
 	bool													isCGIEnviron					= ::gpk::httpRequestInit(requestReceived, runtimeValues, true);
 	if (isCGIEnviron) {
 		gpk_necall(output.append_string("Content-type: text/html\r\nCache-control: no-cache\r\n"), "%s", "Out of memory?");
 		gpk_necall(output.append_string("\r\n"), "%s", "Out of memory?");
-		::gpk::view_const_char							methodsValid	[]				=
+		::gpk::vcc							methodsValid	[]				=
 			{ ::gpk::vcs{"GET" }
 			, ::gpk::vcs{"POST"}
 			};
@@ -30,9 +30,9 @@ GPK_CGI_JSON_APP_IMPL();
 		const ::gpk::error_t									indexRoot					= ::gpk::jsonExpressionResolve(::gpk::vcs{"tuobelisco"}, programState.Config.Reader, 0, rootNode);
 		::ntl::frontConfigLoad(programState, indexRoot);
 	}
-	::gpk::array_pod<char_t>								fileLogo			;
+	::gpk::achar								fileLogo			;
 	::ntl::httpPath(programState.Path.Image, ::gpk::vcs{"logo_home"}, programState.Extension.Image, fileLogo);
-	::gpk::array_pod<char_t>								fileStyle			;
+	::gpk::achar								fileStyle			;
 	::ntl::httpPath(programState.Path.Style, ::gpk::vcs{"blankstyle"}, ::gpk::vcs{"css"}, fileStyle);
 
 	output.append_string("\n<html>");
