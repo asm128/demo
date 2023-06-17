@@ -26,8 +26,8 @@ static	::gpk::error_t								keyGen							(::gpk::vc key)	{
 
 static	::gpk::error_t								sessionInitialize
 	( const ::gpk::SHTTPAPIRequest	& requestReceived
-	, ::gpk::view_const_string		& cookie
-	, ::gpk::view_const_string		& sessionFileName
+	, ::gpk::vcs		& cookie
+	, ::gpk::vcs		& sessionFileName
 	, ::gpk::ac						& digested
 	) {
 	char													temp		[256]					= {};
@@ -50,7 +50,7 @@ static	::gpk::error_t								sessionInitialize
 	::gpk::achar								sessionFileContents					= {};
 	ree_if(0 == ::gpk::fileToMemory(sessionFileName, sessionFileContents), "Invalid session name: '%s'. Already exists!", sessionFileName.begin());
 
-	::gpk::achar								strCookie							= ::gpk::view_const_string{"tumama="};
+	::gpk::achar								strCookie							= ::gpk::vcs{"tumama="};
 	strCookie.append(sessionFileName);
 	strCookie.push_back(';');
 	//gpk_necall(strCookie.append_string(" Secure;"), "%s", "Out of memory?");
@@ -104,12 +104,12 @@ static	::gpk::error_t								sessionInitialize
 	::ntl::SNTLArgs											qsArgs;
 	::ntl::loadNTLArgs(qsArgs, requestReceived.QueryStringKeyVals);
 	if(0 == qsArgs.Language.size())
-		qsArgs.Language										= ::gpk::view_const_string{"es"};
+		qsArgs.Language										= ::gpk::vcs{"es"};
 
 	::gpk::SJSONFile										sessionFile;
-	::gpk::view_const_string								section;
-	const ::gpk::view_const_string							folderSession					= {};
-	const ::gpk::view_const_string							folderUser						= {};
+	::gpk::vcs								section;
+	const ::gpk::vcs							folderSession					= {};
+	const ::gpk::vcs							folderUser						= {};
 	if(0 == qsArgs.Session.size()) {
 		const uint64_t											timeInUs						= ::gpk::timeCurrentInUs();
 		char													strTempSession	[2048]			= {};
@@ -131,19 +131,19 @@ static	::gpk::error_t								sessionInitialize
 		}
 	}
 	else {
-		::gpk::achar								finalPath						= ::gpk::view_const_string{"session/"};
+		::gpk::achar								finalPath						= ::gpk::vcs{"session/"};
 		gpk_necall(finalPath.append(qsArgs.Session), "Failed to append path. Invalid session id?");
 		::gpk::jsonFileRead(sessionFile, {finalPath.begin(), finalPath.size()});
 		section												= "tours";
 	}
 
-	::gpk::view_const_string								title;
+	::gpk::vcs								title;
 
 	::ntl::SHTMLEndpoint									programState;
 	const char												configFileName	[]				= "./neutralizer.json";
 	gpk_necall(::gpk::jsonFileRead(programState.Config, configFileName), "Failed to load configuration file: %s.", configFileName);
 	{
-		::gpk::view_const_string								rootNode;
+		::gpk::vcs								rootNode;
 		const ::gpk::error_t									indexRoot						= ::gpk::jsonExpressionResolve(::gpk::vcs{"tuobelisco"}, programState.Config.Reader, 0, rootNode);
 		::ntl::frontConfigLoad(programState, indexRoot);
 	}
@@ -162,14 +162,14 @@ static	::gpk::error_t								sessionInitialize
 	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"flag_ar"				}, programState.Extension.Image, fileImageLangEsp	);
 	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"icon_small_signed_out"}, programState.Extension.Image, fileImageSignedOut	);
 	::ntl::httpPath(programState.Path.Image		, ::gpk::vcs{"icon_small_copyright"	}, programState.Extension.Image, fileImageCopysign	);
-	::ntl::httpPath(programState.Path.Style		, ::gpk::vcs{"blankstyle"			}, ::gpk::view_const_string{"css"	}, fileStyle		);
-	::ntl::httpPath(programState.Path.Script	, ::gpk::vcs{"header"				}, ::gpk::view_const_string{"js"	}, fileScriptHeader	);
+	::ntl::httpPath(programState.Path.Style		, ::gpk::vcs{"blankstyle"			}, ::gpk::vcs{"css"	}, fileStyle		);
+	::ntl::httpPath(programState.Path.Script	, ::gpk::vcs{"header"				}, ::gpk::vcs{"js"	}, fileScriptHeader	);
 
 	::ntl::httpPath(programState.Path.Program	, ::gpk::vcs{"shops"	}, programState.Extension.Program, fileProgramContent);
 	::ntl::httpPath(programState.Path.Program	, ::gpk::vcs{"obelisco"	}, programState.Extension.Program, fileProgramHeader);
 	::ntl::httpPath(programState.Path.Program	, ::gpk::vcs{"session"	}, programState.Extension.Program, fileProgramSession);
 
-	const ::gpk::view_const_string							htmlDefaultAnte					=
+	const ::gpk::vcs							htmlDefaultAnte					=
 		"\n<html>"
 		"\n<head>"
 		"\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />"
@@ -295,8 +295,8 @@ static	::gpk::error_t								sessionInitialize
 	::gpk::jsonFileRead(barrios, "barrios.json");
 	const ::gpk::error_t									countBarrios					= ::gpk::jsonArraySize(*barrios.Reader[0]);
 	char													tempBarrioOption[256]			= {};
-	::gpk::view_const_string								barrioName;
-	//if(lang == ::gpk::view_const_string{"es"})
+	::gpk::vcs								barrioName;
+	//if(lang == ::gpk::vcs{"es"})
 		output.append_string("\n<option id=\"barrioOption\" value=\"-1\" style=\"\">Todos</option>");
 	//else
 	//	output.append_string("\n<option id=\"barrioOption\" value=\"-1\" style=\"\">All</option>");
@@ -360,11 +360,11 @@ static	::gpk::error_t								sessionInitialize
 		"\n			<td style=\"width:100%;height:72px;font-family:Arial;\" >"
 		);
 	const ::ntl::SHTMLIcon									icons[]							=
-		{ {::gpk::view_const_string{"tours"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Turismo y<br/> Guías"		}}
-		, {::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Comercios y<br/> Servicios"}}
-		, {::gpk::view_const_string{"shows"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Shows y<br/> Arte"			}}
-		, {::gpk::view_const_string{"meals"		}, ::gpk::view_const_string{"shops"		}, ::gpk::view_const_string{"Comidas y<br/> Snacks"		}}
-		//, {::gpk::view_const_string{"pricing"	}, ::gpk::view_const_string{"pricing"	}, ::gpk::view_const_string{"Publicar"					}}
+		{ {::gpk::vcs{"tours"		}, ::gpk::vcs{"shops"		}, ::gpk::vcs{"Turismo y<br/> Guías"		}}
+		, {::gpk::vcs{"shops"		}, ::gpk::vcs{"shops"		}, ::gpk::vcs{"Comercios y<br/> Servicios"}}
+		, {::gpk::vcs{"shows"		}, ::gpk::vcs{"shops"		}, ::gpk::vcs{"Shows y<br/> Arte"			}}
+		, {::gpk::vcs{"meals"		}, ::gpk::vcs{"shops"		}, ::gpk::vcs{"Comidas y<br/> Snacks"		}}
+		//, {::gpk::vcs{"pricing"	}, ::gpk::vcs{"pricing"	}, ::gpk::vcs{"Publicar"					}}
 		};
 	::ntl::htmlControlMenuIconsHorizontal(icons, programState.Path.Image, programState.Extension.Image, output, false);
 
